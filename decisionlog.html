@@ -502,5 +502,72 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+<div id='app' class='p-4'></div>
+
+<script>
+function render(data) {
+  const container = document.getElementById("app");
+  if (!container) return;
+
+  if (data.length === 0) {
+    container.innerHTML = "<p>Nessun dato disponibile.</p>";
+    return;
+  }
+
+  const table = document.createElement("table");
+  table.className = "table-auto border border-slate-300 bg-white text-sm w-full";
+  const thead = document.createElement("thead");
+  const tbody = document.createElement("tbody");
+
+  // Header
+  const headerRow = document.createElement("tr");
+  Object.keys(data[0]).forEach(key => {
+    const th = document.createElement("th");
+    th.className = "border px-2 py-1 bg-slate-100";
+    th.textContent = key;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+
+  // Body
+  data.forEach(row => {
+    const tr = document.createElement("tr");
+    Object.values(row).forEach(val => {
+      const td = document.createElement("td");
+      td.className = "border px-2 py-1";
+      td.textContent = val;
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(thead);
+  table.appendChild(tbody);
+  container.innerHTML = "";
+  container.appendChild(table);
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  fetch("data/decisioni.csv")
+    .then(response => response.text())
+    .then(csvText => {
+      Papa.parse(csvText, {
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+          console.log("✅ Dati caricati da decisioni.csv", results.data);
+          if (typeof render === 'function') render(results.data);
+        }
+      });
+    })
+    .catch(err => {
+      console.error("Errore nel caricamento di decisioni.csv:", err);
+    });
+});
+</script>
+
 </body>
 </html>
