@@ -5,92 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Milestone Progetti</title>
     
-    <!-- Tailwind CSS per uno stile moderno e responsivo -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- PapaParse per il parsing di file CSV lato client -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     
-    <!-- Frappe Gantt per la visualizzazione a diagramma di Gantt -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.css">
     <script src="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.js"></script>
     
-    <!-- Font Inter -->
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
     <style>
-        /* Stili personalizzati per migliorare l'UI */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* Grigio chiaro di Tailwind */
-        }
-
-        /* Stile per il tooltip personalizzato */
-        .tooltip {
-            position: relative;
-            display: inline-block;
-        }
-
-        .tooltip .tooltip-text {
-            visibility: hidden;
-            width: 220px;
-            background-color: #1f2937; /* Grigio scuro di Tailwind */
-            color: #fff;
-            text-align: left;
-            border-radius: 6px;
-            padding: 8px;
-            position: absolute;
-            z-index: 10;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -110px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 0.8rem;
-            line-height: 1.4;
-            pointer-events: none;
-        }
-
-        .tooltip:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        /* Stili per le barre del Gantt in base allo stato */
-        .gantt .bar-completata .bar { fill: #22c55e; } /* Verde */
-        .gantt .bar-in-corso .bar { fill: #facc15; } /* Giallo */
-        .gantt .bar-pianificata .bar { fill: #3b82f6; } /* Blu */
-        .gantt .bar-in-ritardo .bar { fill: #ef4444; } /* Rosso */
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .tooltip { position: relative; display: inline-block; }
+        .tooltip .tooltip-text { visibility: hidden; width: 220px; background-color: #1f2937; color: #fff; text-align: left; border-radius: 6px; padding: 8px; position: absolute; z-index: 10; bottom: 125%; left: 50%; margin-left: -110px; opacity: 0; transition: opacity 0.3s; font-size: 0.8rem; line-height: 1.4; pointer-events: none; }
+        .tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
+        .gantt .bar-completata .bar { fill: #22c55e; }
+        .gantt .bar-in-corso .bar { fill: #facc15; }
+        .gantt .bar-pianificata .bar { fill: #3b82f6; }
+        .gantt .bar-in-ritardo .bar { fill: #ef4444; }
         .gantt .bar-label { font-size: 14px; fill: #1f2937; }
         .gantt .bar-group .bar { opacity: 0.8; }
-        
-        /* Nasconde elementi fino al caricamento del file */
-        .hidden-on-start {
-            display: none;
-        }
+        .hidden-on-start { display: none; }
     </style>
 </head>
 <body class="text-gray-800">
 
     <div class="container mx-auto p-4 md:p-8">
         
-        <!-- Intestazione -->
         <header class="mb-8">
             <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Dashboard Milestone Progetti</h1>
             <p class="text-gray-600 mt-1">Visualizzazione delle milestone caricate automaticamente.</p>
         </header>
 
-        <!-- Sezione Controlli Principali -->
         <div class="bg-white p-4 rounded-lg shadow-md mb-6">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <!-- Controlli di Visualizzazione e Filtri -->
                 <div id="controls-panel" class="hidden-on-start flex flex-col md:flex-row md:items-center gap-4 w-full justify-end">
-                    <!-- Toggle Vista -->
                     <div class="flex items-center bg-gray-200 rounded-lg p-1">
                         <button id="view-cards-btn" class="px-4 py-1 text-sm font-semibold rounded-md bg-white shadow text-blue-600">Card</button>
                         <button id="view-gantt-btn" class="px-4 py-1 text-sm font-semibold rounded-md text-gray-600">Gantt</button>
                     </div>
-                    <!-- Filtro Progetti -->
                     <select id="project-filter" class="p-2 border rounded-md bg-white shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         <option value="all">Tutti i Progetti</option>
                     </select>
@@ -98,13 +51,9 @@
             </div>
         </div>
 
-        <!-- Messaggio iniziale e Preview Tabella -->
         <div id="initial-message" class="text-center py-12 bg-white rounded-lg shadow-md">
-            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-            </svg>
+            <i data-lucide="loader-2" class="mx-auto h-12 w-12 text-gray-400 animate-spin"></i>
             <h3 class="mt-2 text-sm font-medium text-gray-900">Caricamento dati in corso...</h3>
-            <p class="mt-1 text-sm text-gray-500">Attendi il caricamento delle milestone.</p>
         </div>
         
         <div id="preview-section" class="hidden-on-start mb-6">
@@ -117,14 +66,12 @@
             </div>
         </div>
 
-        <!-- Area di Visualizzazione Principale -->
         <main id="dashboard-content" class="transition-opacity duration-500"></main>
 
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Riferimenti agli elementi del DOM
             const initialMessage = document.getElementById('initial-message');
             const controlsPanel = document.getElementById('controls-panel');
             const previewSection = document.getElementById('preview-section');
@@ -133,76 +80,45 @@
             const viewGanttBtn = document.getElementById('view-gantt-btn');
             const projectFilter = document.getElementById('project-filter');
 
-            // Stato dell'applicazione
             let allMilestones = [];
             let projectsData = {};
             let currentView = 'cards';
             let ganttChart = null;
 
-            // --- 1. GESTIONE CARICAMENTO E PARSING AUTOMATICO ---
-            
             function loadInitialMilestones() {
-                const milestoneCsvUrl = 'data/milestone.csv'; // Percorso relativo al file
-
+                const milestoneCsvUrl = 'data/milestone.csv';
                 fetch(milestoneCsvUrl)
                     .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`Errore di rete: Impossibile trovare il file ${milestoneCsvUrl} (status: ${response.status})`);
-                        }
+                        if (!response.ok) throw new Error(`File non trovato: ${milestoneCsvUrl}`);
                         return response.text();
                     })
-                    .then(csvText => {
-                        Papa.parse(csvText, {
-                            header: true,
-                            skipEmptyLines: true,
-                            complete: (results) => {
-                                processData(results.data);
-                            },
-                            error: (error) => {
-                                console.error("Errore nel parsing del CSV:", error);
-                                alert("Impossibile interpretare il file CSV. Controlla la console per i dettagli.");
-                            }
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Errore durante il caricamento automatico:', error);
-                        initialMessage.innerHTML = `
-                            <h3 class="mt-2 text-sm font-medium text-red-700">Errore nel caricamento</h3>
-                            <p class="mt-1 text-sm text-gray-500">Controlla che il file esista al percorso: <strong>${milestoneCsvUrl}</strong></p>
-                        `;
-                    });
+                    .then(csvText => Papa.parse(csvText, {
+                        header: true,
+                        skipEmptyLines: true,
+                        complete: (results) => processData(results.data),
+                        error: (error) => console.error("Errore parsing CSV:", error)
+                    }))
+                    .catch(error => console.error('Errore caricamento:', error));
             }
 
-            // --- 2. ELABORAZIONE E VALIDAZIONE DATI ---
-
             function parseItalianDate(dateString) {
-                if (!dateString || typeof dateString !== 'string') return null;
+                if (!dateString) return null;
                 const parts = dateString.split('/');
-                if (parts.length !== 3) return null;
-                // Formato GG/MM/AAAA -> AAAA-MM-GG per il costruttore Date
-                return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
+                return parts.length !== 3 ? null : new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
             }
 
             function processData(data) {
                 allMilestones = [];
                 projectsData = {};
                 const today = new Date();
-                today.setHours(0, 0, 0, 0); // Normalizza a mezzanotte per confronti corretti
+                today.setHours(0, 0, 0, 0);
 
                 data.forEach(row => {
-                    // Validazione: ignora righe senza Milestone o Progetto
-                    if (!row.Milestone || !row.Progetto) {
-                        return;
-                    }
-
+                    if (!row.Milestone || !row.Progetto) return;
                     const startDate = parseItalianDate(row['Start Date']);
                     const deadline = parseItalianDate(row.Deadline);
+                    if (!startDate || !deadline) return;
 
-                    if (!startDate || !deadline) {
-                        console.warn("Date non valide per la milestone:", row.Milestone);
-                        return; // Salta la riga se le date non sono valide
-                    }
-                    
                     let calculatedStatus = row.Stato;
                     if (row.Stato !== 'Completata' && deadline < today) {
                         calculatedStatus = 'In ritardo';
@@ -211,18 +127,13 @@
                     const milestone = {
                         name: row.Milestone,
                         project: row.Progetto,
-                        startDate: startDate,
-                        deadline: deadline,
+                        startDate,
+                        deadline,
                         status: row.Stato,
-                        calculatedStatus: calculatedStatus,
+                        calculatedStatus,
                     };
-
                     allMilestones.push(milestone);
-
-                    // Raggruppa per progetto
-                    if (!projectsData[milestone.project]) {
-                        projectsData[milestone.project] = [];
-                    }
+                    if (!projectsData[milestone.project]) projectsData[milestone.project] = [];
                     projectsData[milestone.project].push(milestone);
                 });
 
@@ -233,35 +144,42 @@
                     
                     populatePreviewTable();
                     populateProjectFilter();
+
+                    // --- MODIFICA CHIAVE ---
+                    // Controlla se un ID progetto è stato passato nell'URL
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const projectIdFromUrl = urlParams.get('id');
+
+                    if (projectIdFromUrl) {
+                        // Se c'è un ID, imposta il valore del filtro e disabilitalo
+                        projectFilter.value = projectIdFromUrl;
+                        projectFilter.disabled = true; // Opzionale: impedisce all'utente di cambiare progetto
+                    }
+                    // --- FINE MODIFICA ---
+
                     renderCurrentView();
                 } else {
-                    alert("Nessuna riga valida trovata nel file CSV. Assicurati che le colonne 'Milestone', 'Progetto', 'Start Date' e 'Deadline' siano presenti e correttamente formattate (GG/MM/AAAA).");
-                    initialMessage.innerHTML = `<h3 class="mt-2 text-sm font-medium text-gray-900">Nessun dato valido</h3><p class="mt-1 text-sm text-gray-500">Il file CSV è stato caricato ma non contiene dati validi.</p>`;
+                    initialMessage.innerHTML = `<h3>Nessun dato valido trovato.</h3>`;
                 }
             }
-
-            // --- 3. FUNZIONI DI RENDERIZZAZIONE ---
 
             function renderCurrentView() {
                 dashboardContent.style.opacity = 0;
                 setTimeout(() => {
-                    if (currentView === 'cards') {
-                        renderCardView();
-                    } else {
-                        renderGanttView();
-                    }
+                    if (currentView === 'cards') renderCardView();
+                    else renderGanttView();
                     dashboardContent.style.opacity = 1;
                 }, 200);
             }
-            
+
             function getStatusClasses(status) {
-                switch (status) {
-                    case 'Completata': return 'bg-green-100 text-green-800 border-green-300';
-                    case 'In corso': return 'bg-yellow-100 text-yellow-800 border-yellow-300';
-                    case 'Pianificata': return 'bg-blue-100 text-blue-800 border-blue-300';
-                    case 'In ritardo': return 'bg-red-100 text-red-800 border-red-300';
-                    default: return 'bg-gray-100 text-gray-800 border-gray-300';
-                }
+                const classes = {
+                    'Completata': 'bg-green-100 text-green-800 border-green-300',
+                    'In corso': 'bg-yellow-100 text-yellow-800 border-yellow-300',
+                    'Pianificata': 'bg-blue-100 text-blue-800 border-blue-300',
+                    'In ritardo': 'bg-red-100 text-red-800 border-red-300',
+                };
+                return classes[status] || 'bg-gray-100 text-gray-800 border-gray-300';
             }
 
             function createTooltipText(milestone) {
@@ -270,34 +188,27 @@
                 const diffTime = milestone.deadline - today;
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                 
-                let daysInfo;
-                if (milestone.status === 'Completata') {
-                    daysInfo = 'Completata';
-                } else if (diffDays >= 0) {
-                    daysInfo = `${diffDays} giorni rimanenti`;
-                } else {
-                    daysInfo = `In ritardo di ${Math.abs(diffDays)} giorni`;
+                let daysInfo = 'Completata';
+                if (milestone.status !== 'Completata') {
+                    daysInfo = diffDays >= 0 ? `${diffDays} giorni rimanenti` : `In ritardo di ${Math.abs(diffDays)} giorni`;
                 }
 
-                return `
-                    <strong class="block">${milestone.name}</strong>
-                    <span class="block">Inizio: ${milestone.startDate.toLocaleDateString('it-IT')}</span>
-                    <span class="block">Fine: ${milestone.deadline.toLocaleDateString('it-IT')}</span>
-                    <span class="block">Stato: ${milestone.status}</span>
-                    <span class="block font-semibold">${daysInfo}</span>
-                `;
+                return `<strong class="block">${milestone.name}</strong>
+                        <span class="block">Inizio: ${milestone.startDate.toLocaleDateString('it-IT')}</span>
+                        <span class="block">Fine: ${milestone.deadline.toLocaleDateString('it-IT')}</span>
+                        <span class="block">Stato: ${milestone.status}</span>
+                        <span class="block font-semibold">${daysInfo}</span>`;
             }
 
             function renderCardView() {
                 dashboardContent.innerHTML = '';
                 const selectedProject = projectFilter.value;
-
-                const filteredProjects = Object.keys(projectsData)
-                    .filter(p => selectedProject === 'all' || p === selectedProject)
-                    .sort();
+                const projectsToRender = (selectedProject === 'all') ? Object.keys(projectsData) : [selectedProject];
+                
+                const filteredProjects = projectsToRender.filter(p => projectsData[p]).sort();
 
                 if (filteredProjects.length === 0) {
-                    dashboardContent.innerHTML = `<div class="text-center py-10"><p>Nessun progetto corrisponde ai filtri selezionati.</p></div>`;
+                    dashboardContent.innerHTML = `<div class="text-center py-10"><p>Nessun dato per il progetto selezionato.</p></div>`;
                     return;
                 }
 
@@ -308,34 +219,17 @@
                     const milestones = projectsData[projectName];
                     const completedCount = milestones.filter(m => m.status === 'Completata').length;
                     const progress = (completedCount / milestones.length) * 100;
-
                     const card = document.createElement('div');
                     card.className = 'bg-white rounded-lg shadow-md p-5 flex flex-col';
-                    
                     card.innerHTML = `
                         <h3 class="text-xl font-bold text-gray-800">${projectName}</h3>
                         <div class="mt-2 mb-3">
-                            <div class="flex justify-between mb-1">
-                                <span class="text-sm font-medium text-gray-700">Avanzamento</span>
-                                <span class="text-sm font-medium text-gray-700">${Math.round(progress)}%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: ${progress}%"></div>
-                            </div>
+                            <div class="flex justify-between mb-1"><span class="text-sm font-medium text-gray-700">Avanzamento</span><span class="text-sm font-medium text-gray-700">${Math.round(progress)}%</span></div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5"><div class="bg-blue-600 h-2.5 rounded-full" style="width: ${progress}%"></div></div>
                         </div>
-                        <div class="flex-grow overflow-x-auto">
-                            <div class="flex flex-wrap gap-2 py-2">
-                                ${milestones.map(m => `
-                                    <div class="tooltip">
-                                        <span class="inline-block px-3 py-1 text-sm font-medium rounded-full border ${getStatusClasses(m.calculatedStatus)}">
-                                            ${m.name}
-                                        </span>
-                                        <div class="tooltip-text">${createTooltipText(m)}</div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `;
+                        <div class="flex-grow overflow-x-auto"><div class="flex flex-wrap gap-2 py-2">
+                            ${milestones.map(m => `<div class="tooltip"><span class="inline-block px-3 py-1 text-sm font-medium rounded-full border ${getStatusClasses(m.calculatedStatus)}">${m.name}</span><div class="tooltip-text">${createTooltipText(m)}</div></div>`).join('')}
+                        </div></div>`;
                     grid.appendChild(card);
                 });
                 dashboardContent.appendChild(grid);
@@ -344,121 +238,63 @@
             function renderGanttView() {
                 dashboardContent.innerHTML = '<div id="gantt-container" class="bg-white p-4 rounded-lg shadow-md"><svg id="gantt"></svg></div>';
                 const selectedProject = projectFilter.value;
-                
                 const filteredMilestones = allMilestones.filter(m => selectedProject === 'all' || m.project === selectedProject);
 
                 if (filteredMilestones.length === 0) {
-                    document.getElementById('gantt-container').innerHTML = `<div class="text-center py-10"><p>Nessuna milestone corrisponde ai filtri selezionati.</p></div>`;
+                    document.getElementById('gantt-container').innerHTML = `<div class="text-center py-10"><p>Nessuna milestone da visualizzare.</p></div>`;
                     return;
                 }
 
                 const tasks = filteredMilestones.map((m, i) => ({
                     id: `task_${i}`,
                     name: m.name,
-                    start: m.startDate.toISOString().split('T')[0], // YYYY-MM-DD
-                    end: m.deadline.toISOString().split('T')[0],   // YYYY-MM-DD
+                    start: m.startDate.toISOString().split('T')[0],
+                    end: m.deadline.toISOString().split('T')[0],
                     progress: m.status === 'Completata' ? 100 : 0,
-                    dependencies: '',
-                    custom_class: `bar-${m.calculatedStatus.toLowerCase().replace(/\s+/g, '-')}` // es. bar-in-ritardo
+                    custom_class: `bar-${m.calculatedStatus.toLowerCase().replace(/\s+/g, '-')}`
                 }));
 
                 ganttChart = new Gantt("#gantt", tasks, {
-                    header_height: 50,
-                    column_width: 30,
-                    step: 24,
-                    view_modes: ['Quarter Day', 'Half Day', 'Day', 'Week', 'Month'],
-                    bar_height: 20,
-                    bar_corner_radius: 3,
-                    arrow_curve: 5,
-                    padding: 18,
-                    view_mode: 'Week',
-                    date_format: 'YYYY-MM-DD',
-                    language: 'it',
-                    custom_popup_html: function(task) {
+                    view_mode: 'Week', language: 'it',
+                    custom_popup_html: (task) => {
                         const milestone = filteredMilestones.find(m => m.name === task.name);
-                        if (!milestone) return '';
-                        return `<div class="p-2">${createTooltipText(milestone)}</div>`;
+                        return milestone ? `<div class="p-2">${createTooltipText(milestone)}</div>` : '';
                     }
                 });
             }
 
-            // --- 4. GESTIONE FILTRI E INTERAZIONI UI ---
-
             function populatePreviewTable() {
                 const tableHead = document.querySelector('#preview-table thead');
                 const tableBody = document.querySelector('#preview-table tbody');
-                tableHead.innerHTML = '';
-                tableBody.innerHTML = '';
-                
+                tableHead.innerHTML = ''; tableBody.innerHTML = '';
                 if (allMilestones.length === 0) return;
 
                 const headers = ['Progetto', 'Milestone', 'Start Date', 'Deadline', 'Stato'];
-                const headerRow = document.createElement('tr');
-                headers.forEach(h => {
-                    const th = document.createElement('th');
-                    th.className = 'px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider';
-                    th.textContent = h;
-                    headerRow.appendChild(th);
-                });
-                tableHead.appendChild(headerRow);
-
+                tableHead.innerHTML = `<tr>${headers.map(h => `<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">${h}</th>`).join('')}</tr>`;
+                
                 const previewData = allMilestones.slice(0, 5);
-                previewData.forEach(row => {
-                    const tr = document.createElement('tr');
-                    tr.className = 'bg-white';
-                    tr.innerHTML = `
+                tableBody.innerHTML = previewData.map(row => `
+                    <tr class="bg-white">
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${row.project}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${row.name}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${row.startDate.toLocaleDateString('it-IT')}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${row.deadline.toLocaleDateString('it-IT')}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusClasses(row.calculatedStatus).replace('border-','')}">
-                                ${row.calculatedStatus}
-                            </span>
-                        </td>
-                    `;
-                    tableBody.appendChild(tr);
-                });
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusClasses(row.calculatedStatus).replace('border-','')}">${row.calculatedStatus}</span></td>
+                    </tr>
+                `).join('');
             }
 
             function populateProjectFilter() {
-                projectFilter.innerHTML = '<option value="all">Tutti i Progetti</option>';
                 const projectNames = Object.keys(projectsData).sort();
-                projectNames.forEach(name => {
-                    const option = document.createElement('option');
-                    option.value = name;
-                    option.textContent = name;
-                    projectFilter.appendChild(option);
-                });
+                projectFilter.innerHTML = `<option value="all">Tutti i Progetti</option>` + 
+                                          projectNames.map(name => `<option value="${name}">${name}</option>`).join('');
             }
 
             projectFilter.addEventListener('change', renderCurrentView);
-
-            viewCardsBtn.addEventListener('click', () => {
-                if (currentView !== 'cards') {
-                    currentView = 'cards';
-                    viewCardsBtn.classList.add('bg-white', 'shadow', 'text-blue-600');
-                    viewCardsBtn.classList.remove('text-gray-600');
-                    viewGanttBtn.classList.remove('bg-white', 'shadow', 'text-blue-600');
-                    viewGanttBtn.classList.add('text-gray-600');
-                    renderCurrentView();
-                }
-            });
-
-            viewGanttBtn.addEventListener('click', () => {
-                if (currentView !== 'gantt') {
-                    currentView = 'gantt';
-                    viewGanttBtn.classList.add('bg-white', 'shadow', 'text-blue-600');
-                    viewGanttBtn.classList.remove('text-gray-600');
-                    viewCardsBtn.classList.remove('bg-white', 'shadow', 'text-blue-600');
-                    viewCardsBtn.classList.add('text-gray-600');
-                    renderCurrentView();
-                }
-            });
+            viewCardsBtn.addEventListener('click', () => { currentView = 'cards'; renderCurrentView(); });
+            viewGanttBtn.addEventListener('click', () => { currentView = 'gantt'; renderCurrentView(); });
             
-            // --- ESECUZIONE INIZIALE ---
-            loadInitialMilestones(); // Avvia il caricamento automatico all'apertura della pagina
-
+            loadInitialMilestones();
         });
     </script>
 </body>
