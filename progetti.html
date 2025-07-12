@@ -33,12 +33,6 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
-        #iframe-loader {
-            width: 100%;
-            height: 85vh;
-            border: 1px solid #e2e8f0; /* slate-200 */
-            border-radius: 0.5rem;
-        }
     </style>
 </head>
 <body class="text-slate-800">
@@ -46,55 +40,31 @@
     <!-- Contenitore Principale -->
     <div class="container mx-auto p-4 md:p-6">
         
-        <!-- Vista Elenco Progetti -->
-        <div id="project-listing-view">
-            <header class="mb-8 text-center">
-                <h1 class="text-4xl font-bold text-slate-900">Dashboard Centrale Progetti</h1>
-                <p class="text-slate-600 mt-2">Seleziona una dashboard operativa per visualizzare i dettagli di un progetto.</p>
-            </header>
+        <header class="mb-8 text-center">
+            <h1 class="text-4xl font-bold text-slate-900">Dashboard Centrale Progetti</h1>
+            <p class="text-slate-600 mt-2">Seleziona una dashboard operativa per visualizzare i dettagli di un progetto.</p>
+        </header>
 
-            <!-- Sezione di Upload rimossa -->
+        <!-- Contenitore delle Card Progetto -->
+        <main id="projects-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div id="initial-message" class="col-span-full text-center py-12 bg-white rounded-lg shadow-md">
+                <i data-lucide="loader-2" class="mx-auto h-12 w-12 text-slate-400 animate-spin"></i>
+                <h3 class="mt-2 text-sm font-medium text-slate-900">Caricamento progetti in corso...</h3>
+                <p class="mt-1 text-sm text-slate-500">Attendi un momento.</p>
+            </div>
+        </main>
 
-            <!-- Contenitore delle Card Progetto -->
-            <main id="projects-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                <div id="initial-message" class="col-span-full text-center py-12 bg-white rounded-lg shadow-md">
-                    <i data-lucide="loader-2" class="mx-auto h-12 w-12 text-slate-400 animate-spin"></i>
-                    <h3 class="mt-2 text-sm font-medium text-slate-900">Caricamento progetti in corso...</h3>
-                    <p class="mt-1 text-sm text-slate-500">Attendi un momento.</p>
-                </div>
-            </main>
-        </div>
-
-        <!-- Vista Dashboard Interna (Iframe) -->
-        <div id="sub-dashboard-view" class="hidden">
-            <button onclick="goBack()" class="mb-4 inline-flex items-center text-blue-600 font-semibold hover:underline">
-                <i data-lucide="arrow-left" class="h-4 w-4 mr-2"></i>
-                Torna ai Progetti
-            </button>
-            <iframe id="iframe-loader" src="about:blank" title="Contenuto Dashboard Operativa"></iframe>
-        </div>
+        <!-- Sezione Iframe e bottone back RIMOSSA -->
     </div>
 
     <script>
         // Configura Day.js in italiano
         dayjs.locale('it');
 
-        // --- FUNZIONI DI NAVIGAZIONE GLOBALI ---
-        // Queste funzioni sono globali per essere chiamate dagli onclick nell'HTML generato
-        function loadSection(file, id) {
-            document.getElementById('project-listing-view').classList.add('hidden');
-            document.getElementById('sub-dashboard-view').classList.remove('hidden');
-            const iframe = document.getElementById('iframe-loader');
-            // Nota: non passiamo più dati via localStorage. L'ID è sufficiente perché
-            // le pagine figlie caricano i propri dati e filtrano per ID.
-            iframe.src = `${file}?id=${id}`;
-        }
-
-        function goBack() {
-            document.getElementById('project-listing-view').classList.remove('hidden');
-            document.getElementById('sub-dashboard-view').classList.add('hidden');
-            const iframe = document.getElementById('iframe-loader');
-            iframe.src = 'about:blank'; // Svuota l'iframe per fermare eventuali processi
+        // --- FUNZIONE DI NAVIGAZIONE GLOBALE (MODIFICATA) ---
+        function navigateToSection(fileUrl, projectId) {
+            // Reindirizza l'intera pagina all'URL specificato, passando l'ID come parametro
+            window.location.href = `${fileUrl}?id=${projectId}`;
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -190,34 +160,23 @@
             function createProjectCardHTML(project) {
                 const stat = statusInfo[project.status] || statusInfo.Default;
                 const sections = [
-                    { name: 'Milestone', file: 'Milestone.html', icon: 'flag' },
-                    { name: 'Task', file: 'Task.html', icon: 'list-checks' },
-                    { name: 'Imprevisti', file: 'Imprevisti.html', icon: 'siren' },
-                    { name: 'Varianti', file: 'Varianti.html', icon: 'git-pull-request-draft' },
+                    { name: 'Milestone', file: 'milestone.html', icon: 'flag' },
+                    { name: 'Task', file: 'task.html', icon: 'list-checks' },
+                    { name: 'Imprevisti', file: 'imprevisti.html', icon: 'siren' },
+                    { name: 'Varianti', file: 'varianti.html', icon: 'git-pull-request-draft' },
                     { name: 'Decisioni', file: 'decisionlog.html', icon: 'gavel' }
                 ];
 
                 return `
                 <div class="project-card bg-white rounded-lg shadow-md flex flex-col">
-                    <!-- Header Card -->
                     <div class="p-4 border-b border-slate-200">
-                        <div class="flex justify-between items-start">
-                            <h3 class="text-lg font-bold text-slate-900">${project.name}</h3>
-                            <span class="px-2 py-1 text-xs font-semibold rounded-full whitespace-nowrap ${stat.badge}">${project.status}</span>
-                        </div>
+                        <div class="flex justify-between items-start"><h3 class="text-lg font-bold text-slate-900">${project.name}</h3><span class="px-2 py-1 text-xs font-semibold rounded-full whitespace-nowrap ${stat.badge}">${project.status}</span></div>
                         <p class="text-sm text-slate-500">${project.client} | PM: ${project.pm}</p>
                     </div>
-
-                    <!-- Corpo Card con KPI e Avanzamento -->
                     <div class="p-4 flex-grow">
                         <div class="mb-4">
-                            <div class="flex justify-between text-sm mb-1">
-                                <span>Avanzamento</span>
-                                <span class="font-semibold">${project.progress}%</span>
-                            </div>
-                            <div class="w-full bg-slate-200 rounded-full h-3">
-                                <div class="bg-blue-600 h-3 rounded-full" style="width: ${project.progress}%"></div>
-                            </div>
+                            <div class="flex justify-between text-sm mb-1"><span>Avanzamento</span><span class="font-semibold">${project.progress}%</span></div>
+                            <div class="w-full bg-slate-200 rounded-full h-3"><div class="bg-blue-600 h-3 rounded-full" style="width: ${project.progress}%"></div></div>
                         </div>
                         <div class="grid grid-cols-3 gap-2 text-center text-sm">
                             <div><p class="text-slate-500">Budget</p><p class="font-bold">${formatCurrency(project.budget)}</p></div>
@@ -225,13 +184,11 @@
                             <div><p class="text-slate-500">Previsione</p><p class="font-bold">${formatCurrency(project.forecast)}</p></div>
                         </div>
                     </div>
-
-                    <!-- Footer Card con Link alle Dashboard -->
                     <div class="p-4 bg-slate-50 rounded-b-lg border-t border-slate-200">
                         <p class="text-xs font-semibold text-slate-600 mb-2 uppercase">Dashboard Operative</p>
                         <div class="flex flex-wrap gap-2">
                             ${sections.map(sec => `
-                                <button onclick="loadSection('${sec.file}', '${project.id}')" class="flex-1 text-center bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 px-3 py-1.5 text-xs font-semibold rounded-md transition-colors">
+                                <button onclick="navigateToSection('${sec.file}', '${project.id}')" class="flex-1 text-center bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 px-3 py-1.5 text-xs font-semibold rounded-md transition-colors">
                                     <i data-lucide="${sec.icon}" class="inline-block h-3 w-3 mr-1"></i>
                                     ${sec.name}
                                 </button>
