@@ -15,9 +15,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.css">
     <script src="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.js"></script>
 
-    <!-- Lucide Icons (CORRECTED SCRIPT) -->
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     
+    <!-- Font Inter -->
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -44,7 +47,6 @@
         .sort-asc::after { content: ' ▲'; font-size: 0.7em; }
         .sort-desc::after { content: ' ▼'; font-size: 0.7em; }
     </style>
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 </head>
 <body class="text-slate-800">
 
@@ -52,21 +54,16 @@
         
         <header class="mb-6">
             <h1 class="text-3xl md:text-4xl font-bold text-slate-900">Dashboard Task Operativi</h1>
-            <p class="text-slate-600 mt-1">Carica un file CSV per analizzare lo stato di avanzamento dei task.</p>
+            <p class="text-slate-600 mt-1">Analisi dello stato di avanzamento dei task caricati automaticamente.</p>
         </header>
 
         <!-- Pannello Controlli -->
         <div class="bg-white p-4 rounded-lg shadow-md mb-6">
             <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 items-end">
-                <div>
-                    <label for="csv-file-input" class="w-full inline-block text-center cursor-pointer bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300">
-                        Carica File CSV
-                    </label>
-                    <input type="file" id="csv-file-input" class="hidden" accept=".csv">
-                </div>
+                <!-- Bottone di caricamento rimosso -->
                 
                 <!-- Filtri (visibili dopo il caricamento) -->
-                <div id="filters-panel" class="hidden-on-start grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:col-span-4 gap-4">
+                <div id="filters-panel" class="hidden-on-start grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:col-span-5 gap-4">
                     <select id="project-filter" class="p-2 border rounded-md bg-white shadow-sm w-full"></select>
                     <select id="owner-filter" class="p-2 border rounded-md bg-white shadow-sm w-full"></select>
                     
@@ -98,9 +95,9 @@
 
         <!-- Messaggio iniziale -->
         <div id="initial-message" class="text-center py-12 bg-white rounded-lg shadow-md">
-             <i data-lucide="folder-search" class="mx-auto h-12 w-12 text-slate-400"></i>
-            <h3 class="mt-2 text-sm font-medium text-slate-900">Nessun file caricato</h3>
-            <p class="mt-1 text-sm text-slate-500">Seleziona un file CSV per iniziare.</p>
+             <i data-lucide="loader-2" class="mx-auto h-12 w-12 text-slate-400 animate-spin"></i>
+            <h3 class="mt-2 text-sm font-medium text-slate-900">Caricamento task in corso...</h3>
+            <p class="mt-1 text-sm text-slate-500">Attendi un momento, i dati si stanno caricando.</p>
         </div>
 
         <!-- Sezione Dashboard (visibile dopo il caricamento) -->
@@ -126,7 +123,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- ELEMENTI DOM ---
-            const fileInput = document.getElementById('csv-file-input');
             const initialMessage = document.getElementById('initial-message');
             const dashboardContainer = document.getElementById('dashboard-container');
             const filtersPanel = document.getElementById('filters-panel');
@@ -147,7 +143,7 @@
             let filteredTasks = [];
             let currentView = 'table';
             let ganttChart = null;
-            let sortConfig = { key: 'Deadline', direction: 'asc' };
+            let sortConfig = { key: 'deadline', direction: 'asc' };
 
             // --- FUNZIONI DI PARSING E UTILITY ---
             const parseItalianDate = (dateString) => {
@@ -179,18 +175,35 @@
             };
 
             // --- LOGICA PRINCIPALE ---
-            fileInput.addEventListener('change', (event) => {
-                const file = event.target.files[0];
-                if (file) parseCsvFile(file);
-            });
+            function loadInitialTasks() {
+                const taskCsvUrl = 'data/task.csv'; // Percorso del file da caricare
 
-            function parseCsvFile(file) {
-                Papa.parse(file, {
-                    header: true,
-                    skipEmptyLines: true,
-                    complete: (results) => processData(results.data),
-                    error: (err) => alert(`Errore nel parsing del CSV: ${err.message}`)
-                });
+                fetch(taskCsvUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Errore di rete: ${response.statusText}`);
+                        }
+                        return response.text();
+                    })
+                    .then(csvText => {
+                        Papa.parse(csvText, {
+                            header: true,
+                            skipEmptyLines: true,
+                            complete: (results) => processData(results.data),
+                            error: (err) => alert(`Errore nel parsing del CSV: ${err.message}`)
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Errore durante il caricamento dei task:', error);
+                        initialMessage.innerHTML = `
+                            <div class="text-center py-12 bg-white rounded-lg shadow-md">
+                                <i data-lucide="alert-triangle" class="mx-auto h-12 w-12 text-red-500"></i>
+                                <h3 class="mt-2 text-sm font-medium text-red-700">Errore nel caricamento</h3>
+                                <p class="mt-1 text-sm text-slate-500">Impossibile caricare i dati. Controlla che il file esista al percorso: <strong>${taskCsvUrl}</strong></p>
+                            </div>
+                        `;
+                        lucide.createIcons();
+                    });
             }
 
             function processData(data) {
@@ -222,7 +235,7 @@
                         productivity: row['Produttività Stimata'] || '',
                         isLate
                     };
-                }).filter(Boolean); // Rimuove i task nulli (invalidi)
+                }).filter(Boolean);
 
                 if (allTasks.length > 0) {
                     initialMessage.style.display = 'none';
@@ -232,6 +245,7 @@
                     renderDashboard();
                 } else {
                     alert("Nessun task valido trovato nel file. Controlla che le colonne ID, Titolo Task, Progetto, Start Date, Deadline siano presenti e formattate correttamente.");
+                    initialMessage.innerHTML = `<h3 class="mt-2 text-sm font-medium text-gray-900">Nessun dato valido</h3><p class="mt-1 text-sm text-gray-500">Il file CSV è stato caricato ma non contiene dati validi.</p>`;
                 }
             }
 
@@ -269,7 +283,6 @@
                     let valA = a[sortConfig.key];
                     let valB = b[sortConfig.key];
 
-                    // Gestione di diversi tipi di dato per l'ordinamento
                     if (sortConfig.key === 'criticality') {
                         const order = { 'Alta': 0, 'Media': 1, 'Bassa': 2 };
                         valA = order[valA];
@@ -312,9 +325,7 @@
                         </div>
                     </div>
                 `).join('');
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                }
+                lucide.createIcons();
             }
             
             function renderPreview() {
@@ -358,11 +369,9 @@
                 if(filteredTasks.length === 0) {
                     dashboardContent.innerHTML = `<div class="text-center py-10 bg-white rounded-lg shadow"><p>Nessun task corrisponde ai filtri selezionati.</p></div>`;
                 } else {
-                    if (typeof lucide !== 'undefined') {
-                        lucide.createIcons();
-                    }
+                    lucide.createIcons();
                 }
-                // Aggiungi event listener agli header per l'ordinamento
+                
                 document.querySelectorAll('.sortable').forEach(header => {
                     header.addEventListener('click', () => {
                         const key = header.dataset.sortKey;
@@ -420,85 +429,46 @@
                     return;
                 }
 
-                const formatDateForGantt = (date) => {
-                    const year = date.getFullYear();
-                    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                    const day = date.getDate().toString().padStart(2, '0');
-                    return `${year}-${month}-${day}`;
-                };
+                const formatDateForGantt = (date) => date.toISOString().split('T')[0];
                 
-                // Raggruppa i task per progetto
-                const tasksByProject = filteredTasks.reduce((acc, task) => {
-                    if (!acc[task.project]) acc[task.project] = [];
-                    acc[task.project].push(task);
-                    return acc;
-                }, {});
+                const ganttTasks = filteredTasks.map((task, i) => {
+                    const ganttEndDate = new Date(task.deadline);
+                    ganttEndDate.setDate(ganttEndDate.getDate() + 1);
+                    const statusClass = (task.isLate ? 'in-ritardo' : task.status.toLowerCase()).replace(' ', '-');
 
-                let ganttTasks = [];
-                Object.keys(tasksByProject).sort().forEach(project => {
-                    const projectTasks = tasksByProject[project];
-                    // FIX: Skip project group if it has no tasks after filtering
-                    if (projectTasks.length === 0) {
-                        return;
-                    }
-
-                    // Aggiungi una barra per il progetto
-                    const projectStart = new Date(Math.min(...projectTasks.map(t => t.startDate)));
-                    const projectEnd = new Date(Math.max(...projectTasks.map(t => t.deadline)));
-                    projectEnd.setDate(projectEnd.getDate() + 1);
-
-                    ganttTasks.push({
-                        id: `proj_${project}`,
-                        name: project,
-                        start: formatDateForGantt(projectStart),
-                        end: formatDateForGantt(projectEnd),
-                        progress: 100,
-                        custom_class: 'bar-pianificato' // Un colore generico per il gruppo
-                    });
-
-                    // Aggiungi i task di quel progetto
-                    projectTasks.forEach((task, i) => {
-                        const ganttEndDate = new Date(task.deadline);
-                        ganttEndDate.setDate(ganttEndDate.getDate() + 1);
-                        const statusClass = (task.isLate ? 'in-ritardo' : task.status.toLowerCase()).replace(' ', '-');
-
-                        ganttTasks.push({
-                            id: `task_${task.id}_${i}`,
-                            name: task.title,
-                            start: formatDateForGantt(task.startDate),
-                            end: formatDateForGantt(ganttEndDate),
-                            progress: task.completion,
-                            dependencies: `proj_${project}`,
-                            custom_class: `bar-${statusClass}`,
-                            original_task: task
-                        });
-                    });
+                    return {
+                        id: `task_${task.id}_${i}`,
+                        name: task.title,
+                        start: formatDateForGantt(task.startDate),
+                        end: formatDateForGantt(ganttEndDate),
+                        progress: task.completion,
+                        dependencies: task.project,
+                        custom_class: `bar-${statusClass}`,
+                        original_task: task
+                    };
                 });
 
-                if (ganttChart) {
-                    ganttChart.destroy();
-                    ganttChart = null;
+                if (ganttChart) ganttChart.refresh(ganttTasks);
+                else {
+                    ganttChart = new Gantt("#gantt", ganttTasks, {
+                        view_modes: ['Day', 'Week', 'Month'],
+                        view_mode: 'Week',
+                        language: 'it',
+                        custom_popup_html: (task) => {
+                            const original = task.original_task;
+                            if (!original) return `<div class="p-2"><strong>${task.name}</strong></div>`;
+                            return `
+                                <div class="p-2 text-sm">
+                                    <strong class="block">${original.title}</strong>
+                                    <span class="block">Owner: ${original.owner}</span>
+                                    <span class="block">Dal ${original.startDate.toLocaleDateString('it-IT')} al ${original.deadline.toLocaleDateString('it-IT')}</span>
+                                    <span class="block font-semibold">Stato: ${original.isLate ? 'In Ritardo' : original.status}</span>
+                                </div>
+                            `;
+                        }
+                    });
                 }
-
-                ganttChart = new Gantt("#gantt", ganttTasks, {
-                    view_modes: ['Day', 'Week', 'Month'],
-                    view_mode: 'Week',
-                    language: 'it',
-                    custom_popup_html: (task) => {
-                        const original = task.original_task;
-                        if (!original) return `<div class="p-2"><strong>Progetto: ${task.name}</strong></div>`;
-                        return `
-                            <div class="p-2 text-sm">
-                                <strong class="block">${original.title}</strong>
-                                <span class="block">Owner: ${original.owner}</span>
-                                <span class="block">Dal ${original.startDate.toLocaleDateString('it-IT')} al ${original.deadline.toLocaleDateString('it-IT')}</span>
-                                <span class="block font-semibold">Stato: ${original.isLate ? 'In Ritardo' : original.status}</span>
-                            </div>
-                        `;
-                    }
-                });
             }
-
 
             // --- FUNZIONI HELPER E DI POPOLAMENTO ---
             function getStatusInfo(task) {
@@ -540,100 +510,10 @@
                 renderCurrentView();
             });
             
-            // Inizializza le icone una volta che il DOM è pronto
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
+            // --- ESECUZIONE INIZIALE ---
+            loadInitialTasks();
+            lucide.createIcons();
         });
     </script>
-
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-<script>
-window.addEventListener("DOMContentLoaded", () => {
-  fetch("data/task.csv")
-    .then(response => response.text())
-    .then(csvText => {
-      Papa.parse(csvText, {
-        header: true,
-        skipEmptyLines: true,
-        complete: function(results) {
-          console.log("✅ Dati caricati da task.csv", results.data);
-          if (typeof render === 'function') render(results.data);
-        }
-      });
-    })
-    .catch(err => {
-      console.error("Errore nel caricamento di task.csv:", err);
-    });
-});
-</script>
-
-<div id='app' class='p-4'></div>
-
-<script>
-function render(data) {
-  const container = document.getElementById("app");
-  if (!container) return;
-
-  if (data.length === 0) {
-    container.innerHTML = "<p>Nessun dato disponibile.</p>";
-    return;
-  }
-
-  const table = document.createElement("table");
-  table.className = "table-auto border border-slate-300 bg-white text-sm w-full";
-  const thead = document.createElement("thead");
-  const tbody = document.createElement("tbody");
-
-  // Header
-  const headerRow = document.createElement("tr");
-  Object.keys(data[0]).forEach(key => {
-    const th = document.createElement("th");
-    th.className = "border px-2 py-1 bg-slate-100";
-    th.textContent = key;
-    headerRow.appendChild(th);
-  });
-  thead.appendChild(headerRow);
-
-  // Body
-  data.forEach(row => {
-    const tr = document.createElement("tr");
-    Object.values(row).forEach(val => {
-      const td = document.createElement("td");
-      td.className = "border px-2 py-1";
-      td.textContent = val;
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
-
-  table.appendChild(thead);
-  table.appendChild(tbody);
-  container.innerHTML = "";
-  container.appendChild(table);
-}
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-<script>
-window.addEventListener("DOMContentLoaded", () => {
-  fetch("data/task.csv")
-    .then(response => response.text())
-    .then(csvText => {
-      Papa.parse(csvText, {
-        header: true,
-        skipEmptyLines: true,
-        complete: function(results) {
-          console.log("✅ Dati caricati da task.csv", results.data);
-          if (typeof render === 'function') render(results.data);
-        }
-      });
-    })
-    .catch(err => {
-      console.error("Errore nel caricamento di task.csv:", err);
-    });
-});
-</script>
-
 </body>
 </html>
