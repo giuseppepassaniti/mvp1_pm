@@ -15,6 +15,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.css">
     <script src="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.js"></script>
     
+    <!-- Font Inter -->
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+
     <style>
         /* Stili personalizzati per migliorare l'UI */
         body {
@@ -45,7 +48,7 @@
             transition: opacity 0.3s;
             font-size: 0.8rem;
             line-height: 1.4;
-            pointer-events: none; /* Permette di passare il mouse sopra al tooltip senza che scompaia */
+            pointer-events: none;
         }
 
         .tooltip:hover .tooltip-text {
@@ -66,7 +69,6 @@
             display: none;
         }
     </style>
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 </head>
 <body class="text-gray-800">
 
@@ -75,22 +77,14 @@
         <!-- Intestazione -->
         <header class="mb-8">
             <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Dashboard Milestone Progetti</h1>
-            <p class="text-gray-600 mt-1">Carica un file CSV per visualizzare i dati dei tuoi progetti.</p>
+            <p class="text-gray-600 mt-1">Visualizzazione delle milestone caricate automaticamente.</p>
         </header>
 
         <!-- Sezione Controlli Principali -->
         <div class="bg-white p-4 rounded-lg shadow-md mb-6">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <!-- Bottone Caricamento File -->
-                <div>
-                    <label for="csv-file-input" class="cursor-pointer bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300">
-                        Carica File CSV
-                    </label>
-                    <input type="file" id="csv-file-input" class="hidden" accept=".csv">
-                </div>
-
-                <!-- Controlli di Visualizzazione e Filtri (visibili dopo il caricamento) -->
-                <div id="controls-panel" class="hidden-on-start flex flex-col md:flex-row md:items-center gap-4">
+                <!-- Controlli di Visualizzazione e Filtri -->
+                <div id="controls-panel" class="hidden-on-start flex flex-col md:flex-row md:items-center gap-4 w-full justify-end">
                     <!-- Toggle Vista -->
                     <div class="flex items-center bg-gray-200 rounded-lg p-1">
                         <button id="view-cards-btn" class="px-4 py-1 text-sm font-semibold rounded-md bg-white shadow text-blue-600">Card</button>
@@ -109,8 +103,8 @@
             <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
             </svg>
-            <h3 class="mt-2 text-sm font-medium text-gray-900">Nessun file caricato</h3>
-            <p class="mt-1 text-sm text-gray-500">Seleziona un file CSV per iniziare.</p>
+            <h3 class="mt-2 text-sm font-medium text-gray-900">Caricamento dati in corso...</h3>
+            <p class="mt-1 text-sm text-gray-500">Attendi il caricamento delle milestone.</p>
         </div>
         
         <div id="preview-section" class="hidden-on-start mb-6">
@@ -131,7 +125,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Riferimenti agli elementi del DOM
-            const fileInput = document.getElementById('csv-file-input');
             const initialMessage = document.getElementById('initial-message');
             const controlsPanel = document.getElementById('controls-panel');
             const previewSection = document.getElementById('preview-section');
@@ -143,30 +136,41 @@
             // Stato dell'applicazione
             let allMilestones = [];
             let projectsData = {};
-            let currentView = 'cards'; // 'cards' o 'gantt'
+            let currentView = 'cards';
             let ganttChart = null;
 
-            // --- 1. GESTIONE CARICAMENTO E PARSING CSV ---
+            // --- 1. GESTIONE CARICAMENTO E PARSING AUTOMATICO ---
+            
+            function loadInitialMilestones() {
+                const milestoneCsvUrl = 'data/milestone.csv'; // Percorso relativo al file
 
-            fileInput.addEventListener('change', (event) => {
-                const file = event.target.files[0];
-                if (file) {
-                    parseCsvFile(file);
-                }
-            });
-
-            function parseCsvFile(file) {
-                Papa.parse(file, {
-                    header: true,
-                    skipEmptyLines: true,
-                    complete: (results) => {
-                        processData(results.data);
-                    },
-                    error: (error) => {
-                        console.error("Errore nel parsing del CSV:", error);
-                        alert("Impossibile leggere il file CSV. Controlla la console per i dettagli.");
-                    }
-                });
+                fetch(milestoneCsvUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Errore di rete: Impossibile trovare il file ${milestoneCsvUrl} (status: ${response.status})`);
+                        }
+                        return response.text();
+                    })
+                    .then(csvText => {
+                        Papa.parse(csvText, {
+                            header: true,
+                            skipEmptyLines: true,
+                            complete: (results) => {
+                                processData(results.data);
+                            },
+                            error: (error) => {
+                                console.error("Errore nel parsing del CSV:", error);
+                                alert("Impossibile interpretare il file CSV. Controlla la console per i dettagli.");
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Errore durante il caricamento automatico:', error);
+                        initialMessage.innerHTML = `
+                            <h3 class="mt-2 text-sm font-medium text-red-700">Errore nel caricamento</h3>
+                            <p class="mt-1 text-sm text-gray-500">Controlla che il file esista al percorso: <strong>${milestoneCsvUrl}</strong></p>
+                        `;
+                    });
             }
 
             // --- 2. ELABORAZIONE E VALIDAZIONE DATI ---
@@ -232,6 +236,7 @@
                     renderCurrentView();
                 } else {
                     alert("Nessuna riga valida trovata nel file CSV. Assicurati che le colonne 'Milestone', 'Progetto', 'Start Date' e 'Deadline' siano presenti e correttamente formattate (GG/MM/AAAA).");
+                    initialMessage.innerHTML = `<h3 class="mt-2 text-sm font-medium text-gray-900">Nessun dato valido</h3><p class="mt-1 text-sm text-gray-500">Il file CSV è stato caricato ma non contiene dati validi.</p>`;
                 }
             }
 
@@ -249,8 +254,6 @@
                 }, 200);
             }
             
-            // --- 3a. VISTA CARD ---
-            
             function getStatusClasses(status) {
                 switch (status) {
                     case 'Completata': return 'bg-green-100 text-green-800 border-green-300';
@@ -258,16 +261,6 @@
                     case 'Pianificata': return 'bg-blue-100 text-blue-800 border-blue-300';
                     case 'In ritardo': return 'bg-red-100 text-red-800 border-red-300';
                     default: return 'bg-gray-100 text-gray-800 border-gray-300';
-                }
-            }
-
-            function getProgressBarBgClass(status) {
-                switch (status) {
-                    case 'Completata': return 'bg-green-500';
-                    case 'In corso': return 'bg-yellow-500';
-                    case 'Pianificata': return 'bg-blue-500';
-                    case 'In ritardo': return 'bg-red-500';
-                    default: return 'bg-gray-500';
                 }
             }
 
@@ -348,8 +341,6 @@
                 dashboardContent.appendChild(grid);
             }
 
-            // --- 3b. VISTA GANTT ---
-
             function renderGanttView() {
                 dashboardContent.innerHTML = '<div id="gantt-container" class="bg-white p-4 rounded-lg shadow-md"><svg id="gantt"></svg></div>';
                 const selectedProject = projectFilter.value;
@@ -384,7 +375,7 @@
                     date_format: 'YYYY-MM-DD',
                     language: 'it',
                     custom_popup_html: function(task) {
-                        const milestone = filteredMilestones.find(m => `task_${m.id}` === task.id || m.name === task.name);
+                        const milestone = filteredMilestones.find(m => m.name === task.name);
                         if (!milestone) return '';
                         return `<div class="p-2">${createTooltipText(milestone)}</div>`;
                     }
@@ -464,96 +455,11 @@
                     renderCurrentView();
                 }
             });
+            
+            // --- ESECUZIONE INIZIALE ---
+            loadInitialMilestones(); // Avvia il caricamento automatico all'apertura della pagina
+
         });
     </script>
-
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-<script>
-window.addEventListener("DOMContentLoaded", () => {
-  fetch("data/milestone.csv")
-    .then(response => response.text())
-    .then(csvText => {
-      Papa.parse(csvText, {
-        header: true,
-        skipEmptyLines: true,
-        complete: function(results) {
-          console.log("✅ Dati caricati da milestone.csv", results.data);
-          if (typeof render === 'function') render(results.data);
-        }
-      });
-    })
-    .catch(err => {
-      console.error("Errore nel caricamento di milestone.csv:", err);
-    });
-});
-</script>
-
-<div id='app' class='p-4'></div>
-
-<script>
-function render(data) {
-  const container = document.getElementById("app");
-  if (!container) return;
-
-  if (data.length === 0) {
-    container.innerHTML = "<p>Nessun dato disponibile.</p>";
-    return;
-  }
-
-  const table = document.createElement("table");
-  table.className = "table-auto border border-slate-300 bg-white text-sm w-full";
-  const thead = document.createElement("thead");
-  const tbody = document.createElement("tbody");
-
-  // Header
-  const headerRow = document.createElement("tr");
-  Object.keys(data[0]).forEach(key => {
-    const th = document.createElement("th");
-    th.className = "border px-2 py-1 bg-slate-100";
-    th.textContent = key;
-    headerRow.appendChild(th);
-  });
-  thead.appendChild(headerRow);
-
-  // Body
-  data.forEach(row => {
-    const tr = document.createElement("tr");
-    Object.values(row).forEach(val => {
-      const td = document.createElement("td");
-      td.className = "border px-2 py-1";
-      td.textContent = val;
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
-
-  table.appendChild(thead);
-  table.appendChild(tbody);
-  container.innerHTML = "";
-  container.appendChild(table);
-}
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-<script>
-window.addEventListener("DOMContentLoaded", () => {
-  fetch("data/milestone.csv")
-    .then(response => response.text())
-    .then(csvText => {
-      Papa.parse(csvText, {
-        header: true,
-        skipEmptyLines: true,
-        complete: function(results) {
-          console.log("✅ Dati caricati da milestone.csv", results.data);
-          if (typeof render === 'function') render(results.data);
-        }
-      });
-    })
-    .catch(err => {
-      console.error("Errore nel caricamento di milestone.csv:", err);
-    });
-});
-</script>
-
 </body>
 </html>
