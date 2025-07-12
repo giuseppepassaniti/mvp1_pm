@@ -1,208 +1,251 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Progetti</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f1f5f9;
-    }
-    .project-card {
-      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    }
-    .project-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elenco Progetti - Dashboard Centrale</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- PapaParse per il parsing CSV -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    
+    <!-- Day.js per la manipolazione delle date + Locale Italiano -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/dayjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/locale/it.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    
+    <!-- Font Inter -->
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9; /* slate-100 */
+        }
+        .project-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        #iframe-loader {
+            width: 100%;
+            height: 85vh;
+            border: 1px solid #e2e8f0; /* slate-200 */
+            border-radius: 0.5rem;
+        }
+    </style>
 </head>
 <body class="text-slate-800">
-  <div class="container mx-auto p-6">
-    <header class="mb-6 text-center">
-      <h1 class="text-3xl font-bold text-slate-900">Dashboard Progetti</h1>
-      <p class="text-slate-600 mt-1">Carica il file <strong>Progetti.csv</strong> per iniziare.</p>
-    </header>
 
-    <div class="bg-white p-6 rounded-lg shadow-md text-center">
-      <label for="progetti-upload" class="cursor-pointer bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 inline-block">
-        <i data-lucide="upload" class="inline-block h-4 w-4 mr-2"></i>Carica Progetti.csv
-      </label>
-      <input type="file" id="progetti-upload" class="hidden" accept=".csv" />
+    <!-- Contenitore Principale -->
+    <div class="container mx-auto p-4 md:p-6">
+        
+        <!-- Vista Elenco Progetti -->
+        <div id="project-listing-view">
+            <header class="mb-8 text-center">
+                <h1 class="text-4xl font-bold text-slate-900">Dashboard Centrale Progetti</h1>
+                <p class="text-slate-600 mt-2">Seleziona una dashboard operativa per visualizzare i dettagli di un progetto.</p>
+            </header>
+
+            <!-- Sezione di Upload rimossa -->
+
+            <!-- Contenitore delle Card Progetto -->
+            <main id="projects-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                <div id="initial-message" class="col-span-full text-center py-12 bg-white rounded-lg shadow-md">
+                    <i data-lucide="loader-2" class="mx-auto h-12 w-12 text-slate-400 animate-spin"></i>
+                    <h3 class="mt-2 text-sm font-medium text-slate-900">Caricamento progetti in corso...</h3>
+                    <p class="mt-1 text-sm text-slate-500">Attendi un momento.</p>
+                </div>
+            </main>
+        </div>
+
+        <!-- Vista Dashboard Interna (Iframe) -->
+        <div id="sub-dashboard-view" class="hidden">
+            <button onclick="goBack()" class="mb-4 inline-flex items-center text-blue-600 font-semibold hover:underline">
+                <i data-lucide="arrow-left" class="h-4 w-4 mr-2"></i>
+                Torna ai Progetti
+            </button>
+            <iframe id="iframe-loader" src="about:blank" title="Contenuto Dashboard Operativa"></iframe>
+        </div>
     </div>
 
-    <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mt-8"></div>
-  </div>
+    <script>
+        // Configura Day.js in italiano
+        dayjs.locale('it');
 
-  <script>
-    const parseCurrency = str => parseFloat(str?.replace(/[.\u20AC\s]/g, '').replace(',', '.')) || 0;
-    const parsePercentage = str => parseInt(str?.replace('%', ''), 10) || 0;
-    const formatCurrency = val => new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(val);
-    const statusInfo = {
-      'In corso': 'bg-yellow-100 text-yellow-800',
-      'Completato': 'bg-green-100 text-green-800',
-      'Da approvare': 'bg-blue-100 text-blue-800',
-      'Default': 'bg-slate-100 text-slate-800'
-    };
-
-    document.getElementById('progetti-upload').addEventListener('change', e => {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      Papa.parse(file, {
-        header: true,
-        skipEmptyLines: true,
-        transform: value => value.trim(),
-        complete: results => renderProjects(results.data),
-        error: err => alert(`Errore: ${err.message}`)
-      });
-    });
-
-    function renderProjects(data) {
-      const container = document.getElementById('projects-container');
-      const projects = data.map(row => {
-        return {
-          id: row['Id Progetto'],
-          name: row['Nome Progetto'],
-          client: row.Cliente,
-          pm: row['PM responsabile'],
-          status: row.Stato,
-          budget: parseCurrency(row['Budget Iniziale']),
-          costs: parseCurrency(row['Costi Sostenuti']),
-          forecast: parseCurrency(row['Previsione Finale Costi']),
-          progress: parsePercentage(row['% Avanzamento'])
-        };
-      });
-
-      container.innerHTML = projects.map(p => {
-        const badge = statusInfo[p.status] || statusInfo.Default;
-        return `
-          <div class="project-card bg-white rounded-lg shadow p-4">
-            <div class="flex justify-between items-center mb-2">
-              <h3 class="font-bold text-lg">${p.name}</h3>
-              <span class="text-xs font-semibold px-2 py-1 rounded-full ${badge}">${p.status}</span>
-            </div>
-            <p class="text-sm text-slate-600 mb-3">${p.client} | PM: ${p.pm}</p>
-            <div class="mb-4">
-              <div class="flex justify-between text-sm mb-1"><span>Avanzamento</span><span>${p.progress}%</span></div>
-              <div class="bg-slate-200 h-2 rounded-full">
-                <div class="bg-blue-600 h-2 rounded-full" style="width: ${p.progress}%"></div>
-              </div>
-            </div>
-            <div class="grid grid-cols-3 text-center text-sm mb-4">
-              <div><p class="text-slate-500">Budget</p><p class="font-bold">${formatCurrency(p.budget)}</p></div>
-              <div><p class="text-slate-500">Costi</p><p class="font-bold">${formatCurrency(p.costs)}</p></div>
-              <div><p class="text-slate-500">Previsto</p><p class="font-bold">${formatCurrency(p.forecast)}</p></div>
-            </div>
-            <div class="text-right">
-              <button class="text-blue-600 text-sm font-semibold hover:underline" onclick="alert('Dashboard futura: ${p.name}')">
-                Vai alla dashboard
-              </button>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      lucide.createIcons();
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      lucide.createIcons();
-    });
-  </script>
-
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-<script>
-window.addEventListener("DOMContentLoaded", () => {
-  fetch("data/progetti.csv")
-    .then(response => response.text())
-    .then(csvText => {
-      Papa.parse(csvText, {
-        header: true,
-        skipEmptyLines: true,
-        complete: function(results) {
-          console.log("✅ Dati caricati da progetti.csv", results.data);
-          if (typeof render === 'function') render(results.data);
+        // --- FUNZIONI DI NAVIGAZIONE GLOBALI ---
+        // Queste funzioni sono globali per essere chiamate dagli onclick nell'HTML generato
+        function loadSection(file, id) {
+            document.getElementById('project-listing-view').classList.add('hidden');
+            document.getElementById('sub-dashboard-view').classList.remove('hidden');
+            const iframe = document.getElementById('iframe-loader');
+            // Nota: non passiamo più dati via localStorage. L'ID è sufficiente perché
+            // le pagine figlie caricano i propri dati e filtrano per ID.
+            iframe.src = `${file}?id=${id}`;
         }
-      });
-    })
-    .catch(err => {
-      console.error("Errore nel caricamento di progetti.csv:", err);
-    });
-});
-</script>
 
-<div id='app' class='p-4'></div>
-
-<script>
-function render(data) {
-  const container = document.getElementById("app");
-  if (!container) return;
-
-  if (data.length === 0) {
-    container.innerHTML = "<p>Nessun dato disponibile.</p>";
-    return;
-  }
-
-  const table = document.createElement("table");
-  table.className = "table-auto border border-slate-300 bg-white text-sm w-full";
-  const thead = document.createElement("thead");
-  const tbody = document.createElement("tbody");
-
-  // Header
-  const headerRow = document.createElement("tr");
-  Object.keys(data[0]).forEach(key => {
-    const th = document.createElement("th");
-    th.className = "border px-2 py-1 bg-slate-100";
-    th.textContent = key;
-    headerRow.appendChild(th);
-  });
-  thead.appendChild(headerRow);
-
-  // Body
-  data.forEach(row => {
-    const tr = document.createElement("tr");
-    Object.values(row).forEach(val => {
-      const td = document.createElement("td");
-      td.className = "border px-2 py-1";
-      td.textContent = val;
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
-
-  table.appendChild(thead);
-  table.appendChild(tbody);
-  container.innerHTML = "";
-  container.appendChild(table);
-}
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-<script>
-window.addEventListener("DOMContentLoaded", () => {
-  fetch("data/progetti.csv")
-    .then(response => response.text())
-    .then(csvText => {
-      Papa.parse(csvText, {
-        header: true,
-        skipEmptyLines: true,
-        complete: function(results) {
-          console.log("✅ Dati caricati da progetti.csv", results.data);
-          if (typeof render === 'function') render(results.data);
+        function goBack() {
+            document.getElementById('project-listing-view').classList.remove('hidden');
+            document.getElementById('sub-dashboard-view').classList.add('hidden');
+            const iframe = document.getElementById('iframe-loader');
+            iframe.src = 'about:blank'; // Svuota l'iframe per fermare eventuali processi
         }
-      });
-    })
-    .catch(err => {
-      console.error("Errore nel caricamento di progetti.csv:", err);
-    });
-});
-</script>
 
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- RIFERIMENTI DOM ---
+            const projectsContainer = document.getElementById('projects-container');
+            const initialMessage = document.getElementById('initial-message');
+
+            // --- FUNZIONI DI PARSING E UTILITY ---
+            const parseCurrency = (str) => {
+                if (typeof str !== 'string' || !str) return 0;
+                return parseFloat(str.replace(/[.€\s]/g, '').replace(',', '.')) || 0;
+            };
+            const parsePercentage = (str) => {
+                if (typeof str !== 'string' || !str) return 0;
+                return parseInt(str.replace('%', ''), 10) || 0;
+            };
+            const formatCurrency = (value) => new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0 }).format(value);
+            
+            const statusInfo = {
+                'In corso': { badge: 'bg-yellow-100 text-yellow-800' },
+                'Completato': { badge: 'bg-green-100 text-green-800' },
+                'Da approvare': { badge: 'bg-blue-100 text-blue-800' },
+                'Default': { badge: 'bg-slate-100 text-slate-800' },
+            };
+
+            // --- LOGICA DI CARICAMENTO AUTOMATICO ---
+            function loadInitialProjects() {
+                const projectsCsvUrl = 'data/progetti.csv';
+
+                fetch(projectsCsvUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Errore di rete: ${response.statusText}`);
+                        }
+                        return response.text();
+                    })
+                    .then(csvText => {
+                        Papa.parse(csvText, {
+                            header: true,
+                            skipEmptyLines: true,
+                            transform: (value) => value.trim(),
+                            complete: (results) => {
+                                renderProjects(results.data);
+                            },
+                            error: (err) => alert(`Errore nel parsing del file ${projectsCsvUrl}: ${err.message}`),
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Errore durante il caricamento dei progetti:', error);
+                        initialMessage.innerHTML = `
+                            <div class="col-span-full text-center py-12 bg-white rounded-lg shadow-md">
+                                <i data-lucide="alert-triangle" class="mx-auto h-12 w-12 text-red-500"></i>
+                                <h3 class="mt-2 text-sm font-medium text-red-700">Errore nel caricamento</h3>
+                                <p class="mt-1 text-sm text-slate-500">Impossibile caricare i dati. Controlla che il file esista al percorso: <strong>${projectsCsvUrl}</strong></p>
+                            </div>
+                        `;
+                        lucide.createIcons();
+                    });
+            }
+
+            // --- LOGICA DI RENDERIZZAZIONE ---
+            function renderProjects(data) {
+                const projects = data.map(row => {
+                    if (!row['Id Progetto'] || !row['Nome Progetto']) return null;
+                    return {
+                        id: row['Id Progetto'],
+                        name: row['Nome Progetto'],
+                        client: row.Cliente,
+                        pm: row['PM responsabile'],
+                        status: row.Stato,
+                        budget: parseCurrency(row['Budget Iniziale']),
+                        costs: parseCurrency(row['Costi Sostenuti']),
+                        forecast: parseCurrency(row['Previsione Finale Costi']),
+                        progress: parsePercentage(row['% Avanzamento']),
+                    };
+                }).filter(Boolean);
+
+                if (projects.length === 0) {
+                    initialMessage.innerHTML = `
+                        <i data-lucide="alert-circle" class="mx-auto h-12 w-12 text-red-400"></i>
+                        <h3 class="mt-2 text-sm font-medium text-slate-900">Nessun progetto valido trovato</h3>
+                        <p class="mt-1 text-sm text-slate-500">Controlla che il file CSV contenga le colonne 'Id Progetto' e 'Nome Progetto'.</p>
+                    `;
+                    lucide.createIcons();
+                    return;
+                }
+                
+                initialMessage.classList.add('hidden');
+                projectsContainer.innerHTML = projects.map(createProjectCardHTML).join('');
+                lucide.createIcons();
+            }
+
+            function createProjectCardHTML(project) {
+                const stat = statusInfo[project.status] || statusInfo.Default;
+                const sections = [
+                    { name: 'Milestone', file: 'Milestone.html', icon: 'flag' },
+                    { name: 'Task', file: 'Task.html', icon: 'list-checks' },
+                    { name: 'Imprevisti', file: 'Imprevisti.html', icon: 'siren' },
+                    { name: 'Varianti', file: 'Varianti.html', icon: 'git-pull-request-draft' },
+                    { name: 'Decisioni', file: 'decisionlog.html', icon: 'gavel' }
+                ];
+
+                return `
+                <div class="project-card bg-white rounded-lg shadow-md flex flex-col">
+                    <!-- Header Card -->
+                    <div class="p-4 border-b border-slate-200">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-lg font-bold text-slate-900">${project.name}</h3>
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full whitespace-nowrap ${stat.badge}">${project.status}</span>
+                        </div>
+                        <p class="text-sm text-slate-500">${project.client} | PM: ${project.pm}</p>
+                    </div>
+
+                    <!-- Corpo Card con KPI e Avanzamento -->
+                    <div class="p-4 flex-grow">
+                        <div class="mb-4">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Avanzamento</span>
+                                <span class="font-semibold">${project.progress}%</span>
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-3">
+                                <div class="bg-blue-600 h-3 rounded-full" style="width: ${project.progress}%"></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 text-center text-sm">
+                            <div><p class="text-slate-500">Budget</p><p class="font-bold">${formatCurrency(project.budget)}</p></div>
+                            <div><p class="text-slate-500">Costi</p><p class="font-bold">${formatCurrency(project.costs)}</p></div>
+                            <div><p class="text-slate-500">Previsione</p><p class="font-bold">${formatCurrency(project.forecast)}</p></div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Card con Link alle Dashboard -->
+                    <div class="p-4 bg-slate-50 rounded-b-lg border-t border-slate-200">
+                        <p class="text-xs font-semibold text-slate-600 mb-2 uppercase">Dashboard Operative</p>
+                        <div class="flex flex-wrap gap-2">
+                            ${sections.map(sec => `
+                                <button onclick="loadSection('${sec.file}', '${project.id}')" class="flex-1 text-center bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 px-3 py-1.5 text-xs font-semibold rounded-md transition-colors">
+                                    <i data-lucide="${sec.icon}" class="inline-block h-3 w-3 mr-1"></i>
+                                    ${sec.name}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+                `;
+            }
+
+            // --- INIZIALIZZAZIONE ---
+            loadInitialProjects();
+            lucide.createIcons();
+        });
+    </script>
 </body>
 </html>
