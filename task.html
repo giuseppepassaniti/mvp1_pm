@@ -60,8 +60,6 @@
         <!-- Pannello Controlli -->
         <div class="bg-white p-4 rounded-lg shadow-md mb-6">
             <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 items-end">
-                <!-- Bottone di upload rimosso -->
-                
                 <!-- Filtri -->
                 <div id="filters-panel" class="hidden-on-start grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:col-span-5 gap-4">
                     <select id="project-filter" class="p-2 border rounded-md bg-white shadow-sm w-full"></select>
@@ -163,7 +161,7 @@
                     })
                     .catch(error => {
                         console.error('Errore caricamento task:', error);
-                        initialMessage.innerHTML = `<h3 class="text-red-600">Errore nel caricamento dei dati.</h3>`;
+                        initialMessage.innerHTML = `<div class="text-center py-10 bg-white rounded-lg shadow"><h3 class="text-lg font-bold text-red-600">Errore nel caricamento dei dati.</h3><p class="text-slate-500 mt-2">Controlla che il file <strong>${taskCsvUrl}</strong> esista e sia accessibile.</p></div>`;
                     });
             }
 
@@ -177,14 +175,9 @@
                     if (!row.ID || !row['Titolo Task'] || !row.Progetto || !startDate || !deadline) return null;
                     
                     return {
-                        id: row.ID,
-                        title: row['Titolo Task'],
-                        description: row['Descrizione Task'] || '',
-                        project: row.Progetto,
-                        owner: row.Owner || 'Non assegnato',
-                        startDate,
-                        deadline,
-                        status: row.Stato || 'Pianificato',
+                        id: row.ID, title: row['Titolo Task'], description: row['Descrizione Task'] || '',
+                        project: row.Progetto, owner: row.Owner || 'Non assegnato',
+                        startDate, deadline, status: row.Stato || 'Pianificato',
                         criticality: row.Criticità || 'Bassa',
                         estimatedTime: parseFloatWithComma(row['Tempo Stimato']),
                         actualTime: parseFloatWithComma(row['Tempo Effettivo']),
@@ -202,7 +195,7 @@
 
                     // --- MODIFICA CHIAVE ---
                     const urlParams = new URLSearchParams(window.location.search);
-                    const projectIdFromUrl = urlParams.get('id');
+                    const projectIdFromUrl = urlParams.get('id'); // Legge il parametro 'id'
                     if (projectIdFromUrl) {
                         projectFilter.value = projectIdFromUrl;
                         projectFilter.disabled = true;
@@ -253,7 +246,6 @@
                 });
             }
 
-            // --- IL RESTO DELLE FUNZIONI DI RENDERIZZAZIONE (INVARIATE) ---
             function renderKpis() {
                 const totalTasks = filteredTasks.length;
                 const completedTasks = filteredTasks.filter(t => t.status === 'Completato').length;
@@ -303,7 +295,7 @@
                 dashboardContent.innerHTML = `
                     <div class="overflow-x-auto bg-white rounded-lg shadow">
                         <table class="min-w-full divide-y divide-slate-200">
-                            <thead class="bg-slate-50"><tr>${headers.map(h => createHeaderCell(h.toLowerCase().replace(/ /g, ''), h)).join('')}</tr></thead>
+                            <thead class="bg-slate-50"><tr>${headers.map(h => createHeaderCell(h.toLowerCase().replace(/[^a-z]/g, ''), h)).join('')}</tr></thead>
                             <tbody class="divide-y divide-slate-200">${filteredTasks.map(createTaskRow).join('')}</tbody>
                         </table>
                     </div>`;
