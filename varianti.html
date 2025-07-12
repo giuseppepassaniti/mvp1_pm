@@ -21,6 +21,9 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     
+    <!-- Font Inter -->
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -37,7 +40,6 @@
         .sort-asc::after { content: ' ▲'; font-size: 0.7em; }
         .sort-desc::after { content: ' ▼'; font-size: 0.7em; }
     </style>
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 </head>
 <body class="text-slate-800">
 
@@ -46,22 +48,16 @@
         
         <header class="mb-6">
             <h1 class="text-3xl md:text-4xl font-bold text-slate-900">Dashboard Varianti Progettuali</h1>
-            <p class="text-slate-600 mt-1">Carica un file CSV per analizzare l'impatto delle varianti su tempi e costi.</p>
+            <p class="text-slate-600 mt-1">Analisi dell'impatto delle varianti su tempi e costi, caricate automaticamente.</p>
         </header>
 
         <!-- Pannello Controlli e Filtri -->
         <div class="bg-white p-4 rounded-lg shadow-md mb-6">
             <div class="grid grid-cols-1 lg:grid-cols-6 gap-4 items-end">
-                <!-- Upload Button -->
-                <div class="lg:col-span-1">
-                    <label for="csv-file-input" class="w-full inline-block text-center cursor-pointer bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300">
-                        <i data-lucide="upload" class="inline-block h-4 w-4 mr-2"></i>Carica CSV
-                    </label>
-                    <input type="file" id="csv-file-input" class="hidden" accept=".csv">
-                </div>
+                <!-- Upload Button Rimosso -->
                 
                 <!-- Filtri -->
-                <div id="filters-panel" class="hidden-on-start grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 lg:col-span-5 gap-4">
+                <div id="filters-panel" class="hidden-on-start grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 lg:col-span-6 gap-4">
                     <select id="project-filter" class="p-2 border rounded-md bg-white shadow-sm w-full" title="Filtra per progetto"></select>
                     <select id="variant-type-filter" class="p-2 border rounded-md bg-white shadow-sm w-full" title="Filtra per tipo di variante"></select>
                     <select id="status-filter" class="p-2 border rounded-md bg-white shadow-sm w-full" title="Filtra per stato"></select>
@@ -90,9 +86,9 @@
 
         <!-- Messaggio Iniziale -->
         <div id="initial-message" class="text-center py-12 bg-white rounded-lg shadow-md">
-             <i data-lucide="file-search-2" class="mx-auto h-12 w-12 text-slate-400"></i>
-            <h3 class="mt-2 text-sm font-medium text-slate-900">Nessun file caricato</h3>
-            <p class="mt-1 text-sm text-slate-500">Seleziona un file CSV per iniziare.</p>
+             <i data-lucide="loader-2" class="mx-auto h-12 w-12 text-slate-400 animate-spin"></i>
+            <h3 class="mt-2 text-sm font-medium text-slate-900">Caricamento varianti in corso...</h3>
+            <p class="mt-1 text-sm text-slate-500">Attendi un momento.</p>
         </div>
 
         <!-- Contenuto Dashboard -->
@@ -144,7 +140,6 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             // --- RIFERIMENTI DOM ---
-            const fileInput = document.getElementById('csv-file-input');
             const initialMessage = document.getElementById('initial-message');
             const dashboardContainer = document.getElementById('dashboard-container');
             const filtersPanel = document.getElementById('filters-panel');
@@ -175,7 +170,7 @@
             let allVariants = [];
             let filteredVariants = [];
             let currentView = 'cards';
-            let sortConfig = { key: 'Data Variante', direction: 'desc' };
+            let sortConfig = { key: 'Data', direction: 'desc' };
             let impactChart = null;
 
             // --- MAPPATURE E HELPER ---
@@ -199,17 +194,36 @@
                 return parseInt(str.replace('+', ''), 10) || 0;
             }
 
-            fileInput.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    Papa.parse(file, {
-                        header: true,
-                        skipEmptyLines: true,
-                        complete: (results) => processData(results.data),
-                        error: (err) => alert(`Errore nel parsing del CSV: ${err.message}`),
+            function loadInitialVariants() {
+                const variantsCsvUrl = 'data/varianti.csv'; // Percorso del file
+
+                fetch(variantsCsvUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Errore di rete: ${response.statusText}`);
+                        }
+                        return response.text();
+                    })
+                    .then(csvText => {
+                        Papa.parse(csvText, {
+                            header: true,
+                            skipEmptyLines: true,
+                            complete: (results) => processData(results.data),
+                            error: (err) => alert(`Errore nel parsing del CSV: ${err.message}`),
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Errore durante il caricamento delle varianti:', error);
+                        initialMessage.innerHTML = `
+                            <div class="text-center py-12 bg-white rounded-lg shadow-md">
+                                <i data-lucide="alert-triangle" class="mx-auto h-12 w-12 text-red-500"></i>
+                                <h3 class="mt-2 text-sm font-medium text-red-700">Errore nel caricamento</h3>
+                                <p class="mt-1 text-sm text-slate-500">Impossibile caricare i dati. Controlla che il file esista al percorso: <strong>${variantsCsvUrl}</strong></p>
+                            </div>
+                        `;
+                        lucide.createIcons();
                     });
-                }
-            });
+            }
 
             function processData(data) {
                 allVariants = data.map((row, index) => {
@@ -234,6 +248,7 @@
                     renderDashboard();
                 } else {
                     alert('Nessun dato valido trovato. Controlla le colonne Progetto, Variante e Data Variante.');
+                     initialMessage.innerHTML = `<h3 class="mt-2 text-sm font-medium text-gray-900">Nessun dato valido</h3><p class="mt-1 text-sm text-gray-500">Il file CSV è stato caricato ma non contiene dati validi.</p>`;
                 }
             }
 
@@ -269,10 +284,13 @@
                 });
 
                 filteredVariants.sort((a, b) => {
-                    let valA = a[sortConfig.key];
-                    let valB = b[sortConfig.key];
-                    if (sortConfig.key === 'Data') valA = a.date;
-                    if (sortConfig.key === 'Data') valB = b.date;
+                    let valA = a[sortConfig.key.toLowerCase()];
+                    let valB = b[sortConfig.key.toLowerCase()];
+                    
+                    if (sortConfig.key === 'Data') {
+                        valA = a.date;
+                        valB = b.date;
+                    }
                     
                     if (valA < valB) return sortConfig.direction === 'asc' ? -1 : 1;
                     if (valA > valB) return sortConfig.direction === 'asc' ? 1 : -1;
@@ -362,8 +380,8 @@
                 mainContent.innerHTML = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     ${filteredVariants.map(v => {
                         const stat = statusInfo[v.status] || statusInfo.Default;
-                        const timeColor = v.timeImpact > 0 ? 'text-red-600' : 'text-green-600';
-                        const costColor = v.costImpact > 0 ? 'text-red-600' : 'text-green-600';
+                        const timeColor = v.timeImpact > 0 ? 'text-red-600' : (v.timeImpact < 0 ? 'text-green-600' : 'text-slate-600');
+                        const costColor = v.costImpact > 0 ? 'text-red-600' : (v.costImpact < 0 ? 'text-green-600' : 'text-slate-600');
                         return `
                         <div class="bg-white rounded-lg shadow p-4 flex flex-col justify-between" data-id="${v.id}" style="cursor: pointer;">
                             <div>
@@ -397,13 +415,15 @@
                             <tbody class="divide-y divide-slate-200">
                                 ${filteredVariants.map(v => {
                                     const stat = statusInfo[v.status] || statusInfo.Default;
+                                    const timeColor = v.timeImpact > 0 ? 'text-red-600' : (v.timeImpact < 0 ? 'text-green-600' : 'text-slate-600');
+                                    const costColor = v.costImpact > 0 ? 'text-red-600' : (v.costImpact < 0 ? 'text-green-600' : 'text-slate-600');
                                     return `
                                     <tr class="hover:bg-slate-50">
                                         <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">${v.project}</td>
                                         <td class="px-4 py-3 text-sm">${v.type}</td>
                                         <td class="px-4 py-3 whitespace-nowrap text-sm">${dayjs(v.date).format('DD/MM/YYYY')}</td>
-                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-bold ${v.timeImpact > 0 ? 'text-red-600' : 'text-green-600'}">${formatDays(v.timeImpact)}</td>
-                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-bold ${v.costImpact > 0 ? 'text-red-600' : 'text-green-600'}">${formatCurrency(v.costImpact)}</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-bold ${timeColor}">${formatDays(v.timeImpact)}</td>
+                                        <td class="px-4 py-3 whitespace-nowrap text-sm font-bold ${costColor}">${formatCurrency(v.costImpact)}</td>
                                         <td class="px-4 py-3 whitespace-nowrap text-sm"><span class="font-semibold ${stat.badge} px-2 py-1 rounded">${v.status}</span></td>
                                         <td class="px-4 py-3 whitespace-nowrap text-sm"><button class="text-blue-600 hover:underline" data-id="${v.id}">Dettagli</button></td>
                                     </tr>`;
@@ -464,7 +484,8 @@
                 variantTypeFilterEl.innerHTML = types.map(t => `<option value="${t}">${t === 'all' ? 'Tutti i Tipi' : t}</option>`).join('');
                 statusFilterEl.innerHTML = statuses.map(s => `<option value="${s}">${s === 'all' ? 'Tutti gli Stati' : s}</option>`).join('');
             }
-
+            
+            // --- EVENTI ---
             document.querySelectorAll('#filters-panel input, #filters-panel select').forEach(el => el.addEventListener('change', renderDashboard));
             searchInput.addEventListener('input', renderDashboard);
             Object.keys(viewButtons).forEach(key => {
@@ -476,97 +497,10 @@
             modal.closeBtn.addEventListener('click', hideModal);
             modal.overlay.addEventListener('click', hideModal);
             
+            // --- ESECUZIONE INIZIALE ---
+            loadInitialVariants();
             lucide.createIcons();
         });
     </script>
-
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-<script>
-window.addEventListener("DOMContentLoaded", () => {
-  fetch("data/varianti.csv")
-    .then(response => response.text())
-    .then(csvText => {
-      Papa.parse(csvText, {
-        header: true,
-        skipEmptyLines: true,
-        complete: function(results) {
-          console.log("✅ Dati caricati da varianti.csv", results.data);
-          if (typeof render === 'function') render(results.data);
-        }
-      });
-    })
-    .catch(err => {
-      console.error("Errore nel caricamento di varianti.csv:", err);
-    });
-});
-</script>
-
-<div id='app' class='p-4'></div>
-
-<script>
-function render(data) {
-  const container = document.getElementById("app");
-  if (!container) return;
-
-  if (data.length === 0) {
-    container.innerHTML = "<p>Nessun dato disponibile.</p>";
-    return;
-  }
-
-  const table = document.createElement("table");
-  table.className = "table-auto border border-slate-300 bg-white text-sm w-full";
-  const thead = document.createElement("thead");
-  const tbody = document.createElement("tbody");
-
-  // Header
-  const headerRow = document.createElement("tr");
-  Object.keys(data[0]).forEach(key => {
-    const th = document.createElement("th");
-    th.className = "border px-2 py-1 bg-slate-100";
-    th.textContent = key;
-    headerRow.appendChild(th);
-  });
-  thead.appendChild(headerRow);
-
-  // Body
-  data.forEach(row => {
-    const tr = document.createElement("tr");
-    Object.values(row).forEach(val => {
-      const td = document.createElement("td");
-      td.className = "border px-2 py-1";
-      td.textContent = val;
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
-
-  table.appendChild(thead);
-  table.appendChild(tbody);
-  container.innerHTML = "";
-  container.appendChild(table);
-}
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-<script>
-window.addEventListener("DOMContentLoaded", () => {
-  fetch("data/varianti.csv")
-    .then(response => response.text())
-    .then(csvText => {
-      Papa.parse(csvText, {
-        header: true,
-        skipEmptyLines: true,
-        complete: function(results) {
-          console.log("✅ Dati caricati da varianti.csv", results.data);
-          if (typeof render === 'function') render(results.data);
-        }
-      });
-    })
-    .catch(err => {
-      console.error("Errore nel caricamento di varianti.csv:", err);
-    });
-});
-</script>
-
 </body>
 </html>
