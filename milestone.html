@@ -240,7 +240,6 @@ function renderGanttView() {
     const selectedProject = projectFilter.value;
 
     const tasks = [];
-    // Filtra i progetti da renderizzare in base alla selezione
     const projectsToRender = selectedProject === 'all' 
         ? Object.keys(projectsData) 
         : [selectedProject];
@@ -249,22 +248,26 @@ function renderGanttView() {
         const milestones = projectsData[projectName];
         if (!milestones || milestones.length === 0) return;
 
-        // Crea un ID univoco e stabile per il progetto
+        // --- INIZIO CORREZIONE ---
+        // Calcola correttamente la data di inizio minima e di fine massima del progetto
+        const projectStartDate = milestones.reduce((min, m) => m.startDate < min ? m.startDate : min, milestones[0].startDate);
+        const projectEndDate = milestones.reduce((max, m) => m.deadline > max ? m.deadline : max, milestones[0].deadline);
+        // --- FINE CORREZIONE ---
+
         const projectId = `project_${projectName.replace(/\s+/g, '')}`;
 
-        // Aggiunge il progetto come task "padre" (opzionale, ma consigliato per il raggruppamento)
+        // Aggiunge il progetto come task "padre" usando le date corrette
         tasks.push({
             id: projectId,
             name: projectName,
-            start: milestones[0].startDate.toISOString().split('T')[0],
-            end: milestones[milestones.length - 1].deadline.toISOString().split('T')[0],
-            progress: 0, // Puoi calcolare l'avanzamento aggregato se vuoi
-            custom_class: 'bar-project-group' // Classe per stilizzare la barra del progetto
+            start: projectStartDate.toISOString().split('T')[0],
+            end: projectEndDate.toISOString().split('T')[0],
+            progress: 0,
+            custom_class: 'bar-project-group'
         });
 
-        // Aggiunge le milestone come task "figli", dipendenti dal progetto
+        // Aggiunge le milestone come task "figli" (questa parte era già corretta)
         milestones.forEach((milestone, index) => {
-            // Crea un ID univoco e stabile per ogni milestone
             const milestoneId = `milestone_${projectName.replace(/\s+/g, '')}_${index}`;
             tasks.push({
                 id: milestoneId,
@@ -273,13 +276,13 @@ function renderGanttView() {
                 end: milestone.deadline.toISOString().split('T')[0],
                 progress: milestone.status === 'Completata' ? 100 : 0,
                 custom_class: `bar-${milestone.calculatedStatus.toLowerCase().replace(/\s+/g, '-')}`,
-                dependencies: projectId // La chiave per il raggruppamento!
+                dependencies: projectId
             });
         });
     });
 
     if (tasks.length === 0) {
-        ganttContainer.innerHTML = `<div class="text-center py-10"><p>Nessuna milestone da visualizzare per il progetto selezionato.</p></div>`;
+        ganttContainer.innerHTML = `<div class="text-center py-10"><p>Nessuna milestone da visualizzare.</p></div>`;
         return;
     }
 
@@ -287,12 +290,10 @@ function renderGanttView() {
         view_mode: 'Week',
         language: 'it',
         custom_popup_html: (task) => {
-            // La ricerca del tooltip rimane simile ma potrebbe essere resa più robusta usando l'ID
-            const milestone = allMilestones.find(m => m.name === task.name && (selectedProject === 'all' || m.project === selectedProject));
+            const milestone = allMilestones.find(m => m.name === task.name && (task.id.startsWith('milestone_')));
             if (milestone) {
                 return `<div class="p-2">${createTooltipText(milestone)}</div>`;
             }
-            // Aggiunge un tooltip anche per la barra del progetto
             return `<div class="p-2"><strong>Progetto:</strong> ${task.name}</div>`;
         }
     });
