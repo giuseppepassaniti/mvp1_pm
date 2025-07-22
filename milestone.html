@@ -234,34 +234,69 @@
                 });
                 dashboardContent.appendChild(grid);
             }
+function renderGanttView() {
+    dashboardContent.innerHTML = '<div id="gantt-container" class="bg-white p-4 rounded-lg shadow-md"><svg id="gantt"></svg></div>';
+    const ganttContainer = document.getElementById('gantt-container');
+    const selectedProject = projectFilter.value;
 
-            function renderGanttView() {
-                dashboardContent.innerHTML = '<div id="gantt-container" class="bg-white p-4 rounded-lg shadow-md"><svg id="gantt"></svg></div>';
-                const selectedProject = projectFilter.value;
-                const filteredMilestones = allMilestones.filter(m => selectedProject === 'all' || m.project === selectedProject);
+    const tasks = [];
+    // Filtra i progetti da renderizzare in base alla selezione
+    const projectsToRender = selectedProject === 'all' 
+        ? Object.keys(projectsData) 
+        : [selectedProject];
 
-                if (filteredMilestones.length === 0) {
-                    document.getElementById('gantt-container').innerHTML = `<div class="text-center py-10"><p>Nessuna milestone da visualizzare.</p></div>`;
-                    return;
-                }
+    projectsToRender.forEach(projectName => {
+        const milestones = projectsData[projectName];
+        if (!milestones || milestones.length === 0) return;
 
-                const tasks = filteredMilestones.map((m, i) => ({
-                    id: `task_${i}`,
-                    name: m.name,
-                    start: m.startDate.toISOString().split('T')[0],
-                    end: m.deadline.toISOString().split('T')[0],
-                    progress: m.status === 'Completata' ? 100 : 0,
-                    custom_class: `bar-${m.calculatedStatus.toLowerCase().replace(/\s+/g, '-')}`
-                }));
+        // Crea un ID univoco e stabile per il progetto
+        const projectId = `project_${projectName.replace(/\s+/g, '')}`;
 
-                ganttChart = new Gantt("#gantt", tasks, {
-                    view_mode: 'Week', language: 'it',
-                    custom_popup_html: (task) => {
-                        const milestone = filteredMilestones.find(m => m.name === task.name);
-                        return milestone ? `<div class="p-2">${createTooltipText(milestone)}</div>` : '';
-                    }
-                });
+        // Aggiunge il progetto come task "padre" (opzionale, ma consigliato per il raggruppamento)
+        tasks.push({
+            id: projectId,
+            name: projectName,
+            start: milestones[0].startDate.toISOString().split('T')[0],
+            end: milestones[milestones.length - 1].deadline.toISOString().split('T')[0],
+            progress: 0, // Puoi calcolare l'avanzamento aggregato se vuoi
+            custom_class: 'bar-project-group' // Classe per stilizzare la barra del progetto
+        });
+
+        // Aggiunge le milestone come task "figli", dipendenti dal progetto
+        milestones.forEach((milestone, index) => {
+            // Crea un ID univoco e stabile per ogni milestone
+            const milestoneId = `milestone_${projectName.replace(/\s+/g, '')}_${index}`;
+            tasks.push({
+                id: milestoneId,
+                name: milestone.name,
+                start: milestone.startDate.toISOString().split('T')[0],
+                end: milestone.deadline.toISOString().split('T')[0],
+                progress: milestone.status === 'Completata' ? 100 : 0,
+                custom_class: `bar-${milestone.calculatedStatus.toLowerCase().replace(/\s+/g, '-')}`,
+                dependencies: projectId // La chiave per il raggruppamento!
+            });
+        });
+    });
+
+    if (tasks.length === 0) {
+        ganttContainer.innerHTML = `<div class="text-center py-10"><p>Nessuna milestone da visualizzare per il progetto selezionato.</p></div>`;
+        return;
+    }
+
+    ganttChart = new Gantt("#gantt", tasks, {
+        view_mode: 'Week',
+        language: 'it',
+        custom_popup_html: (task) => {
+            // La ricerca del tooltip rimane simile ma potrebbe essere resa più robusta usando l'ID
+            const milestone = allMilestones.find(m => m.name === task.name && (selectedProject === 'all' || m.project === selectedProject));
+            if (milestone) {
+                return `<div class="p-2">${createTooltipText(milestone)}</div>`;
             }
+            // Aggiunge un tooltip anche per la barra del progetto
+            return `<div class="p-2"><strong>Progetto:</strong> ${task.name}</div>`;
+        }
+    });
+}
 
             function populatePreviewTable() {
                 const tableHead = document.querySelector('#preview-table thead');
