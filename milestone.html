@@ -26,6 +26,48 @@
         .gantt .bar-label { font-size: 14px; fill: #1f2937; }
         .gantt .bar-group .bar { opacity: 0.8; }
         .hidden-on-start { display: none; }
+        /* --- Incolla questo nel tuo blocco <style> --- */
+
+/* Stile generale del container */
+#gantt-container {
+    border-radius: 12px;
+    overflow: hidden; /* Nasconde gli angoli sporgenti */
+}
+
+/* Stile dell'header (mesi/giorni) */
+.gantt .grid-header {
+    background-color: #1e3a8a; /* Blu scuro per lo sfondo header */
+    color: white;
+    font-weight: bold;
+}
+
+/* Stile delle barre di task */
+.gantt .bar {
+    border-radius: 10px; /* Angoli arrotondati */
+}
+
+/* Rimuove l'etichetta del nome del task dalla barra */
+.gantt .bar-label {
+    display: none;
+}
+
+/* Stile della barra di avanzamento (la parte colorata) */
+.gantt .bar-progress {
+    border-radius: 10px; /* Angoli arrotondati anche per il progresso */
+}
+
+/* Ridefinisce i colori per assomigliare alla palette dell'immagine */
+.gantt .bar-completata .bar-progress { fill: #10b981; } /* Verde più scuro */
+.gantt .bar-completata .bar { fill: #a7f3d0; } /* Verde più chiaro */
+
+.gantt .bar-in-corso .bar-progress { fill: #10b981; }
+.gantt .bar-in-corso .bar { fill: #a7f3d0; }
+
+.gantt .bar-pianificata .bar-progress { fill: #10b981; }
+.gantt .bar-pianificata .bar { fill: #a7f3d0; }
+
+.gantt .bar-in-ritardo .bar-progress { fill: #ef4444; } /* Lasciamo il rosso per il ritardo */
+.gantt .bar-in-ritardo .bar { fill: #fecaca; }
     </style>
 </head>
 <body class="text-gray-800">
