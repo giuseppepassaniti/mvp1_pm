@@ -246,30 +246,24 @@ function renderGanttView() {
 
     projectsToRender.forEach(projectName => {
         const milestones = projectsData[projectName];
-        if (!milestones || milestones.length === 0) {
-            console.warn(`Progetto '${projectName}' saltato perché non ha milestone valide.`);
-            return;
-        }
+        if (!milestones || milestones.length === 0) return;
 
-        // Calcola correttamente la data di inizio minima e di fine massima
         const projectStartDate = milestones.reduce((min, m) => m.startDate < min ? m.startDate : min, milestones[0].startDate);
         const projectEndDate = milestones.reduce((max, m) => m.deadline > max ? m.deadline : max, milestones[0].deadline);
 
-        // CONTROLLO DI VALIDITÀ AGGIUNTIVO
         if (isNaN(projectStartDate.getTime()) || isNaN(projectEndDate.getTime())) {
             console.error(`Date non valide per il progetto '${projectName}'. Salto.`);
-            return; // Salta questo progetto se le date sono invalide
+            return;
         }
 
         const projectId = `project_${projectName.replace(/\s+/g, '')}`;
-
         tasks.push({
             id: projectId,
             name: projectName,
             start: projectStartDate.toISOString().split('T')[0],
             end: projectEndDate.toISOString().split('T')[0],
             progress: 0,
-            dependencies: null // Un progetto padre non ha dipendenze
+            custom_class: 'bar-project-group' // Classe per la barra del progetto
         });
 
         milestones.forEach((milestone, index) => {
@@ -280,6 +274,7 @@ function renderGanttView() {
                 start: milestone.startDate.toISOString().split('T')[0],
                 end: milestone.deadline.toISOString().split('T')[0],
                 progress: milestone.status === 'Completata' ? 100 : 0,
+                custom_class: `bar-${milestone.calculatedStatus.toLowerCase().replace(/\s+/g, '-')}`, // Colora in base allo stato
                 dependencies: projectId
             });
         });
@@ -290,17 +285,26 @@ function renderGanttView() {
         return;
     }
 
-    // --- LOG DI DEBUG ---
-    // Stampiamo l'array di task per ispezionarlo
-    console.log("Dati inviati alla libreria Gantt:", tasks);
-
     try {
-        // --- CONFIGURAZIONE SEMPLIFICATA ---
+        // --- CONFIGURAZIONE FINALE (SENZA LINGUA ITALIANA PER ORA) ---
         ganttChart = new Gantt("#gantt", tasks, {
-             // Opzioni rimosse temporaneamente per il debug
-             // view_mode: 'Week',
-             // language: 'it',
-             // custom_popup_html: ...
+            header_height: 50,
+            bar_height: 25,
+            bar_corner_radius: 3,
+            view_mode: 'Week', // Vista settimanale
+            custom_popup_html: (task) => {
+                // Cerca la milestone corrispondente solo se il task è una milestone
+                if (task.id.startsWith('milestone_')) {
+                    // Troviamo la milestone originale in modo più robusto
+                    const parts = task.id.split('_');
+                    const project_name = projectsData[parts[1]] ? parts[1] : selectedProject;
+                    const milestone_index = parts[2];
+                    const milestone = projectsData[project_name]?.[milestone_index];
+                    if (milestone) return `<div class="p-2">${createTooltipText(milestone)}</div>`;
+                }
+                // Altrimenti, mostra il nome del progetto
+                return `<div class="p-2"><strong>Progetto:</strong> ${task.name}</div>`;
+            }
         });
     } catch (e) {
         console.error("ERRORE DURANTE LA CREAZIONE DEL GANTT:", e);
