@@ -74,9 +74,12 @@
             border-radius: 10px; /* Angoli arrotondati */
         }
         
-        /* Etichetta del nome del task (nascosta dalla barra, visibile a lato) */
+        /* MODIFICA: Rende visibile l'etichetta sulla barra */
         .gantt .bar-label {
-            display: none; 
+            fill: white;
+            font-weight: 600;
+            font-size: 12px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4); /* Ombra per leggibilità */
         }
 
         /* Barra di avanzamento (la parte colorata) */
@@ -131,16 +134,7 @@
             <h3 class="mt-2 text-sm font-medium text-gray-900">Caricamento dati in corso...</h3>
         </div>
         
-        <!-- Anteprima Dati CSV -->
-        <div id="preview-section" class="hidden-on-start mb-6">
-            <h2 class="text-xl font-bold mb-2">Anteprima Dati (prime 5 righe valide)</h2>
-            <div class="overflow-x-auto bg-white rounded-lg shadow-md">
-                <table id="preview-table" class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50"></thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
+        <!-- MODIFICA: Sezione Anteprima Dati RIMOSSA -->
 
         <!-- Contenuto Principale (Card o Gantt) -->
         <main id="dashboard-content" class="transition-opacity duration-500"></main>
@@ -152,7 +146,6 @@
             // Riferimenti agli elementi del DOM
             const initialMessage = document.getElementById('initial-message');
             const controlsPanel = document.getElementById('controls-panel');
-            const previewSection = document.getElementById('preview-section');
             const dashboardContent = document.getElementById('dashboard-content');
             const viewCardsBtn = document.getElementById('view-cards-btn');
             const viewGanttBtn = document.getElementById('view-gantt-btn');
@@ -232,9 +225,8 @@
                 if (allMilestones.length > 0) {
                     initialMessage.style.display = 'none';
                     controlsPanel.style.display = 'flex';
-                    previewSection.style.display = 'block';
+                    // MODIFICA: Rimosso il display della sezione anteprima
                     
-                    populatePreviewTable();
                     populateProjectFilter();
                     handleUrlParams();
                     renderCurrentView();
@@ -333,15 +325,12 @@
                 dashboardContent.appendChild(grid);
             }
 
-            // ===================================================================
-            // NUOVA FUNZIONE PER RENDERIZZARE IL GANTT (LOGICA SEMPLIFICATA)
-            // ===================================================================
+            // Renderizza la vista Gantt
             function renderGanttView() {
                 dashboardContent.innerHTML = '<div id="gantt-container"><svg id="gantt"></svg></div>';
                 const ganttContainer = document.getElementById('gantt-container');
                 const selectedProject = projectFilter.value;
 
-                // 1. Filtra le milestone in base al progetto selezionato
                 let filteredMilestones = (selectedProject === 'all')
                     ? [...allMilestones]
                     : allMilestones.filter(m => m.project === selectedProject);
@@ -351,38 +340,32 @@
                     return;
                 }
 
-                // 2. Ordina le milestone per data di inizio
                 filteredMilestones.sort((a, b) => a.startDate - b.startDate);
 
-                // 3. Mappa le milestone nel formato richiesto dalla libreria Gantt
                 const tasks = filteredMilestones.map((milestone, index) => {
                     let progress = 0;
                     if (milestone.status === 'Completata') {
                         progress = 100;
                     } else if (milestone.status === 'In corso') {
-                        progress = 50; // Mostra un avanzamento parziale
+                        progress = 50;
                     }
-
                     return {
-                        id: `milestone_${index}`, // ID univoco e stabile
+                        id: `milestone_${index}`,
                         name: milestone.name,
                         start: milestone.startDate.toISOString().split('T')[0],
                         end: milestone.deadline.toISOString().split('T')[0],
                         progress: progress,
                         custom_class: `bar-${milestone.calculatedStatus.toLowerCase().replace(/\s+/g, '-')}`
-                        // Nessuna dipendenza, è un elenco semplice
                     };
                 });
 
-                // 4. Crea il Gantt
                 try {
                     ganttChart = new Gantt("#gantt", tasks, {
                         header_height: 50,
                         bar_height: 25,
                         bar_corner_radius: 10,
-                        view_mode: 'Month', // Vista mensile per una timeline più ampia
+                        view_mode: 'Month',
                         custom_popup_html: (task) => {
-                            // Trova la milestone originale per mostrare il tooltip corretto
                             const originalMilestone = filteredMilestones.find(m => m.name === task.name);
                             if (originalMilestone) {
                                 return `<div class="p-2">${createTooltipText(originalMilestone)}</div>`;
@@ -396,28 +379,7 @@
                 }
             }
 
-            // Popola la tabella di anteprima
-            function populatePreviewTable() {
-                const tableHead = document.querySelector('#preview-table thead');
-                const tableBody = document.querySelector('#preview-table tbody');
-                tableHead.innerHTML = ''; 
-                tableBody.innerHTML = '';
-                if (allMilestones.length === 0) return;
-
-                const headers = ['Progetto', 'Milestone', 'Start Date', 'Deadline', 'Stato Calcolato'];
-                tableHead.innerHTML = `<tr>${headers.map(h => `<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">${h}</th>`).join('')}</tr>`;
-                
-                const previewData = allMilestones.slice(0, 5);
-                tableBody.innerHTML = previewData.map(row => `
-                    <tr class="bg-white">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${row.project}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${row.name}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${row.startDate.toLocaleDateString('it-IT')}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${row.deadline.toLocaleDateString('it-IT')}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusClasses(row.calculatedStatus).replace('border-','')}">${row.calculatedStatus}</span></td>
-                    </tr>
-                `).join('');
-            }
+            // MODIFICA: Funzione populatePreviewTable RIMOSSA
 
             // Popola il filtro dei progetti
             function populateProjectFilter() {
