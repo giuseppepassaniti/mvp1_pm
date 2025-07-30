@@ -10,12 +10,8 @@
     
     <!-- PapaParse per il parsing CSV -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    
-    <!-- Frappe Gantt per la vista timeline -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.js"></script>
 
-    <!-- MODIFICA: Aggiunta libreria Day.js per la gestione delle date -->
+    <!-- Day.js per la gestione delle date -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/dayjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/plugin/customParseFormat.min.js"></script>
 
@@ -40,14 +36,8 @@
         }
         .tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
         
-        /* Stili Gantt */
-        .gantt .bar-completato .bar { fill: #22c55e; } /* green-500 */
-        .gantt .bar-in-corso .bar { fill: #facc15; } /* yellow-400 */
-        .gantt .bar-pianificato .bar { fill: #3b82f6; } /* blue-500 */
-        .gantt .bar-in-ritardo .bar { fill: #ef4444; } /* red-500 */
-        
         /* Stili per l'ordinamento della tabella */
-        .sortable:hover { background-color: #f1f5f9; cursor: pointer; }
+        .sortable:hover { background-color: #e2e8f0; cursor: pointer; }
         .sort-asc::after { content: ' ▲'; font-size: 0.7em; }
         .sort-desc::after { content: ' ▼'; font-size: 0.7em; }
     </style>
@@ -66,28 +56,28 @@
             <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 items-end">
                 <!-- Filtri -->
                 <div id="filters-panel" class="hidden-on-start grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:col-span-5 gap-4">
-                    <select id="project-filter" class="p-2 border rounded-md bg-white shadow-sm w-full"></select>
-                    <select id="owner-filter" class="p-2 border rounded-md bg-white shadow-sm w-full"></select>
+                    <select id="project-filter" class="p-2 border rounded-md bg-white shadow-sm w-full" title="Filtra per progetto"></select>
+                    <select id="owner-filter" class="p-2 border rounded-md bg-white shadow-sm w-full" title="Filtra per owner"></select>
                     
                     <div class="grid grid-cols-2 gap-2">
                           <div>
                               <label for="date-start-filter" class="text-xs text-slate-500">Da (Inizio)</label>
-                              <input type="date" id="date-start-filter" class="p-2 border rounded-md bg-white shadow-sm w-full text-sm">
+                              <input type="date" id="date-start-filter" class="p-2 border rounded-md bg-white shadow-sm w-full text-sm" title="Filtra per data di inizio">
                           </div>
                           <div>
                               <label for="date-end-filter" class="text-xs text-slate-500">A (Fine)</label>
-                              <input type="date" id="date-end-filter" class="p-2 border rounded-md bg-white shadow-sm w-full text-sm">
+                              <input type="date" id="date-end-filter" class="p-2 border rounded-md bg-white shadow-sm w-full text-sm" title="Filtra per data di fine">
                           </div>
                     </div>
 
                     <div class="flex items-center justify-end gap-4">
                         <div class="flex items-center">
                             <input id="status-filter-late" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500">
-                            <label for="status-filter-late" class="ml-2 block text-sm text-gray-900">In Ritardo</label>
+                            <label for="status-filter-late" class="ml-2 block text-sm text-gray-900">Solo in Ritardo</label>
                         </div>
                         <div class="flex items-center">
                             <input id="criticality-filter" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500">
-                            <label for="criticality-filter" class="ml-2 block text-sm text-gray-900">Criticità Alta 🔥</label>
+                            <label for="criticality-filter" class="ml-2 block text-sm text-gray-900">Solo Criticità Alta 🔥</label>
                         </div>
                     </div>
                 </div>
@@ -103,22 +93,18 @@
 
         <!-- Sezione Dashboard -->
         <div id="dashboard-container" class="hidden-on-start">
-            <div id="kpi-section" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6"></div>
+            <div id="kpi-section" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6"></div>
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-2xl font-bold text-slate-800">Dettaglio Task</h2>
-                <div class="flex items-center bg-slate-200 rounded-lg p-1">
-                    <button id="view-table-btn" class="px-4 py-1 text-sm font-semibold rounded-md bg-white shadow text-blue-600">Tabella</button>
-                    <button id="view-gantt-btn" class="px-4 py-1 text-sm font-semibold rounded-md text-slate-600">Timeline</button>
-                </div>
             </div>
-            <div id="preview-section" class="mb-6"></div>
+            <div id="preview-section" class="mb-2"></div>
             <main id="dashboard-content" class="transition-opacity duration-500"></main>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // MODIFICA: Inizializzazione del plugin di Day.js
+            // Inizializzazione del plugin di Day.js per il parsing di formati custom
             dayjs.extend(dayjs_plugin_customParseFormat);
 
             // --- ELEMENTI DOM ---
@@ -134,19 +120,15 @@
             const kpiSection = document.getElementById('kpi-section');
             const previewSection = document.getElementById('preview-section');
             const dashboardContent = document.getElementById('dashboard-content');
-            const viewTableBtn = document.getElementById('view-table-btn');
-            const viewGanttBtn = document.getElementById('view-gantt-btn');
 
             // --- STATO APPLICAZIONE ---
             let allTasks = [];
             let filteredTasks = [];
-            let currentView = 'table';
-            let ganttChart = null;
             let sortConfig = { key: 'deadline', direction: 'asc' };
 
             // --- FUNZIONI DI PARSING E UTILITY ---
-            const parseItalianDate = (d) => d ? dayjs(d, 'DD/MM/YYYY').toDate() : null;
-            const parseFilterDate = (d) => d ? dayjs(d, 'YYYY-MM-DD').toDate() : null;
+            const parseItalianDate = (d) => d ? dayjs(d, 'DD/MM/YYYY', true) : null; // Parsing stretto
+            const parseFilterDate = (d) => d ? dayjs(d, 'YYYY-MM-DD', true).toDate() : null;
             const parseFloatWithComma = (n) => typeof n === 'string' ? parseFloat(n.replace(',', '.')) || 0 : 0;
             const parsePercentage = (p) => typeof p === 'string' ? parseInt(p.replace('%', ''), 10) || 0 : 0;
 
@@ -179,19 +161,30 @@
                 allTasks = data.map(row => {
                     const startDate = parseItalianDate(row['Start Date']);
                     const deadline = parseItalianDate(row.Deadline);
-                    if (!row.ID || !row['Titolo Task'] || !row.Progetto || !startDate || !deadline) return null;
+                    
+                    // Salta la riga se i campi essenziali o le date non sono validi
+                    if (!row.ID || !row['Titolo Task'] || !row.Progetto || !startDate || !startDate.isValid() || !deadline || !deadline.isValid()) {
+                        console.warn('Riga saltata per dati mancanti o non validi:', row);
+                        return null;
+                    }
                     
                     return {
-                        id: row.ID, title: row['Titolo Task'], description: row['Descrizione Task'] || '',
-                        project: row.Progetto, owner: row.Owner || 'Non assegnato',
-                        startDate, deadline, status: row.Stato || 'Pianificato',
+                        id: row.ID, 
+                        title: row['Titolo Task'], 
+                        description: row['Descrizione Task'] || '',
+                        project: row.Progetto, 
+                        owner: row.Owner || 'Non assegnato',
+                        startDate: startDate.toDate(), 
+                        deadline: deadline.toDate(), 
+                        status: row.Stato || 'Pianificato',
                         criticality: row.Criticità || 'Bassa',
                         estimatedTime: parseFloatWithComma(row['Tempo Stimato']),
                         actualTime: parseFloatWithComma(row['Tempo Effettivo']),
                         completion: parsePercentage(row['% Completamento']),
-                        isLate: deadline < today && row.Stato !== 'Completato'
+                        estimatedProductivity: row['Produttività Stimata'] || 'N/D',
+                        isLate: deadline.toDate() < today && row.Stato !== 'Completato'
                     };
-                }).filter(Boolean);
+                }).filter(Boolean); // Rimuove le righe nulle
 
                 if (allTasks.length > 0) {
                     initialMessage.style.display = 'none';
@@ -217,7 +210,7 @@
                 applyFiltersAndSort();
                 renderKpis();
                 renderPreview();
-                renderCurrentView();
+                renderTableView(); // Renderizza sempre la tabella
             }
 
             function applyFiltersAndSort() {
@@ -243,7 +236,8 @@
                     let valB = b[sortConfig.key];
                     if (sortConfig.key === 'criticality') {
                         const order = { 'Alta': 0, 'Media': 1, 'Bassa': 2 };
-                        valA = order[valA]; valB = order[valB];
+                        valA = order[valA] ?? 99; 
+                        valB = order[valB] ?? 99;
                     }
                     if (valA < valB) return sortConfig.direction === 'asc' ? -1 : 1;
                     if (valA > valB) return sortConfig.direction === 'asc' ? 1 : -1;
@@ -257,7 +251,7 @@
                 const lateTasks = filteredTasks.filter(t => t.isLate).length;
                 const criticalTasks = filteredTasks.filter(t => t.criticality === 'Alta').length;
                 const totalEstimatedTime = filteredTasks.reduce((sum, t) => sum + t.estimatedTime, 0);
-                const totalActualTime = filteredTasks.reduce((sum, t) => sum + t.actualTime, 0);
+                const productiveTasks = filteredTasks.filter(t => t.estimatedProductivity.includes('Produttivo')).length;
                 const completionPercentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
 
                 const kpis = [
@@ -265,7 +259,8 @@
                     { label: '% Completati', value: `${completionPercentage}%`, icon: 'check-circle-2' },
                     { label: 'In Ritardo', value: lateTasks, icon: 'siren', color: 'text-red-600' },
                     { label: 'Criticità Alta', value: criticalTasks, icon: 'flame', color: 'text-orange-600' },
-                    { label: 'Ore Stimate/Effettive', value: `${totalEstimatedTime.toFixed(1)}h / ${totalActualTime.toFixed(1)}h`, icon: 'hourglass' }
+                    { label: 'Ore Stimate', value: `${totalEstimatedTime.toFixed(1)}h`, icon: 'hourglass' },
+                    { label: 'Task Produttivi', value: productiveTasks, icon: 'trending-up', color: 'text-green-600' }
                 ];
                 kpiSection.innerHTML = kpis.map(kpi => `
                     <div class="bg-white p-4 rounded-lg shadow flex items-center">
@@ -279,16 +274,7 @@
             }
             
             function renderPreview() {
-                previewSection.innerHTML = filteredTasks.length > 0 ? `<p class="text-sm text-slate-500 mb-2">Mostrando ${filteredTasks.length} su ${allTasks.length} task totali.</p>` : '';
-            }
-
-            function renderCurrentView() {
-                dashboardContent.style.opacity = 0;
-                setTimeout(() => {
-                    if (currentView === 'table') renderTableView();
-                    else renderGanttView();
-                    dashboardContent.style.opacity = 1;
-                }, 200);
+                previewSection.innerHTML = `<p class="text-sm text-slate-500">Mostrando ${filteredTasks.length} su ${allTasks.length} task totali.</p>`;
             }
 
             function renderTableView() {
@@ -296,11 +282,22 @@
                     dashboardContent.innerHTML = `<div class="text-center py-10 bg-white rounded-lg shadow"><p>Nessun task corrisponde ai filtri selezionati.</p></div>`;
                     return;
                 }
-                const headers = ['Titolo Task', 'Progetto', 'Owner', 'Deadline', 'Criticità', '% Compl.', 'Stato'];
+                
+                const headers = [
+                    { key: 'title', label: 'Titolo Task' },
+                    { key: 'project', label: 'Progetto' },
+                    { key: 'owner', label: 'Owner' },
+                    { key: 'deadline', label: 'Deadline' },
+                    { key: 'criticality', label: 'Criticità' },
+                    { key: 'completion', label: '% Compl.' },
+                    { key: 'estimatedProductivity', label: 'Produttività' },
+                    { key: 'status', label: 'Stato' }
+                ];
+
                 dashboardContent.innerHTML = `
                     <div class="overflow-x-auto bg-white rounded-lg shadow">
                         <table class="min-w-full divide-y divide-slate-200">
-                            <thead class="bg-slate-50"><tr>${headers.map(h => createHeaderCell(h.toLowerCase().replace(/[^a-z]/g, ''), h)).join('')}</tr></thead>
+                            <thead class="bg-slate-50"><tr>${headers.map(h => createHeaderCell(h.key, h.label)).join('')}</tr></thead>
                             <tbody class="divide-y divide-slate-200">${filteredTasks.map(createTaskRow).join('')}</tbody>
                         </table>
                     </div>`;
@@ -321,41 +318,21 @@
             function createTaskRow(task) {
                 const statusInfo = getStatusInfo(task);
                 const criticalityIcon = task.criticality === 'Alta' ? `<i data-lucide="flame" class="inline-block h-4 w-4 text-orange-500"></i>` : '';
+                const deadlineText = dayjs(task.deadline).isValid() ? dayjs(task.deadline).format('DD/MM/YYYY') : 'N/A';
+
                 return `
                     <tr class="hover:bg-slate-50">
                         <td class="px-4 py-4 whitespace-nowrap"><div class="tooltip"><span class="font-medium text-slate-900">${task.title}</span><div class="tooltip-text">${task.description || 'Nessuna descrizione.'}</div></div></td>
                         <td class="px-4 py-4 whitespace-nowrap text-sm text-slate-500">${task.project}</td>
                         <td class="px-4 py-4 whitespace-nowrap text-sm text-slate-500">${task.owner}</td>
-                        <td class="px-4 py-4 whitespace-nowrap text-sm text-slate-500">${dayjs(task.deadline).format('DD/MM/YYYY')}</td>
+                        <td class="px-4 py-4 whitespace-nowrap text-sm text-slate-500">${deadlineText}</td>
                         <td class="px-4 py-4 whitespace-nowrap text-sm text-slate-500 text-center">${criticalityIcon}</td>
                         <td class="px-4 py-4 whitespace-nowrap"><div class="w-full bg-slate-200 rounded-full h-2.5"><div class="${statusInfo.progressBg} h-2.5 rounded-full" style="width: ${task.completion}%"></div></div></td>
+                        <td class="px-4 py-4 whitespace-nowrap text-sm text-slate-500">${task.estimatedProductivity}</td>
                         <td class="px-4 py-4 whitespace-nowrap"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusInfo.badgeClasses}">${statusInfo.text}</span></td>
                     </tr>`;
             }
             
-            function renderGanttView() {
-                if (filteredTasks.length === 0) {
-                    dashboardContent.innerHTML = `<div class="text-center py-10 bg-white rounded-lg shadow"><p>Nessun task da visualizzare nella timeline.</p></div>`;
-                    return;
-                }
-                dashboardContent.innerHTML = '<div id="gantt-container" class="bg-white p-4 rounded-lg shadow"><svg id="gantt"></svg></div>';
-                const ganttTasks = filteredTasks.map((task, i) => ({
-                    id: `task_${task.id}_${i}`, name: task.title,
-                    start: dayjs(task.startDate).format('YYYY-MM-DD'), end: dayjs(task.deadline).format('YYYY-MM-DD'),
-                    progress: task.completion, dependencies: task.project,
-                    custom_class: `bar-${(task.isLate ? 'in-ritardo' : task.status.toLowerCase()).replace(' ', '-')}`,
-                    original_task: task
-                }));
-                if (ganttChart) ganttChart.refresh(ganttTasks);
-                else ganttChart = new Gantt("#gantt", ganttTasks, {
-                    view_mode: 'Week', language: 'it',
-                    custom_popup_html: (task) => {
-                        const o = task.original_task;
-                        return o ? `<div class="p-2 text-sm"><strong class="block">${o.title}</strong><span>Owner: ${o.owner}</span><br><span>Stato: ${o.isLate ? 'In Ritardo' : o.status}</span></div>` : '';
-                    }
-                });
-            }
-
             function getStatusInfo(task) {
                 if (task.isLate) return { text: 'In Ritardo', badgeClasses: 'bg-red-100 text-red-800', progressBg: 'bg-red-600' };
                 const statuses = {
@@ -367,16 +344,16 @@
             }
 
             function populateFilters() {
-                const projects = ['all', ...new Set(allTasks.map(t => t.project))];
-                const owners = ['all', ...new Set(allTasks.map(t => t.owner))];
+                const projects = ['all', ...new Set(allTasks.map(t => t.project).sort())];
+                const owners = ['all', ...new Set(allTasks.map(t => t.owner).sort())];
                 projectFilter.innerHTML = projects.map(p => `<option value="${p}">${p === 'all' ? 'Tutti i Progetti' : p}</option>`).join('');
                 ownerFilter.innerHTML = owners.map(o => `<option value="${o}">${o === 'all' ? 'Tutti gli Owner' : o}</option>`).join('');
             }
 
+            // Aggiunge gli event listener ai filtri
             [projectFilter, ownerFilter, statusFilterLate, criticalityFilter, dateStartFilter, dateEndFilter].forEach(el => el.addEventListener('change', renderDashboard));
-            viewTableBtn.addEventListener('click', () => { currentView = 'table'; renderCurrentView(); });
-            viewGanttBtn.addEventListener('click', () => { currentView = 'gantt'; renderCurrentView(); });
             
+            // Avvio del caricamento
             loadInitialTasks();
             lucide.createIcons();
         });
