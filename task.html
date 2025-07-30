@@ -11,7 +11,7 @@
     <!-- PapaParse per il parsing CSV -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
-    <!-- Day.js per la gestione delle date -->
+    <!-- Day.js per la gestione delle date (usato per la formattazione) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/dayjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/plugin/customParseFormat.min.js"></script>
 
@@ -127,8 +127,17 @@
             let sortConfig = { key: 'deadline', direction: 'asc' };
 
             // --- FUNZIONI DI PARSING E UTILITY ---
-            // MODIFICA: Rimosso il parsing "stretto" per accettare date come 'D/M/YYYY'
-            const parseItalianDate = (d) => d ? dayjs(d, 'DD/MM/YYYY') : null; 
+            // MODIFICA: Utilizzo della funzione di parsing manuale, più robusta per i dati specifici.
+            const parseItalianDate = (dateString) => {
+                if (!dateString) return null;
+                const parts = dateString.split('/');
+                if (parts.length !== 3) return null;
+                const [day, month, year] = parts.map(p => parseInt(p, 10));
+                if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
+                // Controlla che l'anno abbia 4 cifre per evitare errori
+                if (String(year).length < 4) return null;
+                return new Date(year, month - 1, day);
+            };
             const parseFilterDate = (d) => d ? dayjs(d, 'YYYY-MM-DD', true).toDate() : null;
             const parseFloatWithComma = (n) => typeof n === 'string' ? parseFloat(n.replace(',', '.')) || 0 : 0;
             const parsePercentage = (p) => typeof p === 'string' ? parseInt(p.replace('%', ''), 10) || 0 : 0;
@@ -163,8 +172,8 @@
                     const startDate = parseItalianDate(row['Start Date']);
                     const deadline = parseItalianDate(row.Deadline);
                     
-                    // Salta la riga se i campi essenziali o le date non sono validi
-                    if (!row.ID || !row['Titolo Task'] || !row.Progetto || !startDate || !startDate.isValid() || !deadline || !deadline.isValid()) {
+                    // MODIFICA: Semplificato il controllo della validità della data
+                    if (!row.ID || !row['Titolo Task'] || !row.Progetto || !startDate || !deadline) {
                         console.warn('Riga saltata per dati mancanti o non validi:', row);
                         return null;
                     }
@@ -175,15 +184,15 @@
                         description: row['Descrizione Task'] || '',
                         project: row.Progetto, 
                         owner: row.Owner || 'Non assegnato',
-                        startDate: startDate.toDate(), 
-                        deadline: deadline.toDate(), 
+                        startDate: startDate, 
+                        deadline: deadline, 
                         status: row.Stato || 'Pianificato',
                         criticality: row.Criticità || 'Bassa',
                         estimatedTime: parseFloatWithComma(row['Tempo Stimato']),
                         actualTime: parseFloatWithComma(row['Tempo Effettivo']),
                         completion: parsePercentage(row['% Completamento']),
                         estimatedProductivity: row['Produttività Stimata'] || 'N/D',
-                        isLate: deadline.toDate() < today && row.Stato !== 'Completato'
+                        isLate: deadline < today && row.Stato !== 'Completato'
                     };
                 }).filter(Boolean); // Rimuove le righe nulle
 
@@ -203,7 +212,7 @@
 
                     renderDashboard();
                 } else {
-                    initialMessage.innerHTML = '<h3>Nessun task valido trovato nel file.</h3>';
+                    initialMessage.innerHTML = '<h3>Nessun task valido trovato nel file. Controlla il formato del CSV e delle date.</h3>';
                 }
             }
 
@@ -319,7 +328,8 @@
             function createTaskRow(task) {
                 const statusInfo = getStatusInfo(task);
                 const criticalityIcon = task.criticality === 'Alta' ? `<i data-lucide="flame" class="inline-block h-4 w-4 text-orange-500"></i>` : '';
-                const deadlineText = dayjs(task.deadline).isValid() ? dayjs(task.deadline).format('DD/MM/YYYY') : 'N/A';
+                // Usiamo dayjs solo per formattare la data in output
+                const deadlineText = dayjs(task.deadline).format('DD/MM/YYYY');
 
                 return `
                     <tr class="hover:bg-slate-50">
