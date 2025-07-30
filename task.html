@@ -127,7 +127,8 @@
             let sortConfig = { key: 'deadline', direction: 'asc' };
 
             // --- FUNZIONI DI PARSING E UTILITY ---
-            const parseItalianDate = (d) => d ? dayjs(d, 'DD/MM/YYYY', true) : null; // Parsing stretto
+            // MODIFICA: Rimosso il parsing "stretto" per accettare date come 'D/M/YYYY'
+            const parseItalianDate = (d) => d ? dayjs(d, 'DD/MM/YYYY') : null; 
             const parseFilterDate = (d) => d ? dayjs(d, 'YYYY-MM-DD', true).toDate() : null;
             const parseFloatWithComma = (n) => typeof n === 'string' ? parseFloat(n.replace(',', '.')) || 0 : 0;
             const parsePercentage = (p) => typeof p === 'string' ? parseInt(p.replace('%', ''), 10) || 0 : 0;
