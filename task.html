@@ -15,6 +15,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.css">
     <script src="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.js"></script>
 
+    <!-- MODIFICA: Aggiunta libreria Day.js per la gestione delle date -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/dayjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.10/plugin/customParseFormat.min.js"></script>
+
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     
@@ -66,14 +70,14 @@
                     <select id="owner-filter" class="p-2 border rounded-md bg-white shadow-sm w-full"></select>
                     
                     <div class="grid grid-cols-2 gap-2">
-                         <div>
-                            <label for="date-start-filter" class="text-xs text-slate-500">Da (Inizio)</label>
-                            <input type="date" id="date-start-filter" class="p-2 border rounded-md bg-white shadow-sm w-full text-sm">
-                         </div>
-                         <div>
-                            <label for="date-end-filter" class="text-xs text-slate-500">A (Fine)</label>
-                            <input type="date" id="date-end-filter" class="p-2 border rounded-md bg-white shadow-sm w-full text-sm">
-                         </div>
+                          <div>
+                              <label for="date-start-filter" class="text-xs text-slate-500">Da (Inizio)</label>
+                              <input type="date" id="date-start-filter" class="p-2 border rounded-md bg-white shadow-sm w-full text-sm">
+                          </div>
+                          <div>
+                              <label for="date-end-filter" class="text-xs text-slate-500">A (Fine)</label>
+                              <input type="date" id="date-end-filter" class="p-2 border rounded-md bg-white shadow-sm w-full text-sm">
+                          </div>
                     </div>
 
                     <div class="flex items-center justify-end gap-4">
@@ -114,6 +118,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // MODIFICA: Inizializzazione del plugin di Day.js
+            dayjs.extend(dayjs_plugin_customParseFormat);
+
             // --- ELEMENTI DOM ---
             const initialMessage = document.getElementById('initial-message');
             const dashboardContainer = document.getElementById('dashboard-container');
@@ -143,7 +150,7 @@
             const parseFloatWithComma = (n) => typeof n === 'string' ? parseFloat(n.replace(',', '.')) || 0 : 0;
             const parsePercentage = (p) => typeof p === 'string' ? parseInt(p.replace('%', ''), 10) || 0 : 0;
 
-            // --- LOGICA PRINCIPALE (MODIFICATA) ---
+            // --- LOGICA PRINCIPALE ---
             function loadInitialTasks() {
                 const taskCsvUrl = 'data/task.csv';
                 fetch(taskCsvUrl)
@@ -193,14 +200,12 @@
                     
                     populateFilters();
 
-                    // --- MODIFICA CHIAVE ---
                     const urlParams = new URLSearchParams(window.location.search);
-                    const projectIdFromUrl = urlParams.get('id'); // Legge il parametro 'id'
+                    const projectIdFromUrl = urlParams.get('id');
                     if (projectIdFromUrl) {
                         projectFilter.value = projectIdFromUrl;
                         projectFilter.disabled = true;
                     }
-                    // --- FINE MODIFICA ---
 
                     renderDashboard();
                 } else {
