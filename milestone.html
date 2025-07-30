@@ -74,7 +74,7 @@
             border-radius: 10px; /* Angoli arrotondati */
         }
         
-        /* MODIFICA: Rende visibile l'etichetta sulla barra */
+        /* Etichetta sulla barra */
         .gantt .bar-label {
             fill: white;
             font-weight: 600;
@@ -99,6 +99,11 @@
 
         .gantt .bar-in-ritardo .bar-progress { fill: #ef4444; } /* Rosso scuro */
         .gantt .bar-in-ritardo .bar { fill: #fecaca; } /* Rosso chiaro */
+        
+        /* MODIFICA: Nasconde le barre "dummy" usate per creare il padding */
+        .gantt .bar-wrapper.dummy-task {
+            display: none;
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -134,8 +139,6 @@
             <h3 class="mt-2 text-sm font-medium text-gray-900">Caricamento dati in corso...</h3>
         </div>
         
-        <!-- MODIFICA: Sezione Anteprima Dati RIMOSSA -->
-
         <!-- Contenuto Principale (Card o Gantt) -->
         <main id="dashboard-content" class="transition-opacity duration-500"></main>
 
@@ -225,7 +228,6 @@
                 if (allMilestones.length > 0) {
                     initialMessage.style.display = 'none';
                     controlsPanel.style.display = 'flex';
-                    // MODIFICA: Rimosso il display della sezione anteprima
                     
                     populateProjectFilter();
                     handleUrlParams();
@@ -342,7 +344,8 @@
 
                 filteredMilestones.sort((a, b) => a.startDate - b.startDate);
 
-                const tasks = filteredMilestones.map((milestone, index) => {
+                // Mappa le milestone nel formato richiesto dalla libreria
+                let tasks = filteredMilestones.map((milestone, index) => {
                     let progress = 0;
                     if (milestone.status === 'Completata') {
                         progress = 100;
@@ -359,6 +362,31 @@
                     };
                 });
 
+                // --- MODIFICA: Aggiunge padding alla timeline ---
+                const firstDate = new Date(filteredMilestones[0].startDate);
+                const lastDate = filteredMilestones.reduce((max, m) => m.deadline > max ? m.deadline : max, new Date(filteredMilestones[0].deadline));
+
+                const timelineStart = new Date(firstDate);
+                timelineStart.setMonth(timelineStart.getMonth() - 1); // Un mese prima
+
+                const timelineEnd = new Date(lastDate);
+                timelineEnd.setMonth(timelineEnd.getMonth() + 1); // Un mese dopo
+
+                // Aggiunge task invisibili per definire i limiti della timeline
+                tasks.unshift({
+                    id: 'dummy_start', name: '',
+                    start: timelineStart.toISOString().split('T')[0],
+                    end: timelineStart.toISOString().split('T')[0],
+                    progress: 0, custom_class: 'dummy-task'
+                });
+                 tasks.push({
+                    id: 'dummy_end', name: '',
+                    start: timelineEnd.toISOString().split('T')[0],
+                    end: timelineEnd.toISOString().split('T')[0],
+                    progress: 0, custom_class: 'dummy-task'
+                });
+                // --- FINE MODIFICA ---
+
                 try {
                     ganttChart = new Gantt("#gantt", tasks, {
                         header_height: 50,
@@ -366,6 +394,9 @@
                         bar_corner_radius: 10,
                         view_mode: 'Month',
                         custom_popup_html: (task) => {
+                            // Non mostrare il popup per i task invisibili
+                            if(task.custom_class === 'dummy-task') return;
+
                             const originalMilestone = filteredMilestones.find(m => m.name === task.name);
                             if (originalMilestone) {
                                 return `<div class="p-2">${createTooltipText(originalMilestone)}</div>`;
@@ -378,8 +409,6 @@
                     ganttContainer.innerHTML = `<div class="text-center py-10 bg-white rounded-lg"><p>Errore nella creazione del diagramma di Gantt.</p></div>`;
                 }
             }
-
-            // MODIFICA: Funzione populatePreviewTable RIMOSSA
 
             // Popola il filtro dei progetti
             function populateProjectFilter() {
