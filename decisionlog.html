@@ -50,8 +50,6 @@
         <!-- Pannello Controlli e Filtri -->
         <div class="bg-white p-4 rounded-lg shadow-md mb-6">
             <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 items-end">
-                <!-- Upload Button Rimosso -->
-                
                 <!-- Filtri -->
                 <div id="filters-panel" class="hidden-on-start grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 lg:col-span-5 gap-4">
                     <select id="project-filter" class="p-2 border rounded-md bg-white shadow-sm w-full" title="Filtra per progetto"></select>
@@ -153,6 +151,20 @@
             };
 
             // --- LOGICA DI CARICAMENTO E PARSING ---
+            // CORREZIONE: Funzione di parsing della data più robusta
+            const parseRobustDate = (dateString) => {
+                if (!dateString) return null;
+                const parts = dateString.split('/');
+                if (parts.length !== 3) return null;
+                const [day, month, year] = parts.map(p => parseInt(p, 10));
+                if (isNaN(day) || isNaN(month) || isNaN(year) || String(year).length < 4) return null;
+                const date = new Date(year, month - 1, day);
+                if (date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day) {
+                    return date;
+                }
+                return null;
+            };
+
             function loadInitialDecisions() {
                 const decisionsCsvUrl = 'data/decisioni.csv';
                 fetch(decisionsCsvUrl)
@@ -174,11 +186,15 @@
             function processData(data) {
                 allDecisions = data.map((row, index) => {
                     if (!row.Progetto || !row.Decisione || !row['Data Decisione']) return null;
+                    
+                    const date = parseRobustDate(row['Data Decisione']); // Usa la funzione corretta
+                    if (!date) return null; // Salta la riga se la data non è valida
+
                     const motivation = (row.Motivazione || 'Nessuna motivazione fornita.').replace(/\\n/g, '\n');
                     return {
                         id: index, decision: row.Decisione.replace(/\\n/g, ' '), project: row.Progetto,
                         responsabile: row.Responsabile || 'Non specificato',
-                        date: dayjs(row['Data Decisione'], 'DD/MM/YYYY').toDate(),
+                        date: date,
                         motivation: motivation, status: getDecisionStatus(motivation),
                     };
                 }).filter(Boolean);
@@ -189,14 +205,12 @@
                     filtersPanel.classList.remove('hidden-on-start');
                     populateFilters();
 
-                    // --- MODIFICA CHIAVE ---
                     const urlParams = new URLSearchParams(window.location.search);
                     const projectIdFromUrl = urlParams.get('id');
                     if (projectIdFromUrl) {
                         projectFilterEl.value = projectIdFromUrl;
                         projectFilterEl.disabled = true;
                     }
-                    // --- FINE MODIFICA ---
 
                     renderDashboard();
                 } else {
