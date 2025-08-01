@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Time Log</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js e plugin per la heatmap -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@2.0.1/dist/chartjs-chart-matrix.min.js"></script>
+    
+    <!-- PapaParse per il parsing CSV -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+    <!-- Font Inter -->
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root { font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: #f8fafc; /* slate-50 */
+            color: #334155; /* slate-700 */
+        }
+        /* Stili per i grafici e la tabella per evitare overflow su mobile */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 24rem; /* 384px */
+        }
+        /* Stili per i filtri multi-select custom */
+        .custom-multiselect { position: relative; }
+        .multiselect-options { 
+            position: absolute;
+            z-index: 20;
+            margin-top: 0.25rem;
+            width: 100%;
+            max-height: 15rem;
+            overflow-y: auto;
+            background-color: white;
+            border: 1px solid #e2e8f0; /* slate-200 */
+            border-radius: 0.375rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .multiselect-options label {
+            display: block;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            color: #475569; /* slate-600 */
+            cursor: pointer;
+        }
+        .multiselect-options label:hover {
+             background-color: #f1f5f9; /* slate-100 */
+        }
+        /* Animazione spinner */
+        .spinner {
+            border-top-color: #3b82f6; /* blue-500 */
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Contenitore principale -->
+    <div class="container mx-auto p-4 md:p-6">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-6">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-slate-900">Dashboard Time Log</h1>
+                <p class="text-sm text-slate-500">Analisi interattiva delle ore lavorate.</p>
+            </div>
+        </header>
+
+        <!-- MODIFICA: Sezione Upload rimossa -->
+
+        <!-- Messaggio di caricamento iniziale -->
+        <div id="initial-message" class="text-center py-12">
+            <div class="spinner h-12 w-12 rounded-full border-4 border-slate-200 mx-auto"></div>
+            <p class="mt-4 text-slate-600">Caricamento dati in corso da repository...</p>
+        </div>
+
+        <!-- Dashboard (nascosta all'inizio) -->
+        <div id="dashboard-container" class="hidden">
+            <!-- Filtri -->
+            <div id="filters-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 p-4 bg-white rounded-lg shadow-sm">
+                <!-- Filtro Intervallo Temporale -->
+                <div>
+                    <label for="date-range-filter" class="block text-sm font-medium text-slate-700 mb-1">Periodo</label>
+                    <select id="date-range-filter" class="w-full p-2 border border-slate-300 bg-white rounded-md shadow-sm"></select>
+                </div>
+                <!-- Filtri Date Personalizzate -->
+                <div id="custom-date-filters" class="hidden md:col-span-2 lg:col-span-1 grid grid-cols-2 gap-2">
+                    <div>
+                        <label for="start-date" class="block text-sm font-medium text-slate-700 mb-1">Da</label>
+                        <input type="date" id="start-date" class="w-full p-2 border border-slate-300 bg-white rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label for="end-date" class="block text-sm font-medium text-slate-700 mb-1">A</label>
+                        <input type="date" id="end-date" class="w-full p-2 border border-slate-300 bg-white rounded-md shadow-sm">
+                    </div>
+                </div>
+                <!-- Filtro Risorse -->
+                <div id="resource-filter-container" class="custom-multiselect"></div>
+                <!-- Filtro Progetti -->
+                <div id="project-filter-container" class="custom-multiselect"></div>
+            </div>
+
+            <!-- Sezione KPI -->
+            <div id="kpi-section" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-6"></div>
+
+            <!-- Sezione Grafici -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h3 class="font-bold mb-4 text-slate-800">Ore per Progetto</h3>
+                    <div class="chart-container"><canvas id="projects-chart"></canvas></div>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h3 class="font-bold mb-4 text-slate-800">Ore per Risorsa</h3>
+                    <div class="chart-container"><canvas id="resources-chart"></canvas></div>
+                </div>
+                <div class="lg:col-span-2 bg-white p-4 rounded-lg shadow-sm">
+                    <h3 class="font-bold mb-4 text-slate-800">Trend Settimanale Ore Totali</h3>
+                    <div class="chart-container"><canvas id="trend-chart"></canvas></div>
+                </div>
+                <div class="lg:col-span-2 bg-white p-4 rounded-lg shadow-sm">
+                    <h3 class="font-bold mb-4 text-slate-800">Heatmap Ore Lavorate</h3>
+                    <div class="chart-container h-[320px] md:h-[400px]"><canvas id="heatmap-chart"></canvas></div>
+                </div>
+            </div>
+
+            <!-- Sezione Tabella Dettagliata -->
+            <div class="bg-white p-4 rounded-lg shadow-sm">
+                 <div class="flex flex-col md:flex-row justify-between md:items-center mb-4 gap-4">
+                    <h3 class="font-bold text-slate-800">Dettaglio Log</h3>
+                    <button id="export-csv-btn" class="flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                        Esporta CSV Filtrato
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead id="table-head" class="text-xs text-slate-600 uppercase bg-slate-100"></thead>
+                        <tbody id="table-body" class="divide-y divide-slate-200"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- STATO GLOBALE E RIFERIMENTI DOM ---
+            let allLogs = [];
+            let chartInstances = {};
+            const dom = {
+                initialMessage: document.getElementById('initial-message'),
+                dashboardContainer: document.getElementById('dashboard-container'),
+                dateRangeFilter: document.getElementById('date-range-filter'),
+                customDateFilters: document.getElementById('custom-date-filters'),
+                startDateInput: document.getElementById('start-date'),
+                endDateInput: document.getElementById('end-date'),
+                resourceFilterContainer: document.getElementById('resource-filter-container'),
+                projectFilterContainer: document.getElementById('project-filter-container'),
+                kpiSection: document.getElementById('kpi-section'),
+                tableHead: document.getElementById('table-head'),
+                tableBody: document.getElementById('table-body'),
+                exportCsvBtn: document.getElementById('export-csv-btn'),
+            };
+            const numberFormatter = new Intl.NumberFormat('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const PJT_REGEX = /(PJT-\d+)/;
+
+            // --- PARSING E PREPARAZIONE DATI ---
+            const parseRobustDate = (dateString) => {
+                if (!dateString) return null;
+                const parts = dateString.split('/');
+                if (parts.length !== 3) return null;
+                const [day, month, year] = parts.map(p => parseInt(p, 10));
+                if (isNaN(day) || isNaN(month) || isNaN(year) || String(year).length < 4) return null;
+                const date = new Date(year, month - 1, day);
+                if (date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day) return date;
+                return null;
+            };
+            
+            // --- LOGICA DI CARICAMENTO E INIZIALIZZAZIONE ---
+            const loadInitialData = () => {
+                const csvUrl = 'data/timelog.csv';
+                fetch(csvUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`File non trovato: ${response.status} ${response.statusText}`);
+                        }
+                        return response.text();
+                    })
+                    .then(csvText => {
+                        Papa.parse(csvText, {
+                            header: true,
+                            skipEmptyLines: true,
+                            complete: (results) => parseAndInitialize(results.data),
+                            error: (err) => {
+                                console.error("Errore di parsing:", err);
+                                dom.initialMessage.innerHTML = `<p class="text-red-600 font-bold">Errore nel leggere il file CSV.</p>`;
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Errore nel caricamento del file:', error);
+                        dom.initialMessage.innerHTML = `<p class="text-red-600 font-bold">Impossibile caricare il file da ${csvUrl}. Controlla che il percorso sia corretto.</p>`;
+                    });
+            };
+
+            const parseAndInitialize = (data) => {
+                allLogs = data.map(row => {
+                    const dateStr = row.Data;
+                    const resource = row.Risorse;
+                    const taskStr = row.Task;
+                    const hoursStr = row['Ore Effettive'];
+                    if (!dateStr || !resource || !taskStr || !hoursStr) return null;
+                    const date = parseRobustDate(dateStr);
+                    if (!date) return null;
+                    const match = taskStr.match(PJT_REGEX);
+                    const projectId = match ? match[1] : 'N/A';
+                    const taskTitle = match ? taskStr.replace(PJT_REGEX, '').trim() : taskStr.trim();
+                    const hours = parseFloat(hoursStr.replace(',', '.')) || 0;
+                    const week = getWeekNumber(date);
+                    return { date, resource, projectId, taskTitle, hours, week };
+                }).filter(Boolean);
+
+                if (allLogs.length === 0) {
+                    dom.initialMessage.innerHTML = `<p class="text-amber-600 font-bold">Nessun dato valido trovato nel file CSV.</p>`;
+                    return;
+                }
+                allLogs.sort((a, b) => a.date - b.date);
+                dom.initialMessage.classList.add('hidden');
+                dom.dashboardContainer.classList.remove('hidden');
+                initializeDashboard();
+            };
+            
+            const initializeDashboard = () => {
+                setupFilters();
+                updateDashboard();
+                setupFilterEventListeners();
+                lucide.createIcons();
+            };
+
+            // --- GESTIONE FILTRI ---
+            const setupFilters = () => {
+                const uniqueProjects = [...new Set(allLogs.map(log => log.projectId))].sort();
+                const uniqueResources = [...new Set(allLogs.map(log => log.resource))].sort();
+                
+                const dateOptions = [
+                    { value: 'all', text: 'Tutto il periodo' },
+                    { value: 'last30days', text: 'Ultimi 30 giorni' },
+                    { value: 'ytd', text: 'Da inizio anno (YTD)' },
+                    { value: 'lastyear', text: 'Anno precedente' },
+                    { value: 'custom', text: 'Personalizzato' },
+                ];
+                dom.dateRangeFilter.innerHTML = dateOptions.map(opt => `<option value="${opt.value}">${opt.text}</option>`).join('');
+                dom.dateRangeFilter.value = 'all';
+
+                createMultiSelect(dom.projectFilterContainer, 'Progetti', uniqueProjects, 'project');
+                createMultiSelect(dom.resourceFilterContainer, 'Risorse', uniqueResources, 'resource');
+            };
+
+            const createMultiSelect = (container, label, options, idPrefix) => {
+                container.innerHTML = `
+                    <label class="block text-sm font-medium text-slate-700 mb-1">${label}</label>
+                    <div class="relative">
+                        <button id="${idPrefix}-btn" class="w-full text-left p-2 border border-slate-300 bg-white rounded-md shadow-sm flex justify-between items-center">
+                            <span id="${idPrefix}-btn-text"></span>
+                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </button>
+                        <div id="${idPrefix}-options" class="multiselect-options hidden">
+                            <div class="p-2 border-b border-slate-200">
+                                <label class="flex items-center"><input type="checkbox" class="select-all-cb mr-2" data-type="${idPrefix}"> Seleziona Tutto</label>
+                            </div>
+                            ${options.map(opt => `<label class="flex items-center"><input type="checkbox" class="filter-cb" data-type="${idPrefix}" value="${opt}" checked> ${opt}</label>`).join('')}
+                        </div>
+                    </div>`;
+                updateMultiSelectButton(idPrefix);
+            };
+            
+            const getSelectedOptions = (type) => Array.from(document.querySelectorAll(`.filter-cb[data-type="${type}"]:checked`)).map(cb => cb.value);
+
+            const updateMultiSelectButton = (type) => {
+                const btnText = document.getElementById(`${type}-btn-text`);
+                const selected = getSelectedOptions(type);
+                const total = document.querySelectorAll(`.filter-cb[data-type="${type}"]`).length;
+                if (selected.length === total) btnText.textContent = `Tutti i ${type.charAt(0).toUpperCase() + type.slice(1)}`;
+                else if (selected.length === 0) btnText.textContent = `Nessun ${type}`;
+                else if (selected.length === 1) btnText.textContent = selected[0];
+                else btnText.textContent = `${selected.length} ${type} selezionati`;
+            };
+
+            const setupFilterEventListeners = () => {
+                [dom.dateRangeFilter, dom.startDateInput, dom.endDateInput].forEach(el => el.addEventListener('change', updateDashboard));
+                dom.dateRangeFilter.addEventListener('change', (e) => dom.customDateFilters.classList.toggle('hidden', e.target.value !== 'custom'));
+                document.body.addEventListener('click', (e) => {
+                    if (e.target.closest('.custom-multiselect')) {
+                        const type = e.target.closest('.custom-multiselect').querySelector('.filter-cb')?.dataset.type;
+                        if (!type) return;
+                        const optionsDiv = document.getElementById(`${type}-options`);
+                        if (e.target.closest('button')) optionsDiv.classList.toggle('hidden');
+                        else if (e.target.classList.contains('filter-cb') || e.target.classList.contains('select-all-cb')) {
+                            if (e.target.classList.contains('select-all-cb')) document.querySelectorAll(`.filter-cb[data-type="${type}"]`).forEach(cb => cb.checked = e.target.checked);
+                            updateMultiSelectButton(type);
+                            updateDashboard();
+                        }
+                    } else {
+                        document.querySelectorAll('.multiselect-options').forEach(el => el.classList.add('hidden'));
+                    }
+                });
+            };
+
+            // --- FUNZIONE DI AGGIORNAMENTO PRINCIPALE ---
+            const updateDashboard = () => {
+                const { filteredLogs, aggregates } = applyFiltersAndAggregate();
+                renderKPIs(aggregates);
+                renderCharts(aggregates);
+                renderTable(filteredLogs);
+            };
+            
+            // --- FILTRAGGIO E AGGREGAZIONE DATI ---
+            const applyFiltersAndAggregate = () => {
+                const [startDate, endDate] = getDateRange();
+                const selectedProjects = getSelectedOptions('project');
+                const selectedResources = getSelectedOptions('resource');
+                const filteredLogs = allLogs.filter(log => log.date >= startDate && log.date <= endDate && selectedProjects.includes(log.projectId) && selectedResources.includes(log.resource));
+                const totalHours = filteredLogs.reduce((sum, log) => sum + log.hours, 0);
+                const hoursByProject = aggregateBy(filteredLogs, 'projectId');
+                const hoursByResource = aggregateBy(filteredLogs, 'resource');
+                const hoursByWeek = aggregateBy(filteredLogs, 'week');
+                const hoursByDay = aggregateBy(filteredLogs, 'date', true);
+                const resourceUsage = calculateResourceUsage(hoursByResource, startDate, endDate);
+                return { filteredLogs, aggregates: { totalHours, hoursByProject, hoursByResource, hoursByWeek, hoursByDay, resourceUsage } };
+            };
+            
+            // --- FUNZIONI DI RENDER ---
+            const renderKPIs = (aggregates) => {
+                const { totalHours, hoursByResource, resourceUsage } = aggregates;
+                const kpis = [
+                    { label: 'Ore Totali Lavorate', value: numberFormatter.format(totalHours) + 'h', icon: 'clock', color: 'blue' },
+                    { label: 'Risorse Attive', value: Object.keys(hoursByResource).length, icon: 'users', color: 'violet' },
+                    { label: 'Utilizzo Medio Risorse', value: calculateAverageUsage(resourceUsage) + '%', icon: 'pie-chart', color: 'amber' },
+                ];
+                const colorClasses = {
+                    blue: 'bg-blue-100 text-blue-600',
+                    violet: 'bg-violet-100 text-violet-600',
+                    amber: 'bg-amber-100 text-amber-600',
+                };
+                dom.kpiSection.innerHTML = kpis.map(kpi => `
+                    <div class="bg-white p-4 rounded-lg shadow-sm flex items-start gap-4">
+                        <div class="p-3 rounded-full ${colorClasses[kpi.color]}">
+                            <i data-lucide="${kpi.icon}"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-slate-500">${kpi.label}</p>
+                            <p class="text-xl md:text-2xl font-bold text-slate-900 truncate" title="${kpi.value}">${kpi.value}</p>
+                        </div>
+                    </div>`).join('');
+                lucide.createIcons();
+            };
+
+            const renderCharts = (aggregates) => {
+                const gridColor = '#e2e8f0'; // slate-200
+                const textColor = '#64748b'; // slate-500
+                renderBarChart('projects-chart', aggregates.hoursByProject, 'Ore', gridColor, textColor, '#3b82f6');
+                renderHorizontalBarChart('resources-chart', aggregates.hoursByResource, 'Ore', gridColor, textColor, '#10b981');
+                renderLineChart('trend-chart', aggregates.hoursByWeek, 'Ore Totali', gridColor, textColor, '#ef4444');
+                renderHeatmap('heatmap-chart', aggregates.hoursByDay, gridColor, textColor);
+            };
+
+            const renderBarChart = (canvasId, data, label, gridColor, textColor, barColor) => {
+                const sortedData = Object.entries(data).sort(([,a],[,b]) => b-a).slice(0, 15); // Top 15
+                const chartData = {
+                    labels: sortedData.map(([key]) => key),
+                    datasets: [{ label, data: sortedData.map(([, value]) => value), backgroundColor: barColor }]
+                };
+                createOrUpdateChart(canvasId, 'bar', chartData, { scales: { y: { grid: { color: gridColor }, ticks: { color: textColor } }, x: { grid: { color: gridColor }, ticks: { color: textColor } } } });
+            };
+            
+            const renderHorizontalBarChart = (canvasId, data, label, gridColor, textColor, barColor) => {
+                const sortedData = Object.entries(data).sort(([,a],[,b]) => a-b).slice(-15); // Top 15
+                const chartData = {
+                    labels: sortedData.map(([key]) => key),
+                    datasets: [{ label, data: sortedData.map(([, value]) => value), backgroundColor: barColor }]
+                };
+                createOrUpdateChart(canvasId, 'bar', chartData, { indexAxis: 'y', scales: { y: { grid: { color: gridColor }, ticks: { color: textColor } }, x: { grid: { color: gridColor }, ticks: { color: textColor } } } });
+            };
+
+            const renderLineChart = (canvasId, data, label, gridColor, textColor, lineColor) => {
+                const sortedWeeks = Object.keys(data).map(Number).sort((a,b) => a-b);
+                const chartData = {
+                    labels: sortedWeeks.map(week => `Sett. ${week}`),
+                    datasets: [{ label, data: sortedWeeks.map(week => data[week]), borderColor: lineColor, tension: 0.1, pointBackgroundColor: lineColor, pointRadius: 4 }]
+                };
+                createOrUpdateChart(canvasId, 'line', chartData, { scales: { y: { grid: { color: gridColor }, ticks: { color: textColor } }, x: { grid: { color: gridColor }, ticks: { color: textColor } } } });
+            };
+            
+            const renderHeatmap = (canvasId, data, gridColor, textColor) => {
+                const [startDate, endDate] = getDateRange();
+                const weekDayLabels = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+                
+                const weekMap = new Map();
+                let current = new Date(startDate);
+                while (current <= endDate) {
+                    const week = getWeekNumber(current);
+                    if (!weekMap.has(week)) weekMap.set(week, { week, year: current.getFullYear() });
+                    current.setDate(current.getDate() + 7);
+                }
+                const sortedWeeks = [...weekMap.values()].sort((a, b) => a.year - b.year || a.week - b.week);
+                const weekLabels = sortedWeeks.map(w => `S${w.week}`);
+
+                const heatmapData = Object.entries(data).map(([dateStr, hours]) => {
+                    const date = new Date(dateStr);
+                    return { x: date.getDay(), y: getWeekNumber(date), d: date, v: hours };
+                });
+
+                const chartData = {
+                    datasets: [{
+                        label: 'Ore per Giorno', data: heatmapData,
+                        backgroundColor: (ctx) => {
+                            const value = ctx.raw?.v;
+                            if (!value) return '#f8fafc'; // slate-50
+                            const alpha = Math.min(1, 0.15 + value / 10);
+                            return `rgba(34, 197, 94, ${alpha})`;
+                        },
+                        borderColor: '#e2e8f0', borderWidth: 1,
+                        width: ({chart}) => (chart.chartArea?.width || 0) / 7 - 1,
+                        height: ({chart}) => (chart.chartArea?.height || 0) / weekLabels.length - 1,
+                    }]
+                };
+                const options = {
+                    plugins: { tooltip: { callbacks: { title: (items) => new Date(items[0].raw.d).toLocaleDateString('it-IT'), label: (item) => `Ore: ${numberFormatter.format(item.raw.v)}` } } },
+                    scales: { 
+                        y: { type: 'category', labels: weekLabels, offset: true, grid: { display: false }, ticks: { color: textColor } }, 
+                        x: { type: 'category', labels: weekDayLabels, offset: true, grid: { display: false }, ticks: { color: textColor } } 
+                    }
+                };
+                createOrUpdateChart(canvasId, 'matrix', chartData, options);
+            };
+
+            const renderTable = (logs) => {
+                dom.tableHead.innerHTML = `<tr>${['Data', 'Risorsa', 'Progetto', 'Task', 'Ore'].map(h => `<th class="p-2 text-left">${h}</th>`).join('')}</tr>`;
+                dom.tableBody.innerHTML = logs.slice(0, 200).map(log => `
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-2 whitespace-nowrap">${log.date.toLocaleDateString('it-IT')}</td>
+                        <td class="p-2">${log.resource}</td>
+                        <td class="p-2">${log.projectId}</td>
+                        <td class="p-2">${log.taskTitle}</td>
+                        <td class="p-2 text-right">${numberFormatter.format(log.hours)}</td>
+                    </tr>
+                `).join('');
+            };
+            
+            // --- FUNZIONI DI UTILITÀ ---
+            const createOrUpdateChart = (canvasId, type, data, options = {}) => {
+                if (chartInstances[canvasId]) chartInstances[canvasId].destroy();
+                const defaultOptions = { maintainAspectRatio: false, responsive: true, plugins: { legend: { display: false } } };
+                const ctx = document.getElementById(canvasId).getContext('2d');
+                chartInstances[canvasId] = new Chart(ctx, { type, data, options: { ...defaultOptions, ...options } });
+            };
+
+            const getDateRange = () => {
+                const now = new Date();
+                let startDate, endDate = new Date();
+                switch (dom.dateRangeFilter.value) {
+                    case 'last30days': startDate = new Date(); startDate.setDate(now.getDate() - 30); break;
+                    case 'ytd': startDate = new Date(now.getFullYear(), 0, 1); break;
+                    case 'lastyear': startDate = new Date(now.getFullYear() - 1, 0, 1); endDate = new Date(now.getFullYear() - 1, 11, 31); break;
+                    case 'custom': startDate = dom.startDateInput.value ? new Date(dom.startDateInput.value) : allLogs[0].date; endDate = dom.endDateInput.value ? new Date(dom.endDateInput.value) : new Date(); break;
+                    default: startDate = allLogs[0].date; endDate = allLogs[allLogs.length - 1].date;
+                }
+                return [startDate, endDate];
+            };
+
+            const getWeekNumber = (d) => {
+                d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+                d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+                const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+                return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+            };
+
+            const aggregateBy = (logs, key, isDate = false) => logs.reduce((acc, log) => {
+                const groupKey = isDate ? log[key].toISOString().split('T')[0] : log[key];
+                acc[groupKey] = (acc[groupKey] || 0) + log.hours;
+                return acc;
+            }, {});
+
+            const calculateResourceUsage = (hoursByResource, startDate, endDate) => {
+                const diffTime = Math.abs(endDate - startDate);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                const totalWorkableHours = (diffDays / 7) * 40;
+                if (totalWorkableHours <= 0) return {};
+                const usage = {};
+                for (const resource in hoursByResource) usage[resource] = (hoursByResource[resource] / totalWorkableHours) * 100;
+                return usage;
+            };
+
+            const calculateAverageUsage = (resourceUsage) => {
+                const usages = Object.values(resourceUsage);
+                if (usages.length === 0) return 0;
+                return numberFormatter.format(usages.reduce((sum, u) => sum + u, 0) / usages.length);
+            };
+
+            dom.exportCsvBtn.addEventListener('click', () => {
+                const { filteredLogs } = applyFiltersAndAggregate();
+                const headers = ['Data', 'Risorsa', 'Progetto', 'Task', 'Ore Lavorate'];
+                const rows = filteredLogs.map(log => [log.date.toLocaleDateString('it-IT'), log.resource, log.projectId, log.taskTitle, String(log.hours).replace('.', ',')]);
+                const csvContent = [headers.join(';'), ...rows.map(row => row.join(';'))].join('\n');
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement("a");
+                link.setAttribute("href", URL.createObjectURL(blob));
+                link.setAttribute("download", "dati_filtrati.csv");
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+
+            // --- AVVIO ---
+            loadInitialData();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
