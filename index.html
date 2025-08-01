@@ -21,7 +21,7 @@
         
         /* Stili riutilizzabili per le card */
         .nav-card {
-            @apply bg-white p-4 rounded-lg shadow-sm border border-transparent hover:border-blue-500 hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-1 cursor-pointer;
+            @apply bg-white p-6 rounded-lg shadow-sm border border-transparent hover:border-blue-500 hover:bg-blue-50 transition-all duration-300 transform hover:-translate-y-1 cursor-pointer flex flex-col;
         }
         .kpi-card {
             @apply bg-white p-6 rounded-lg shadow-sm;
@@ -36,13 +36,15 @@
             <div class="p-6 text-2xl font-bold border-b border-gray-700">
                 Azienda SRL
             </div>
-            <nav class="flex-grow p-4">
-                <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">🏠 Home</a>
-                <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">📂 Progetti</a>
-                <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">📅 Milestone</a>
-                <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">✅ Task</a>
-                <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 bg-gray-700">⏱️ Timelog</a>
-                <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">⚙️ Impostazioni</a>
+            <nav class="flex-grow p-4 space-y-2">
+                <a href="index.html" class="block py-2.5 px-4 rounded transition duration-200 bg-gray-700 font-semibold">🏠 Home</a>
+                <a href="progetti.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">📂 Progetti</a>
+                <a href="milestone.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">📅 Milestone</a>
+                <a href="task.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">✅ Task</a>
+                <a href="timelog.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">⏱️ Timelog</a>
+                <a href="imprevisti.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">⚠️ Imprevisti</a>
+                <a href="varianti.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">🛠️ Varianti</a>
+                <a href="decisionlog.html" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">📌 Decisioni</a>
             </nav>
         </aside>
 
@@ -61,36 +63,42 @@
             <main class="p-6">
                 <!-- Sezione Quick Navigation -->
                 <section id="quick-nav" class="mb-8">
-                    <h2 class="text-xl font-semibold text-gray-700 mb-4">Accesso Rapido</h2>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                        <div class="nav-card">
-                            <h3 class="text-lg font-bold flex items-center">📂 Progetti</h3>
-                            <p id="progetti-desc" class="text-sm text-gray-500 mt-1">Nessun dato</p>
-                        </div>
-                        <div class="nav-card">
-                            <h3 class="text-lg font-bold flex items-center">📅 Milestone</h3>
-                            <p id="milestone-desc" class="text-sm text-gray-500 mt-1">Nessun dato</p>
-                        </div>
-                        <div class="nav-card">
-                            <h3 class="text-lg font-bold flex items-center">✅ Task</h3>
-                            <p id="task-desc" class="text-sm text-gray-500 mt-1">Nessun dato</p>
-                        </div>
-                        <div class="nav-card">
-                            <h3 class="text-lg font-bold flex items-center">⚠️ Imprevisti</h3>
-                            <p class="text-sm text-gray-500 mt-1">Non monitorati</p>
-                        </div>
-                        <div class="nav-card">
-                            <h3 class="text-lg font-bold flex items-center">🛠️ Varianti</h3>
-                            <p class="text-sm text-gray-500 mt-1">Non monitorate</p>
-                        </div>
-                        <div class="nav-card">
-                            <h3 class="text-lg font-bold flex items-center">📌 Decisioni</h3>
-                            <p class="text-sm text-gray-500 mt-1">Non monitorate</p>
-                        </div>
-                        <div class="nav-card">
-                            <h3 class="text-lg font-bold flex items-center">⏱️ Timelog</h3>
-                            <p id="timelog-desc" class="text-sm text-gray-500 mt-1">Nessun dato</p>
-                        </div>
+                    <h2 class="text-xl font-semibold text-gray-700 mb-4">Pannelli di Controllo</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        
+                        <a href="progetti.html" class="nav-card">
+                            <h3 class="text-lg font-bold flex items-center mb-2">📂 Progetti</h3>
+                            <p class="text-sm text-gray-600 flex-grow">Visualizza lo stato di avanzamento di tutti i progetti, dal concepimento alla chiusura.</p>
+                            <p id="progetti-desc" class="text-sm text-blue-600 font-semibold mt-2">Nessun dato</p>
+                        </a>
+                        <a href="milestone.html" class="nav-card">
+                            <h3 class="text-lg font-bold flex items-center mb-2">📅 Milestone</h3>
+                            <p class="text-sm text-gray-600 flex-grow">Monitora le scadenze chiave e i punti di controllo critici per ogni progetto.</p>
+                            <p id="milestone-desc" class="text-sm text-red-600 font-semibold mt-2">Nessun dato</p>
+                        </a>
+                        <a href="task.html" class="nav-card">
+                            <h3 class="text-lg font-bold flex items-center mb-2">✅ Task</h3>
+                            <p class="text-sm text-gray-600 flex-grow">Analizza il dettaglio delle attività operative, assegnazioni e performance del team.</p>
+                            <p id="task-desc" class="text-sm text-yellow-600 font-semibold mt-2">Nessun dato</p>
+                        </a>
+                         <a href="timelog.html" class="nav-card">
+                            <h3 class="text-lg font-bold flex items-center mb-2">⏱️ Timelog</h3>
+                            <p class="text-sm text-gray-600 flex-grow">Esplora la distribuzione delle ore lavorate per risorsa, progetto e periodo.</p>
+                            <p id="timelog-desc" class="text-sm text-green-600 font-semibold mt-2">Nessun dato</p>
+                        </a>
+                        <a href="imprevisti.html" class="nav-card">
+                            <h3 class="text-lg font-bold flex items-center mb-2">⚠️ Imprevisti</h3>
+                            <p class="text-sm text-gray-600 flex-grow">Traccia e gestisci gli eventi inaspettati che impattano la pianificazione.</p>
+                        </a>
+                        <a href="varianti.html" class="nav-card">
+                            <h3 class="text-lg font-bold flex items-center mb-2">🛠️ Varianti</h3>
+                            <p class="text-sm text-gray-600 flex-grow">Documenta e approva le modifiche di progetto e il loro impatto su tempi e costi.</p>
+                        </a>
+                        <a href="decisionlog.html" class="nav-card">
+                            <h3 class="text-lg font-bold flex items-center mb-2">📌 Decisioni</h3>
+                            <p class="text-sm text-gray-600 flex-grow">Mantieni un registro centrale delle decisioni importanti prese durante il progetto.</p>
+                        </a>
+
                     </div>
                 </section>
 
@@ -128,9 +136,7 @@
             const loadCSV = async (path) => {
                 try {
                     const response = await fetch(path);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                     const csvText = await response.text();
                     return new Promise(resolve => {
                         Papa.parse(csvText, {
@@ -139,13 +145,13 @@
                             complete: (results) => resolve(results.data),
                             error: (err) => {
                                 console.warn(`Errore nel parsing di ${path}:`, err);
-                                resolve([]); // Restituisce array vuoto in caso di errore di parsing
+                                resolve([]);
                             }
                         });
                     });
                 } catch (error) {
                     console.warn(`Impossibile caricare il file CSV da ${path}:`, error);
-                    return []; // Restituisce array vuoto se il fetch fallisce
+                    return [];
                 }
             };
 
@@ -154,7 +160,6 @@
                 if (!dateString) return null;
                 const parts = dateString.split('/');
                 if (parts.length !== 3) return null;
-                // Formato: Anno, Mese (0-11), Giorno
                 const date = new Date(parts[2], parts[1] - 1, parts[0]);
                 return isNaN(date.getTime()) ? null : date;
             };
@@ -170,11 +175,9 @@
 
             // --- LOGICA PRINCIPALE ---
 
-            // 1. Aggiorna l'orologio immediatamente e poi ogni minuto
             updateDateTime();
             setInterval(updateDateTime, 60000);
 
-            // 2. Carica tutti i dati CSV in parallelo
             const [progetti, milestone, task, timelog] = await Promise.all([
                 loadCSV('data/progetti.csv'),
                 loadCSV('data/milestone.csv'),
@@ -182,7 +185,7 @@
                 loadCSV('data/timelog.csv')
             ]);
 
-            // 3. Calcola le metriche per le Quick Navigation Cards
+            // Calcola le metriche e aggiorna le card
             const progettiInCorsoCount = progetti.filter(p => p.Stato !== 'Completato').length;
             document.getElementById('progetti-desc').textContent = `${progettiInCorsoCount} in corso`;
             
@@ -195,7 +198,7 @@
             const timelogCount = timelog.length;
             document.getElementById('timelog-desc').textContent = `${timelogCount} record totali`;
 
-            // 4. Calcola i KPI
+            // Calcola e aggiorna i KPI
             document.getElementById('kpi-progetti').textContent = progettiInCorsoCount;
             document.getElementById('kpi-milestone').textContent = milestoneInRitardoCount;
             document.getElementById('kpi-task').textContent = taskApertiCount;
@@ -205,14 +208,10 @@
 
             const oreUltimi30gg = timelog.reduce((sum, record) => {
                 const recordDate = parseItalianDate(record.Data);
-                // NOTA: La colonna delle ore in timelog.csv potrebbe chiamarsi 'Ore' o 'Ore Effettive'.
-                // Adattare 'record.Ore' se il nome della colonna è diverso.
+                // NOTA: Adattare 'record['Ore Effettive']' se il nome della colonna è diverso.
                 const oreValue = record['Ore Effettive'] || record['Ore'] || '0';
                 const ore = parseFloat(String(oreValue).replace(',', '.')) || 0;
-
-                if (recordDate && recordDate >= thirtyDaysAgo) {
-                    return sum + ore;
-                }
+                if (recordDate && recordDate >= thirtyDaysAgo) return sum + ore;
                 return sum;
             }, 0);
 
