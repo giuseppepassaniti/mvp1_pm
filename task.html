@@ -127,14 +127,12 @@
             let sortConfig = { key: 'deadline', direction: 'asc' };
 
             // --- FUNZIONI DI PARSING E UTILITY ---
-            // MODIFICA: Utilizzo della funzione di parsing manuale, più robusta per i dati specifici.
             const parseItalianDate = (dateString) => {
                 if (!dateString) return null;
                 const parts = dateString.split('/');
                 if (parts.length !== 3) return null;
                 const [day, month, year] = parts.map(p => parseInt(p, 10));
                 if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
-                // Controlla che l'anno abbia 4 cifre per evitare errori
                 if (String(year).length < 4) return null;
                 return new Date(year, month - 1, day);
             };
@@ -144,7 +142,8 @@
 
             // --- LOGICA PRINCIPALE ---
             function loadInitialTasks() {
-                const taskCsvUrl = 'data/task.csv';
+                // Sostituire questo URL con il percorso corretto del file CSV
+                const taskCsvUrl = 'tasks.csv';
                 fetch(taskCsvUrl)
                     .then(response => {
                         if (!response.ok) throw new Error(`File non trovato: ${taskCsvUrl}`);
@@ -172,7 +171,6 @@
                     const startDate = parseItalianDate(row['Start Date']);
                     const deadline = parseItalianDate(row.Deadline);
                     
-                    // MODIFICA: Semplificato il controllo della validità della data
                     if (!row.ID || !row['Titolo Task'] || !row.Progetto || !startDate || !deadline) {
                         console.warn('Riga saltata per dati mancanti o non validi:', row);
                         return null;
@@ -194,7 +192,7 @@
                         estimatedProductivity: row['Produttività Stimata'] || 'N/D',
                         isLate: deadline < today && row.Stato !== 'Completato'
                     };
-                }).filter(Boolean); // Rimuove le righe nulle
+                }).filter(Boolean); 
 
                 if (allTasks.length > 0) {
                     initialMessage.style.display = 'none';
@@ -220,7 +218,7 @@
                 applyFiltersAndSort();
                 renderKpis();
                 renderPreview();
-                renderTableView(); // Renderizza sempre la tabella
+                renderTableView();
             }
 
             function applyFiltersAndSort() {
@@ -328,7 +326,6 @@
             function createTaskRow(task) {
                 const statusInfo = getStatusInfo(task);
                 const criticalityIcon = task.criticality === 'Alta' ? `<i data-lucide="flame" class="inline-block h-4 w-4 text-orange-500"></i>` : '';
-                // Usiamo dayjs solo per formattare la data in output
                 const deadlineText = dayjs(task.deadline).format('DD/MM/YYYY');
 
                 return `
@@ -344,12 +341,14 @@
                     </tr>`;
             }
             
+            // --- MODIFICA PER BUG FIX ---
             function getStatusInfo(task) {
                 if (task.isLate) return { text: 'In Ritardo', badgeClasses: 'bg-red-100 text-red-800', progressBg: 'bg-red-600' };
                 const statuses = {
                     'Completato': { text: 'Completato', badgeClasses: 'bg-green-100 text-green-800', progressBg: 'bg-green-600' },
                     'In corso': { text: 'In Corso', badgeClasses: 'bg-yellow-100 text-yellow-800', progressBg: 'bg-yellow-500' },
                     'Pianificato': { text: 'Pianificato', badgeClasses: 'bg-blue-100 text-blue-800', progressBg: 'bg-blue-600' },
+                    'Non Iniziata': { text: 'Non Iniziata', badgeClasses: 'bg-slate-200 text-slate-800', progressBg: 'bg-slate-400' } // Aggiunto per gestire il nuovo stato
                 };
                 return statuses[task.status] || { text: 'Sconosciuto', badgeClasses: 'bg-slate-100 text-slate-800', progressBg: 'bg-slate-500' };
             }
