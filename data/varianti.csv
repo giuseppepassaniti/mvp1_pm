@@ -1,166 +1,19 @@
 ﻿Variante,Progetto,Data Variante,Descrizione Variante,Impatto Tempi (in giorni),Impatto Costi,Stato
-"
-Modifica per tempistiche
-",PJT-1000,25/8/2024,"
-In seguito all’imprevisto 'Tempistiche' (ritardo consegna) rilevato nel progetto Linea Alta Tensione Nord-Est, è stata proposta una variante correttiva.
-","19,0","€38583,00",Rifiutata
-"
-Modifica per tempistiche
-",PJT-1000,22/5/2024,"
-In seguito all’imprevisto 'Tempistiche' (ritardo consegna) rilevato nel progetto Linea Alta Tensione Nord-Est, è stata proposta una variante correttiva.
-","22,0","€0,00",Rifiutata
-"
-Modifica per cliente
-",PJT-1001,13/7/2024,"
-In seguito all’imprevisto 'Cliente' (sforamento costi) rilevato nel progetto Raddoppio Linea AV Milano–Brescia, è stata proposta una variante correttiva.
-","3,0","€11141,00",In valutazione
-"
-Modifica per cliente
-",PJT-1001,7/5/2025,"
-In seguito all’imprevisto 'Cliente' (ritardo consegna) rilevato nel progetto Raddoppio Linea AV Milano–Brescia, è stata proposta una variante correttiva.
-","22,0","€0,00",Approvata
-"
-Modifica per risorse interne
-",PJT-1002,5/1/2024,"
-In seguito all’imprevisto 'Risorse interne' (sforamento costi) rilevato nel progetto Impianto Fotovoltaico Sicilia Ovest, è stata proposta una variante correttiva.
-","-3,0","€17709,00",In valutazione
-"
-Modifica per tempistiche
-",PJT-1002,26/11/2023,"
-In seguito all’imprevisto 'Tempistiche' (ritardo consegna) rilevato nel progetto Impianto Fotovoltaico Sicilia Ovest, è stata proposta una variante correttiva.
-","30,0","-€23363,00",Approvata
-"
-Modifica per tempistiche
-",PJT-1002,26/3/2024,"
-In seguito all’imprevisto 'Tempistiche' (sforamento costi) rilevato nel progetto Impianto Fotovoltaico Sicilia Ovest, è stata proposta una variante correttiva.
-","15,0","€33651,00",Rifiutata
-"
-Modifica per errore tecnico
-",PJT-1003,11/2/2025,"
-In seguito all’imprevisto 'Errore tecnico' (ritardo consegna) rilevato nel progetto Interconnessione Rete Gas Appennino, è stata proposta una variante correttiva.
-","27,0","-€7613,00",Rifiutata
-"
-Modifica per tempistiche
-",PJT-1003,18/6/2023,"
-In seguito all’imprevisto 'Tempistiche' (perdita qualità) rilevato nel progetto Interconnessione Rete Gas Appennino, è stata proposta una variante correttiva.
-","19,0","-€28303,00",In valutazione
-"
-Modifica per materiali
-",PJT-1004,2/5/2024,"
-In seguito all’imprevisto 'Materiali' (perdita qualità) rilevato nel progetto Galleria Ferroviaria Monte Bianco, è stata proposta una variante correttiva.
-","10,0","€0,00",Approvata
-"
-Modifica per risorse interne
-",PJT-1004,15/10/2024,"
-In seguito all’imprevisto 'Risorse interne' (ritardo consegna) rilevato nel progetto Galleria Ferroviaria Monte Bianco, è stata proposta una variante correttiva.
-","26,0","€0,00",In valutazione
-"
-Modifica per materiali
-",PJT-1004,26/7/2023,"
-In seguito all’imprevisto 'Materiali' (perdita qualità) rilevato nel progetto Galleria Ferroviaria Monte Bianco, è stata proposta una variante correttiva.
-","6,0","€0,00",Approvata
-"
-Modifica per risorse interne
-",PJT-1005,1/1/2025,"
-In seguito all’imprevisto 'Risorse interne' (sforamento costi) rilevato nel progetto Ampliamento Stazione AV Bologna, è stata proposta una variante correttiva.
-","3,0","€34731,00",Approvata
-"
-Modifica per risorse interne
-",PJT-1005,31/10/2024,"
-In seguito all’imprevisto 'Risorse interne' (sforamento costi) rilevato nel progetto Ampliamento Stazione AV Bologna, è stata proposta una variante correttiva.
-","-4,0","€47738,00",Rifiutata
-"
-Modifica per risorse interne
-",PJT-1005,8/8/2025,"
-In seguito all’imprevisto 'Risorse interne' (perdita qualità) rilevato nel progetto Ampliamento Stazione AV Bologna, è stata proposta una variante correttiva.
-","-4,0","€48634,00",Approvata
-"
-Modifica per cliente
-",PJT-1006,8/12/2023,"
-In seguito all’imprevisto 'Cliente' (ritardo consegna) rilevato nel progetto Sottostazione Elettrica Brindisi, è stata proposta una variante correttiva.
-","24,0","€0,00",Rifiutata
-"
-Modifica per tempistiche
-",PJT-1006,1/1/2024,"
-In seguito all’imprevisto 'Tempistiche' (ritardo consegna) rilevato nel progetto Sottostazione Elettrica Brindisi, è stata proposta una variante correttiva.
-","9,0","€0,00",Rifiutata
-"
-Modifica per cliente
-",PJT-1006,4/12/2023,"
-In seguito all’imprevisto 'Cliente' (perdita qualità) rilevato nel progetto Sottostazione Elettrica Brindisi, è stata proposta una variante correttiva.
-","-4,0","€0,00",In valutazione
-"
-Modifica per tempistiche
-",PJT-1007,28/11/2023,"
-In seguito all’imprevisto 'Tempistiche' (perdita qualità) rilevato nel progetto Potenziamento Nodo Ferroviario Torino, è stata proposta una variante correttiva.
-","13,0","€0,00",In valutazione
-"
-Modifica per tempistiche
-",PJT-1007,22/8/2023,"
-In seguito all’imprevisto 'Tempistiche' (perdita qualità) rilevato nel progetto Potenziamento Nodo Ferroviario Torino, è stata proposta una variante correttiva.
-","2,0","-€15858,00",In valutazione
-"
-Modifica per cliente
-",PJT-1008,9/11/2024,"
-In seguito all’imprevisto 'Cliente' (sforamento costi) rilevato nel progetto Linea Interrata 380kV Nord-Sud, è stata proposta una variante correttiva.
-","4,0","€24952,00",In valutazione
-"
-Modifica per cliente
-",PJT-1008,6/10/2024,"
-In seguito all’imprevisto 'Cliente' (sforamento costi) rilevato nel progetto Linea Interrata 380kV Nord-Sud, è stata proposta una variante correttiva.
-","12,0","€34935,00",Approvata
-"
-Modifica per tempistiche
-",PJT-1009,22/10/2023,"
-In seguito all’imprevisto 'Tempistiche' (sforamento costi) rilevato nel progetto Rete Idrica Industriale Cagliari, è stata proposta una variante correttiva.
-","-5,0","€48065,00",Approvata
-"
-Modifica per cliente
-",PJT-1009,5/10/2023,"
-In seguito all’imprevisto 'Cliente' (sforamento costi) rilevato nel progetto Rete Idrica Industriale Cagliari, è stata proposta una variante correttiva.
-","7,0","€16794,00",Approvata
-"
-Modifica per tempistiche
-",PJT-1009,14/12/2023,"
-In seguito all’imprevisto 'Tempistiche' (sforamento costi) rilevato nel progetto Rete Idrica Industriale Cagliari, è stata proposta una variante correttiva.
-","0,0","€15919,00",Approvata
-"
-Modifica per cliente
-",PJT-1009,5/5/2024,"
-In seguito all’imprevisto 'Cliente' (sforamento costi) rilevato nel progetto Rete Idrica Industriale Cagliari, è stata proposta una variante correttiva.
-","-4,0","€28512,00",In valutazione
-"
-Modifica per errore tecnico
-",PJT-1010,18/9/2024,"
-In seguito all’imprevisto 'Errore tecnico' (perdita qualità) rilevato nel progetto Tunnel di Servizio Brennero, è stata proposta una variante correttiva.
-","16,0","-€17032,00",Rifiutata
-"
-Modifica per cliente
-",PJT-1010,16/6/2024,"
-In seguito all’imprevisto 'Cliente' (ritardo consegna) rilevato nel progetto Tunnel di Servizio Brennero, è stata proposta una variante correttiva.
-","15,0","€7738,00",Rifiutata
-"
-Modifica per errore tecnico
-",PJT-1010,15/6/2024,"
-In seguito all’imprevisto 'Errore tecnico' (sforamento costi) rilevato nel progetto Tunnel di Servizio Brennero, è stata proposta una variante correttiva.
-","7,0","€7897,00",Rifiutata
-"
-Modifica per risorse interne
-",PJT-1011,15/12/2023,"
-In seguito all’imprevisto 'Risorse interne' (sforamento costi) rilevato nel progetto Parco Eolico Off-shore Taranto, è stata proposta una variante correttiva.
-","0,0","€42722,00",Rifiutata
-"
-Modifica per risorse interne
-",PJT-1011,11/7/2024,"
-In seguito all’imprevisto 'Risorse interne' (sforamento costi) rilevato nel progetto Parco Eolico Off-shore Taranto, è stata proposta una variante correttiva.
-","-4,0","€45585,00",Rifiutata
-"
-Modifica per tempistiche
-",PJT-1011,21/2/2024,"
-In seguito all’imprevisto 'Tempistiche' (ritardo consegna) rilevato nel progetto Parco Eolico Off-shore Taranto, è stata proposta una variante correttiva.
-","34,0","€0,00",Approvata
-"
-Modifica per risorse interne
-",PJT-1011,19/12/2023,"
-In seguito all’imprevisto 'Risorse interne' (ritardo consegna) rilevato nel progetto Parco Eolico Off-shore Taranto, è stata proposta una variante correttiva.
-","28,0","€0,00",In valutazione
+Richiesta Cliente,PV-2025-01,25/6/2025,Richiesta cliente di aggiunta di un attacco supplementare DN50,"5,0","€18000,00",Approvata
+Modifica Ciclo Lavoro,PV-2025-01,10/8/2025,Modifica del ciclo di verniciatura su richiesta cliente (aggiunta primer speciale),"3,0","€7500,00",In valutazione
+Sostituzione Materiale,PV-2024-01,6/4/2024,Sostituzione materiale raccordi su richiesta cliente.,"7,0","€9500,00",Approvata
+Modifica verniciatura,PV-2024-01,16/6/2024,Modifica ciclo verniciatura con primer speciale,"4,0","€2800,00",Approvata
+Richiesta Cliente,SEP-2025-02,18/5/2025,Aggiunta linea di bypass manuale per scarico condensa.,"4,0","€12000,00",Approvata
+Upgrade Strumentazione,SEP-2025-02,2/7/2025,Sostituzione strumentazione di livello con sensori radar ad alta precisione.,"3,0","€18000,00",In valutazione
+Variazione Tracciato,G.PIPE-2025-03,12/4/2025,Spostamento tracciato di 50 m per evitare area protetta.,"8,0","€35000,00",Approvata
+Rivestimento Anticorrosione,G.PIPE-2025-03,6/6/2025,Aggiunta rivestimento anticorrosione 3LPE su tutta la pipeline.,"5,0","€15000,00",In valutazione
+Cambio Materiale Bulloni,OFF.P-2025-04,22/9/2025,Utilizzo bulloni ad alta resistenza 42CrMo4 al posto di A325.,"6,0","€28000,00",Approvata
+Integrazione Modulo Compressione,OFF.P-2025-04,15/10/2025,Aggiunta modulo di compressione gas sul topside per future espansioni.,"10,0","€75000,00",In valutazione
+Aggiunta valvola bypass manuale,G.Dh-2024-02,15/4/2024,Richiesta cliente per aggiunta valvola bypass su linea principale.,"3,0","€9500,00",Approvata
+Upgrade strumentazione pressione,G.Dh-2024-02,5/7/2024,Sostituzione trasmettitori pressione con modelli digitali.,"2,0","€6200,00",Approvata
+Sostituzione materiale guarnizioni,G.Dh-2024-02,10/5/2024,Utilizzo guarnizioni in PTFE per compatibilità con gas acidi.,"1,0","€3200,00",Approvata
+Implementazione monitoraggio remoto,G.Dh-2024-02,20/8/2024,Aggiunta sistema di monitoraggio remoto su richiesta cliente.,"4,0","€12500,00",Approvata
+Sostituzione materiale fondi vessel,PV-2024-03,12/4/2024,Utilizzo acciaio 16Mo3 al posto di P355NL2 per i fondi vessel.,"5,0","€9800,00",Approvata
+Aggiunta attacco supplementare DN80,PV-2024-03,25/5/2024,Richiesta cliente per attacco supplementare DN80 su guscio.,"4,0","€14500,00",Approvata
+Modifica ciclo verniciatura,PV-2024-03,10/8/2024,Aggiunta primer epossidico per ambiente marino.,"3,0","€7200,00",Approvata
+Upgrade valvole di sicurezza,PV-2024-03,2/5/2024,Sostituzione valvole di sicurezza con modello certificato SIL3.,"2,0","€5600,00",Approvata

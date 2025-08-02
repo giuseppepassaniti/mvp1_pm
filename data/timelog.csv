@@ -1,611 +1,117 @@
 ﻿ID,Task,Risorse,Data,Ore Effettive,Descrizione
-1051,1 | Revisione elaborati | PJT-1000,Marco Russo,18/7/2025,"4,0",Completamento fase operativa
-1700,1 | Revisione elaborati | PJT-1000,Marco Russo,30/7/2025,"5,0",Avanzamento attività prevista
-1701,2 | Revisione elaborati | PJT-1000,Laura Bellini,10/2/2024,"8,0",Verifica finale della task
-1702,2 | Revisione elaborati | PJT-1000,Laura Bellini,20/2/2024,"1,0",Verifica finale della task
-1703,3 | Analisi tecnica | PJT-1000,Francesca Villa,15/11/2023,"4,0",Analisi e sviluppo tecnico
-1704,4 | Verifica normativa | PJT-1000,Marco Russo,29/7/2025,"2,0",Avanzamento attività prevista
-1705,4 | Verifica normativa | PJT-1000,Marco Russo,21/8/2025,"6,0",Integrazione elaborati
-1706,4 | Verifica normativa | PJT-1000,Marco Russo,31/7/2025,"7,0",Integrazione elaborati
-1707,4 | Verifica normativa | PJT-1000,Marco Russo,26/7/2025,"1,0",Integrazione elaborati
-1708,4 | Verifica normativa | PJT-1000,Marco Russo,30/7/2025,"5,0",Avanzamento attività prevista
-1709,5 | Coordinamento team | PJT-1000,Giulia Conti,21/11/2023,"4,0",Integrazione elaborati
-1710,5 | Coordinamento team | PJT-1000,Giulia Conti,11/11/2023,"3,0",Integrazione elaborati
-1711,6 | Validazione interna | PJT-1000,Marco Russo,18/11/2023,"7,0",Completamento fase operativa
-1712,6 | Validazione interna | PJT-1000,Marco Russo,1/12/2023,"5,0",Avanzamento attività prevista
-1713,6 | Validazione interna | PJT-1000,Marco Russo,23/11/2023,"5,0",Verifica finale della task
-1714,6 | Validazione interna | PJT-1000,Marco Russo,25/11/2023,"4,0",Avanzamento attività prevista
-1715,6 | Validazione interna | PJT-1000,Marco Russo,18/11/2023,"2,0",Verifica finale della task
-1716,6 | Validazione interna | PJT-1000,Marco Russo,20/11/2023,"2,0",Avanzamento attività prevista
-1717,7 | Validazione interna | PJT-1000,Marco Russo,16/7/2025,"4,0",Completamento fase operativa
-1718,7 | Validazione interna | PJT-1000,Marco Russo,18/7/2025,"4,0",Verifica finale della task
-1719,7 | Validazione interna | PJT-1000,Marco Russo,3/7/2025,"3,0",Avanzamento attività prevista
-1720,8 | Coordinamento team | PJT-1000,Francesca Villa,19/2/2024,"1,0",Verifica finale della task
-1721,8 | Coordinamento team | PJT-1000,Francesca Villa,15/2/2024,"2,0",Completamento fase operativa
-1722,8 | Coordinamento team | PJT-1000,Francesca Villa,14/2/2024,"1,0",Avanzamento attività prevista
-1723,9 | Simulazione impianto | PJT-1000,Daniele Grassi,28/11/2023,"5,0",Verifica finale della task
-1724,9 | Simulazione impianto | PJT-1000,Daniele Grassi,15/11/2023,"8,0",Integrazione elaborati
-1725,9 | Simulazione impianto | PJT-1000,Daniele Grassi,15/11/2023,"8,0",Analisi e sviluppo tecnico
-1726,10 | Coordinamento team | PJT-1000,Daniele Grassi,6/5/2025,"8,0",Verifica finale della task
-1727,10 | Coordinamento team | PJT-1000,Daniele Grassi,6/5/2025,"4,0",Avanzamento attività prevista
-1728,11 | Elaborazione disegni | PJT-1000,Francesca Villa,3/8/2025,"5,0",Analisi e sviluppo tecnico
-1729,11 | Elaborazione disegni | PJT-1000,Francesca Villa,8/8/2025,"5,0",Avanzamento attività prevista
-1730,11 | Elaborazione disegni | PJT-1000,Francesca Villa,7/8/2025,"1,0",Integrazione elaborati
-1731,12 | Sopralluogo | PJT-1000,Giulia Conti,21/2/2024,"5,0",Completamento fase operativa
-1732,12 | Sopralluogo | PJT-1000,Giulia Conti,19/2/2024,"4,0",Verifica finale della task
-1733,12 | Sopralluogo | PJT-1000,Giulia Conti,19/2/2024,"5,0",Verifica finale della task
-1734,12 | Sopralluogo | PJT-1000,Giulia Conti,22/2/2024,"4,0",Avanzamento attività prevista
-1735,12 | Sopralluogo | PJT-1000,Giulia Conti,12/2/2024,"5,0",Completamento fase operativa
-1736,13 | Gestione cliente | PJT-1000,Giulia Conti,24/7/2025,"6,0",Completamento fase operativa
-1737,13 | Gestione cliente | PJT-1000,Giulia Conti,1/8/2025,"2,0",Integrazione elaborati
-1738,13 | Gestione cliente | PJT-1000,Giulia Conti,21/7/2025,"8,0",Completamento fase operativa
-1739,13 | Gestione cliente | PJT-1000,Giulia Conti,11/8/2025,"4,0",Integrazione elaborati
-1740,14 | Coordinamento team | PJT-1000,Giulia Conti,21/8/2025,"6,0",Verifica finale della task
-1741,14 | Coordinamento team | PJT-1000,Giulia Conti,29/7/2025,"6,0",Analisi e sviluppo tecnico
-1742,14 | Coordinamento team | PJT-1000,Giulia Conti,10/8/2025,"1,0",Analisi e sviluppo tecnico
-1743,14 | Coordinamento team | PJT-1000,Giulia Conti,17/8/2025,"4,0",Completamento fase operativa
-1744,14 | Coordinamento team | PJT-1000,Giulia Conti,13/8/2025,"3,0",Completamento fase operativa
-1745,15 | Verifica normativa | PJT-1000,Giulia Conti,9/4/2025,"5,0",Analisi e sviluppo tecnico
-1746,15 | Verifica normativa | PJT-1000,Giulia Conti,19/3/2025,"8,0",Avanzamento attività prevista
-1747,15 | Verifica normativa | PJT-1000,Giulia Conti,24/3/2025,"3,0",Avanzamento attività prevista
-1748,15 | Verifica normativa | PJT-1000,Giulia Conti,18/3/2025,"1,0",Verifica finale della task
-1749,15 | Verifica normativa | PJT-1000,Giulia Conti,7/4/2025,"1,0",Avanzamento attività prevista
-1750,16 | Verifica normativa | PJT-1001,Giulia Conti,22/7/2025,"2,0",Integrazione elaborati
-1751,16 | Verifica normativa | PJT-1001,Giulia Conti,10/7/2025,"4,0",Verifica finale della task
-1752,16 | Verifica normativa | PJT-1001,Giulia Conti,15/7/2025,"1,0",Completamento fase operativa
-1753,16 | Verifica normativa | PJT-1001,Giulia Conti,8/7/2025,"4,0",Avanzamento attività prevista
-1754,17 | Revisione elaborati | PJT-1001,Giulia Conti,18/6/2025,"5,0",Completamento fase operativa
-1755,17 | Revisione elaborati | PJT-1001,Giulia Conti,14/6/2025,"1,0",Verifica finale della task
-1756,18 | Revisione elaborati | PJT-1001,Giulia Conti,13/6/2025,"5,0",Completamento fase operativa
-1757,18 | Revisione elaborati | PJT-1001,Giulia Conti,5/7/2025,"5,0",Analisi e sviluppo tecnico
-1758,19 | Elaborazione disegni | PJT-1001,Giulia Conti,8/7/2025,"1,0",Avanzamento attività prevista
-1759,19 | Elaborazione disegni | PJT-1001,Giulia Conti,16/7/2025,"1,0",Avanzamento attività prevista
-1760,19 | Elaborazione disegni | PJT-1001,Giulia Conti,9/7/2025,"2,0",Integrazione elaborati
-1761,19 | Elaborazione disegni | PJT-1001,Giulia Conti,7/7/2025,"3,0",Completamento fase operativa
-1762,19 | Elaborazione disegni | PJT-1001,Giulia Conti,14/7/2025,"8,0",Analisi e sviluppo tecnico
-1763,20 | Coordinamento team | PJT-1001,Marco Russo,11/6/2025,"7,0",Avanzamento attività prevista
-1764,20 | Coordinamento team | PJT-1001,Marco Russo,26/6/2025,"5,0",Avanzamento attività prevista
-1765,20 | Coordinamento team | PJT-1001,Marco Russo,28/6/2025,"8,0",Integrazione elaborati
-1766,21 | Simulazione impianto | PJT-1001,Francesca Villa,12/7/2025,"1,0",Avanzamento attività prevista
-1767,21 | Simulazione impianto | PJT-1001,Francesca Villa,16/7/2025,"2,0",Avanzamento attività prevista
-1768,21 | Simulazione impianto | PJT-1001,Francesca Villa,14/7/2025,"4,0",Verifica finale della task
-1769,22 | Coordinamento team | PJT-1001,Giulia Conti,18/8/2024,"2,0",Verifica finale della task
-1770,22 | Coordinamento team | PJT-1001,Giulia Conti,1/9/2024,"7,0",Integrazione elaborati
-1771,22 | Coordinamento team | PJT-1001,Giulia Conti,17/8/2024,"4,0",Completamento fase operativa
-1772,22 | Coordinamento team | PJT-1001,Giulia Conti,15/8/2024,"7,0",Verifica finale della task
-1773,22 | Coordinamento team | PJT-1001,Giulia Conti,25/8/2024,"8,0",Integrazione elaborati
-1774,23 | Analisi tecnica | PJT-1001,Alessandro Neri,12/7/2025,"4,0",Analisi e sviluppo tecnico
-1775,23 | Analisi tecnica | PJT-1001,Alessandro Neri,27/7/2025,"2,0",Analisi e sviluppo tecnico
-1776,23 | Analisi tecnica | PJT-1001,Alessandro Neri,18/7/2025,"1,0",Integrazione elaborati
-1777,24 | Revisione elaborati | PJT-1001,Laura Bellini,2/8/2025,"5,0",Analisi e sviluppo tecnico
-1778,24 | Revisione elaborati | PJT-1001,Laura Bellini,12/7/2025,"1,0",Integrazione elaborati
-1779,25 | Revisione elaborati | PJT-1001,Alessandro Neri,14/8/2025,"8,0",Analisi e sviluppo tecnico
-1780,25 | Revisione elaborati | PJT-1001,Alessandro Neri,10/8/2025,"2,0",Verifica finale della task
-1781,25 | Revisione elaborati | PJT-1001,Alessandro Neri,10/8/2025,"6,0",Avanzamento attività prevista
-1782,25 | Revisione elaborati | PJT-1001,Alessandro Neri,14/8/2025,"2,0",Analisi e sviluppo tecnico
-1783,25 | Revisione elaborati | PJT-1001,Alessandro Neri,16/8/2025,"8,0",Completamento fase operativa
-1784,26 | Sopralluogo | PJT-1001,Laura Bellini,10/7/2024,"7,0",Analisi e sviluppo tecnico
-1785,26 | Sopralluogo | PJT-1001,Laura Bellini,14/7/2024,"5,0",Analisi e sviluppo tecnico
-1786,27 | Sopralluogo | PJT-1001,Marco Russo,22/7/2025,"5,0",Integrazione elaborati
-1787,27 | Sopralluogo | PJT-1001,Marco Russo,13/7/2025,"6,0",Analisi e sviluppo tecnico
-1788,27 | Sopralluogo | PJT-1001,Marco Russo,13/7/2025,"5,0",Integrazione elaborati
-1789,28 | Coordinamento team | PJT-1001,Daniele Grassi,18/8/2025,"6,0",Completamento fase operativa
-1790,28 | Coordinamento team | PJT-1001,Daniele Grassi,13/8/2025,"6,0",Completamento fase operativa
-1791,28 | Coordinamento team | PJT-1001,Daniele Grassi,20/8/2025,"2,0",Avanzamento attività prevista
-1792,28 | Coordinamento team | PJT-1001,Daniele Grassi,21/8/2025,"1,0",Avanzamento attività prevista
-1793,29 | Simulazione impianto | PJT-1001,Francesca Villa,7/2/2025,"4,0",Analisi e sviluppo tecnico
-1794,29 | Simulazione impianto | PJT-1001,Francesca Villa,22/1/2025,"2,0",Analisi e sviluppo tecnico
-1795,30 | Validazione interna | PJT-1002,Daniele Grassi,21/5/2024,"8,0",Avanzamento attività prevista
-1796,30 | Validazione interna | PJT-1002,Daniele Grassi,1/6/2024,"1,0",Verifica finale della task
-1797,31 | Validazione interna | PJT-1002,Alessandro Neri,28/12/2023,"7,0",Integrazione elaborati
-1798,31 | Validazione interna | PJT-1002,Alessandro Neri,21/12/2023,"1,0",Completamento fase operativa
-1799,31 | Validazione interna | PJT-1002,Alessandro Neri,2/1/2024,"4,0",Integrazione elaborati
-1800,31 | Validazione interna | PJT-1002,Alessandro Neri,25/12/2023,"5,0",Avanzamento attività prevista
-1801,32 | Simulazione impianto | PJT-1002,Daniele Grassi,24/12/2023,"5,0",Completamento fase operativa
-1802,32 | Simulazione impianto | PJT-1002,Daniele Grassi,20/12/2023,"8,0",Verifica finale della task
-1803,32 | Simulazione impianto | PJT-1002,Daniele Grassi,23/12/2023,"2,0",Avanzamento attività prevista
-1804,32 | Simulazione impianto | PJT-1002,Daniele Grassi,28/12/2023,"3,0",Integrazione elaborati
-1805,33 | Elaborazione disegni | PJT-1002,Francesca Villa,23/5/2024,"5,0",Completamento fase operativa
-1806,33 | Elaborazione disegni | PJT-1002,Francesca Villa,13/6/2024,"1,0",Completamento fase operativa
-1807,33 | Elaborazione disegni | PJT-1002,Francesca Villa,15/6/2024,"6,0",Integrazione elaborati
-1808,33 | Elaborazione disegni | PJT-1002,Francesca Villa,2/6/2024,"2,0",Avanzamento attività prevista
-1809,34 | Verifica normativa | PJT-1002,Giulia Conti,4/6/2024,"4,0",Completamento fase operativa
-1810,35 | Compilazione documenti | PJT-1002,Daniele Grassi,17/5/2024,"3,0",Avanzamento attività prevista
-1811,35 | Compilazione documenti | PJT-1002,Daniele Grassi,14/5/2024,"2,0",Avanzamento attività prevista
-1812,35 | Compilazione documenti | PJT-1002,Daniele Grassi,10/5/2024,"1,0",Verifica finale della task
-1813,35 | Compilazione documenti | PJT-1002,Daniele Grassi,23/5/2024,"1,0",Integrazione elaborati
-1814,36 | Coordinamento team | PJT-1002,Francesca Villa,31/12/2023,"5,0",Integrazione elaborati
-1815,36 | Coordinamento team | PJT-1002,Francesca Villa,25/12/2023,"4,0",Integrazione elaborati
-1816,36 | Coordinamento team | PJT-1002,Francesca Villa,22/12/2023,"6,0",Analisi e sviluppo tecnico
-1817,36 | Coordinamento team | PJT-1002,Francesca Villa,29/12/2023,"6,0",Avanzamento attività prevista
-1818,37 | Coordinamento team | PJT-1002,Alessandro Neri,31/12/2023,"6,0",Integrazione elaborati
-1819,37 | Coordinamento team | PJT-1002,Alessandro Neri,23/12/2023,"3,0",Avanzamento attività prevista
-1820,37 | Coordinamento team | PJT-1002,Alessandro Neri,16/12/2023,"5,0",Completamento fase operativa
-1821,38 | Validazione interna | PJT-1002,Francesca Villa,10/3/2024,"3,0",Verifica finale della task
-1822,38 | Validazione interna | PJT-1002,Francesca Villa,12/3/2024,"6,0",Avanzamento attività prevista
-1823,39 | Verifica normativa | PJT-1002,Daniele Grassi,28/3/2024,"2,0",Completamento fase operativa
-1824,39 | Verifica normativa | PJT-1002,Daniele Grassi,31/3/2024,"5,0",Integrazione elaborati
-1825,39 | Verifica normativa | PJT-1002,Daniele Grassi,15/3/2024,"1,0",Analisi e sviluppo tecnico
-1826,40 | Elaborazione disegni | PJT-1002,Marco Russo,8/3/2024,"5,0",Avanzamento attività prevista
-1827,40 | Elaborazione disegni | PJT-1002,Marco Russo,13/3/2024,"2,0",Completamento fase operativa
-1828,40 | Elaborazione disegni | PJT-1002,Marco Russo,25/3/2024,"3,0",Completamento fase operativa
-1829,40 | Elaborazione disegni | PJT-1002,Marco Russo,19/3/2024,"6,0",Verifica finale della task
-1830,41 | Simulazione impianto | PJT-1002,Francesca Villa,23/12/2023,"3,0",Completamento fase operativa
-1831,41 | Simulazione impianto | PJT-1002,Francesca Villa,30/12/2023,"3,0",Avanzamento attività prevista
-1832,42 | Verifica normativa | PJT-1002,Laura Bellini,2/6/2024,"3,0",Avanzamento attività prevista
-1833,42 | Verifica normativa | PJT-1002,Laura Bellini,1/6/2024,"3,0",Analisi e sviluppo tecnico
-1834,42 | Verifica normativa | PJT-1002,Laura Bellini,2/6/2024,"7,0",Integrazione elaborati
-1835,42 | Verifica normativa | PJT-1002,Laura Bellini,29/5/2024,"3,0",Analisi e sviluppo tecnico
-1836,42 | Verifica normativa | PJT-1002,Laura Bellini,3/6/2024,"3,0",Avanzamento attività prevista
-1837,43 | Revisione elaborati | PJT-1002,Giulia Conti,16/12/2023,"1,0",Completamento fase operativa
-1838,43 | Revisione elaborati | PJT-1002,Giulia Conti,23/12/2023,"3,0",Avanzamento attività prevista
-1839,43 | Revisione elaborati | PJT-1002,Giulia Conti,17/12/2023,"2,0",Completamento fase operativa
-1840,44 | Validazione interna | PJT-1002,Francesca Villa,14/3/2024,"8,0",Avanzamento attività prevista
-1841,44 | Validazione interna | PJT-1002,Francesca Villa,3/4/2024,"8,0",Analisi e sviluppo tecnico
-1842,44 | Validazione interna | PJT-1002,Francesca Villa,19/3/2024,"2,0",Avanzamento attività prevista
-1843,45 | Coordinamento team | PJT-1002,Daniele Grassi,3/6/2024,"4,0",Verifica finale della task
-1844,45 | Coordinamento team | PJT-1002,Daniele Grassi,31/5/2024,"1,0",Completamento fase operativa
-1845,45 | Coordinamento team | PJT-1002,Daniele Grassi,30/5/2024,"8,0",Integrazione elaborati
-1846,45 | Coordinamento team | PJT-1002,Daniele Grassi,30/5/2024,"4,0",Integrazione elaborati
-1847,45 | Coordinamento team | PJT-1002,Daniele Grassi,27/5/2024,"4,0",Analisi e sviluppo tecnico
-1848,46 | Verifica normativa | PJT-1002,Laura Bellini,15/6/2024,"4,0",Completamento fase operativa
-1849,46 | Verifica normativa | PJT-1002,Laura Bellini,25/5/2024,"3,0",Verifica finale della task
-1850,46 | Verifica normativa | PJT-1002,Laura Bellini,29/5/2024,"3,0",Verifica finale della task
-1851,47 | Revisione elaborati | PJT-1002,Marco Russo,30/12/2023,"6,0",Integrazione elaborati
-1852,47 | Revisione elaborati | PJT-1002,Marco Russo,28/12/2023,"6,0",Analisi e sviluppo tecnico
-1853,47 | Revisione elaborati | PJT-1002,Marco Russo,26/12/2023,"1,0",Verifica finale della task
-1854,48 | Simulazione impianto | PJT-1002,Alessandro Neri,12/4/2024,"8,0",Completamento fase operativa
-1855,48 | Simulazione impianto | PJT-1002,Alessandro Neri,11/4/2024,"3,0",Integrazione elaborati
-1856,48 | Simulazione impianto | PJT-1002,Alessandro Neri,11/4/2024,"4,0",Completamento fase operativa
-1857,49 | Coordinamento team | PJT-1002,Francesca Villa,27/5/2024,"7,0",Verifica finale della task
-1858,50 | Verifica normativa | PJT-1003,Laura Bellini,10/2/2025,"8,0",Integrazione elaborati
-1859,50 | Verifica normativa | PJT-1003,Laura Bellini,12/2/2025,"1,0",Integrazione elaborati
-1860,50 | Verifica normativa | PJT-1003,Laura Bellini,14/2/2025,"2,0",Integrazione elaborati
-1861,51 | Simulazione impianto | PJT-1003,Francesca Villa,21/10/2024,"8,0",Verifica finale della task
-1862,51 | Simulazione impianto | PJT-1003,Francesca Villa,12/10/2024,"1,0",Analisi e sviluppo tecnico
-1863,51 | Simulazione impianto | PJT-1003,Francesca Villa,29/9/2024,"5,0",Analisi e sviluppo tecnico
-1864,51 | Simulazione impianto | PJT-1003,Francesca Villa,26/10/2024,"3,0",Integrazione elaborati
-1865,52 | Compilazione documenti | PJT-1003,Alessandro Neri,13/10/2024,"6,0",Completamento fase operativa
-1866,52 | Compilazione documenti | PJT-1003,Alessandro Neri,19/10/2024,"1,0",Avanzamento attività prevista
-1867,52 | Compilazione documenti | PJT-1003,Alessandro Neri,5/10/2024,"3,0",Completamento fase operativa
-1868,53 | Validazione interna | PJT-1003,Marco Russo,27/7/2025,"7,0",Integrazione elaborati
-1869,53 | Validazione interna | PJT-1003,Marco Russo,28/7/2025,"4,0",Integrazione elaborati
-1870,53 | Validazione interna | PJT-1003,Marco Russo,26/7/2025,"7,0",Verifica finale della task
-1871,53 | Validazione interna | PJT-1003,Marco Russo,31/7/2025,"1,0",Completamento fase operativa
-1872,54 | Verifica normativa | PJT-1003,Daniele Grassi,28/9/2024,"3,0",Integrazione elaborati
-1873,54 | Verifica normativa | PJT-1003,Daniele Grassi,10/10/2024,"8,0",Verifica finale della task
-1874,54 | Verifica normativa | PJT-1003,Daniele Grassi,10/10/2024,"5,0",Analisi e sviluppo tecnico
-1875,54 | Verifica normativa | PJT-1003,Daniele Grassi,24/10/2024,"1,0",Integrazione elaborati
-1876,55 | Verifica normativa | PJT-1003,Daniele Grassi,23/3/2024,"5,0",Completamento fase operativa
-1877,55 | Verifica normativa | PJT-1003,Daniele Grassi,14/3/2024,"3,0",Analisi e sviluppo tecnico
-1878,55 | Verifica normativa | PJT-1003,Daniele Grassi,9/3/2024,"3,0",Completamento fase operativa
-1879,56 | Verifica normativa | PJT-1003,Marco Russo,30/9/2024,"5,0",Verifica finale della task
-1880,56 | Verifica normativa | PJT-1003,Marco Russo,13/10/2024,"2,0",Analisi e sviluppo tecnico
-1881,56 | Verifica normativa | PJT-1003,Marco Russo,4/10/2024,"1,0",Verifica finale della task
-1882,56 | Verifica normativa | PJT-1003,Marco Russo,27/9/2024,"3,0",Analisi e sviluppo tecnico
-1883,57 | Revisione elaborati | PJT-1003,Marco Russo,19/7/2025,"6,0",Verifica finale della task
-1884,57 | Revisione elaborati | PJT-1003,Marco Russo,25/7/2025,"4,0",Avanzamento attività prevista
-1885,57 | Revisione elaborati | PJT-1003,Marco Russo,21/7/2025,"3,0",Avanzamento attività prevista
-1886,58 | Simulazione impianto | PJT-1003,Alessandro Neri,27/7/2025,"1,0",Verifica finale della task
-1887,58 | Simulazione impianto | PJT-1003,Alessandro Neri,26/7/2025,"5,0",Avanzamento attività prevista
-1888,58 | Simulazione impianto | PJT-1003,Alessandro Neri,21/7/2025,"7,0",Analisi e sviluppo tecnico
-1889,59 | Validazione interna | PJT-1003,Laura Bellini,24/7/2025,"4,0",Avanzamento attività prevista
-1890,59 | Validazione interna | PJT-1003,Laura Bellini,24/7/2025,"4,0",Analisi e sviluppo tecnico
-1891,59 | Validazione interna | PJT-1003,Laura Bellini,29/7/2025,"3,0",Analisi e sviluppo tecnico
-1892,59 | Validazione interna | PJT-1003,Laura Bellini,22/7/2025,"3,0",Integrazione elaborati
-1893,59 | Validazione interna | PJT-1003,Laura Bellini,26/7/2025,"4,0",Completamento fase operativa
-1894,59 | Validazione interna | PJT-1003,Laura Bellini,5/8/2025,"1,0",Analisi e sviluppo tecnico
-1895,60 | Verifica normativa | PJT-1003,Francesca Villa,21/10/2024,"8,0",Analisi e sviluppo tecnico
-1896,60 | Verifica normativa | PJT-1003,Francesca Villa,19/10/2024,"1,0",Analisi e sviluppo tecnico
-1897,60 | Verifica normativa | PJT-1003,Francesca Villa,6/10/2024,"3,0",Analisi e sviluppo tecnico
-1898,61 | Revisione elaborati | PJT-1003,Daniele Grassi,30/9/2024,"1,0",Completamento fase operativa
-1899,61 | Revisione elaborati | PJT-1003,Daniele Grassi,3/10/2024,"3,0",Completamento fase operativa
-1900,61 | Revisione elaborati | PJT-1003,Daniele Grassi,23/10/2024,"2,0",Integrazione elaborati
-1901,61 | Revisione elaborati | PJT-1003,Daniele Grassi,9/10/2024,"1,0",Verifica finale della task
-1902,62 | Verifica normativa | PJT-1003,Francesca Villa,23/7/2025,"1,0",Avanzamento attività prevista
-1903,62 | Verifica normativa | PJT-1003,Francesca Villa,26/7/2025,"4,0",Analisi e sviluppo tecnico
-1904,62 | Verifica normativa | PJT-1003,Francesca Villa,21/7/2025,"4,0",Avanzamento attività prevista
-1905,62 | Verifica normativa | PJT-1003,Francesca Villa,31/7/2025,"2,0",Completamento fase operativa
-1906,63 | Analisi tecnica | PJT-1003,Laura Bellini,23/5/2024,"4,0",Avanzamento attività prevista
-1907,63 | Analisi tecnica | PJT-1003,Laura Bellini,1/6/2024,"7,0",Analisi e sviluppo tecnico
-1908,63 | Analisi tecnica | PJT-1003,Laura Bellini,5/6/2024,"7,0",Completamento fase operativa
-1909,63 | Analisi tecnica | PJT-1003,Laura Bellini,22/5/2024,"2,0",Verifica finale della task
-1910,64 | Verifica normativa | PJT-1003,Francesca Villa,10/3/2024,"5,0",Completamento fase operativa
-1911,64 | Verifica normativa | PJT-1003,Francesca Villa,24/3/2024,"6,0",Analisi e sviluppo tecnico
-1912,64 | Verifica normativa | PJT-1003,Francesca Villa,4/3/2024,"1,0",Analisi e sviluppo tecnico
-1913,64 | Verifica normativa | PJT-1003,Francesca Villa,9/3/2024,"3,0",Integrazione elaborati
-1914,65 | Compilazione documenti | PJT-1003,Francesca Villa,4/8/2025,"3,0",Integrazione elaborati
-1915,65 | Compilazione documenti | PJT-1003,Francesca Villa,29/7/2025,"1,0",Integrazione elaborati
-1916,66 | Gestione cliente | PJT-1004,Alessandro Neri,15/3/2025,"2,0",Analisi e sviluppo tecnico
-1917,66 | Gestione cliente | PJT-1004,Alessandro Neri,15/3/2025,"4,0",Verifica finale della task
-1918,66 | Gestione cliente | PJT-1004,Alessandro Neri,20/3/2025,"5,0",Analisi e sviluppo tecnico
-1919,66 | Gestione cliente | PJT-1004,Alessandro Neri,15/3/2025,"4,0",Completamento fase operativa
-1920,66 | Gestione cliente | PJT-1004,Alessandro Neri,26/3/2025,"6,0",Avanzamento attività prevista
-1921,67 | Elaborazione disegni | PJT-1004,Marco Russo,27/10/2024,"2,0",Verifica finale della task
-1922,67 | Elaborazione disegni | PJT-1004,Marco Russo,29/10/2024,"4,0",Analisi e sviluppo tecnico
-1923,68 | Compilazione documenti | PJT-1004,Daniele Grassi,11/5/2025,"3,0",Avanzamento attività prevista
-1924,68 | Compilazione documenti | PJT-1004,Daniele Grassi,30/4/2025,"2,0",Integrazione elaborati
-1925,68 | Compilazione documenti | PJT-1004,Daniele Grassi,1/5/2025,"8,0",Avanzamento attività prevista
-1926,69 | Compilazione documenti | PJT-1004,Francesca Villa,29/4/2025,"4,0",Integrazione elaborati
-1927,69 | Compilazione documenti | PJT-1004,Francesca Villa,8/5/2025,"6,0",Analisi e sviluppo tecnico
-1928,69 | Compilazione documenti | PJT-1004,Francesca Villa,10/5/2025,"3,0",Analisi e sviluppo tecnico
-1929,69 | Compilazione documenti | PJT-1004,Francesca Villa,4/5/2025,"1,0",Completamento fase operativa
-1930,70 | Coordinamento team | PJT-1004,Francesca Villa,25/10/2024,"7,0",Avanzamento attività prevista
-1931,70 | Coordinamento team | PJT-1004,Francesca Villa,26/10/2024,"5,0",Avanzamento attività prevista
-1932,70 | Coordinamento team | PJT-1004,Francesca Villa,25/10/2024,"4,0",Analisi e sviluppo tecnico
-1933,71 | Coordinamento team | PJT-1004,Alessandro Neri,30/10/2024,"5,0",Verifica finale della task
-1934,71 | Coordinamento team | PJT-1004,Alessandro Neri,24/10/2024,"4,0",Verifica finale della task
-1935,72 | Compilazione documenti | PJT-1004,Alessandro Neri,2/11/2024,"8,0",Avanzamento attività prevista
-1936,72 | Compilazione documenti | PJT-1004,Alessandro Neri,23/10/2024,"3,0",Integrazione elaborati
-1937,73 | Verifica normativa | PJT-1004,Alessandro Neri,28/4/2025,"1,0",Verifica finale della task
-1938,73 | Verifica normativa | PJT-1004,Alessandro Neri,27/4/2025,"4,0",Integrazione elaborati
-1939,73 | Verifica normativa | PJT-1004,Alessandro Neri,28/4/2025,"5,0",Analisi e sviluppo tecnico
-1940,74 | Elaborazione disegni | PJT-1004,Giulia Conti,24/7/2025,"3,0",Avanzamento attività prevista
-1941,74 | Elaborazione disegni | PJT-1004,Giulia Conti,27/7/2025,"5,0",Completamento fase operativa
-1942,74 | Elaborazione disegni | PJT-1004,Giulia Conti,8/8/2025,"6,0",Analisi e sviluppo tecnico
-1943,74 | Elaborazione disegni | PJT-1004,Giulia Conti,6/8/2025,"4,0",Analisi e sviluppo tecnico
-1944,74 | Elaborazione disegni | PJT-1004,Giulia Conti,10/8/2025,"8,0",Analisi e sviluppo tecnico
-1945,75 | Coordinamento team | PJT-1004,Marco Russo,23/3/2025,"3,0",Integrazione elaborati
-1946,75 | Coordinamento team | PJT-1004,Marco Russo,1/4/2025,"4,0",Analisi e sviluppo tecnico
-1947,75 | Coordinamento team | PJT-1004,Marco Russo,29/3/2025,"5,0",Completamento fase operativa
-1948,75 | Coordinamento team | PJT-1004,Marco Russo,15/3/2025,"1,0",Verifica finale della task
-1949,75 | Coordinamento team | PJT-1004,Marco Russo,22/3/2025,"2,0",Avanzamento attività prevista
-1950,75 | Coordinamento team | PJT-1004,Marco Russo,18/3/2025,"6,0",Analisi e sviluppo tecnico
-1951,76 | Validazione interna | PJT-1004,Laura Bellini,1/8/2025,"5,0",Verifica finale della task
-1952,76 | Validazione interna | PJT-1004,Laura Bellini,10/8/2025,"2,0",Verifica finale della task
-1953,76 | Validazione interna | PJT-1004,Laura Bellini,5/8/2025,"1,0",Completamento fase operativa
-1954,76 | Validazione interna | PJT-1004,Laura Bellini,5/8/2025,"8,0",Avanzamento attività prevista
-1955,77 | Analisi tecnica | PJT-1004,Francesca Villa,7/8/2025,"6,0",Analisi e sviluppo tecnico
-1956,77 | Analisi tecnica | PJT-1004,Francesca Villa,12/8/2025,"4,0",Completamento fase operativa
-1957,77 | Analisi tecnica | PJT-1004,Francesca Villa,28/7/2025,"2,0",Analisi e sviluppo tecnico
-1958,78 | Revisione elaborati | PJT-1005,Daniele Grassi,12/11/2024,"4,0",Avanzamento attività prevista
-1959,79 | Gestione cliente | PJT-1005,Giulia Conti,28/12/2025,"5,0",Integrazione elaborati
-1960,79 | Gestione cliente | PJT-1005,Giulia Conti,19/12/2025,"6,0",Integrazione elaborati
-1961,79 | Gestione cliente | PJT-1005,Giulia Conti,25/12/2025,"2,0",Integrazione elaborati
-1962,79 | Gestione cliente | PJT-1005,Giulia Conti,4/1/2026,"2,0",Verifica finale della task
-1963,80 | Gestione cliente | PJT-1005,Francesca Villa,23/12/2025,"2,0",Analisi e sviluppo tecnico
-1964,80 | Gestione cliente | PJT-1005,Francesca Villa,17/12/2025,"1,0",Analisi e sviluppo tecnico
-1965,80 | Gestione cliente | PJT-1005,Francesca Villa,29/12/2025,"3,0",Completamento fase operativa
-1966,80 | Gestione cliente | PJT-1005,Francesca Villa,20/12/2025,"5,0",Avanzamento attività prevista
-1967,80 | Gestione cliente | PJT-1005,Francesca Villa,20/12/2025,"6,0",Completamento fase operativa
-1968,80 | Gestione cliente | PJT-1005,Francesca Villa,25/12/2025,"1,0",Integrazione elaborati
-1969,81 | Analisi tecnica | PJT-1005,Francesca Villa,30/12/2025,"5,0",Analisi e sviluppo tecnico
-1970,81 | Analisi tecnica | PJT-1005,Francesca Villa,4/1/2026,"2,0",Analisi e sviluppo tecnico
-1971,82 | Sopralluogo | PJT-1005,Laura Bellini,4/1/2026,"4,0",Integrazione elaborati
-1972,82 | Sopralluogo | PJT-1005,Laura Bellini,18/12/2025,"1,0",Analisi e sviluppo tecnico
-1973,82 | Sopralluogo | PJT-1005,Laura Bellini,31/12/2025,"2,0",Completamento fase operativa
-1974,83 | Coordinamento team | PJT-1005,Francesca Villa,11/7/2025,"8,0",Avanzamento attività prevista
-1975,83 | Coordinamento team | PJT-1005,Francesca Villa,19/7/2025,"2,0",Verifica finale della task
-1976,84 | Simulazione impianto | PJT-1005,Alessandro Neri,18/7/2025,"7,0",Completamento fase operativa
-1977,84 | Simulazione impianto | PJT-1005,Alessandro Neri,11/7/2025,"3,0",Avanzamento attività prevista
-1978,84 | Simulazione impianto | PJT-1005,Alessandro Neri,16/7/2025,"8,0",Verifica finale della task
-1979,84 | Simulazione impianto | PJT-1005,Alessandro Neri,13/7/2025,"4,0",Analisi e sviluppo tecnico
-1980,84 | Simulazione impianto | PJT-1005,Alessandro Neri,5/7/2025,"4,0",Verifica finale della task
-1981,85 | Analisi tecnica | PJT-1005,Alessandro Neri,18/11/2024,"2,0",Avanzamento attività prevista
-1982,85 | Analisi tecnica | PJT-1005,Alessandro Neri,27/11/2024,"5,0",Completamento fase operativa
-1983,86 | Elaborazione disegni | PJT-1005,Francesca Villa,11/11/2024,"5,0",Verifica finale della task
-1984,86 | Elaborazione disegni | PJT-1005,Francesca Villa,17/11/2024,"7,0",Analisi e sviluppo tecnico
-1985,86 | Elaborazione disegni | PJT-1005,Francesca Villa,19/11/2024,"4,0",Completamento fase operativa
-1986,87 | Sopralluogo | PJT-1005,Francesca Villa,20/11/2024,"1,0",Completamento fase operativa
-1987,87 | Sopralluogo | PJT-1005,Francesca Villa,29/11/2024,"3,0",Integrazione elaborati
-1988,87 | Sopralluogo | PJT-1005,Francesca Villa,12/11/2024,"5,0",Analisi e sviluppo tecnico
-1989,88 | Gestione cliente | PJT-1005,Alessandro Neri,22/11/2024,"1,0",Analisi e sviluppo tecnico
-1990,88 | Gestione cliente | PJT-1005,Alessandro Neri,15/11/2024,"5,0",Integrazione elaborati
-1991,88 | Gestione cliente | PJT-1005,Alessandro Neri,1/12/2024,"3,0",Completamento fase operativa
-1992,88 | Gestione cliente | PJT-1005,Alessandro Neri,17/11/2024,"1,0",Integrazione elaborati
-1993,89 | Sopralluogo | PJT-1005,Giulia Conti,25/12/2025,"3,0",Avanzamento attività prevista
-1994,89 | Sopralluogo | PJT-1005,Giulia Conti,20/12/2025,"6,0",Completamento fase operativa
-1995,89 | Sopralluogo | PJT-1005,Giulia Conti,21/12/2025,"3,0",Integrazione elaborati
-1996,89 | Sopralluogo | PJT-1005,Giulia Conti,25/12/2025,"8,0",Completamento fase operativa
-1997,89 | Sopralluogo | PJT-1005,Giulia Conti,23/12/2025,"2,0",Avanzamento attività prevista
-1998,89 | Sopralluogo | PJT-1005,Giulia Conti,3/1/2026,"1,0",Integrazione elaborati
-1999,90 | Simulazione impianto | PJT-1005,Francesca Villa,20/1/2025,"5,0",Analisi e sviluppo tecnico
-2000,90 | Simulazione impianto | PJT-1005,Francesca Villa,17/1/2025,"4,0",Analisi e sviluppo tecnico
-2001,90 | Simulazione impianto | PJT-1005,Francesca Villa,5/1/2025,"1,0",Completamento fase operativa
-2002,90 | Simulazione impianto | PJT-1005,Francesca Villa,14/1/2025,"6,0",Completamento fase operativa
-2003,91 | Revisione elaborati | PJT-1006,Giulia Conti,21/2/2024,"5,0",Integrazione elaborati
-2004,91 | Revisione elaborati | PJT-1006,Giulia Conti,23/2/2024,"5,0",Verifica finale della task
-2005,91 | Revisione elaborati | PJT-1006,Giulia Conti,19/2/2024,"7,0",Completamento fase operativa
-2006,91 | Revisione elaborati | PJT-1006,Giulia Conti,11/2/2024,"8,0",Integrazione elaborati
-2007,91 | Revisione elaborati | PJT-1006,Giulia Conti,12/2/2024,"2,0",Avanzamento attività prevista
-2008,91 | Revisione elaborati | PJT-1006,Giulia Conti,5/3/2024,"1,0",Completamento fase operativa
-2009,92 | Revisione elaborati | PJT-1006,Marco Russo,20/1/2025,"4,0",Analisi e sviluppo tecnico
-2010,92 | Revisione elaborati | PJT-1006,Marco Russo,23/1/2025,"1,0",Analisi e sviluppo tecnico
-2011,93 | Revisione elaborati | PJT-1006,Marco Russo,26/8/2024,"1,0",Verifica finale della task
-2012,93 | Revisione elaborati | PJT-1006,Marco Russo,27/8/2024,"8,0",Verifica finale della task
-2013,94 | Simulazione impianto | PJT-1006,Alessandro Neri,28/8/2024,"8,0",Integrazione elaborati
-2014,94 | Simulazione impianto | PJT-1006,Alessandro Neri,25/8/2024,"5,0",Completamento fase operativa
-2015,94 | Simulazione impianto | PJT-1006,Alessandro Neri,1/9/2024,"6,0",Completamento fase operativa
-2016,94 | Simulazione impianto | PJT-1006,Alessandro Neri,23/8/2024,"5,0",Avanzamento attività prevista
-2017,95 | Sopralluogo | PJT-1006,Daniele Grassi,31/8/2024,"2,0",Verifica finale della task
-2018,95 | Sopralluogo | PJT-1006,Daniele Grassi,15/8/2024,"8,0",Avanzamento attività prevista
-2019,95 | Sopralluogo | PJT-1006,Daniele Grassi,19/8/2024,"3,0",Integrazione elaborati
-2020,95 | Sopralluogo | PJT-1006,Daniele Grassi,23/8/2024,"3,0",Completamento fase operativa
-2021,96 | Simulazione impianto | PJT-1006,Daniele Grassi,4/8/2025,"2,0",Analisi e sviluppo tecnico
-2022,96 | Simulazione impianto | PJT-1006,Daniele Grassi,25/7/2025,"2,0",Verifica finale della task
-2023,96 | Simulazione impianto | PJT-1006,Daniele Grassi,1/8/2025,"1,0",Avanzamento attività prevista
-2024,97 | Revisione elaborati | PJT-1006,Alessandro Neri,23/7/2025,"3,0",Analisi e sviluppo tecnico
-2025,97 | Revisione elaborati | PJT-1006,Alessandro Neri,19/7/2025,"1,0",Completamento fase operativa
-2026,97 | Revisione elaborati | PJT-1006,Alessandro Neri,18/7/2025,"5,0",Analisi e sviluppo tecnico
-2027,97 | Revisione elaborati | PJT-1006,Alessandro Neri,27/7/2025,"5,0",Integrazione elaborati
-2028,97 | Revisione elaborati | PJT-1006,Alessandro Neri,19/7/2025,"1,0",Completamento fase operativa
-2029,98 | Compilazione documenti | PJT-1006,Giulia Conti,2/8/2025,"2,0",Avanzamento attività prevista
-2030,98 | Compilazione documenti | PJT-1006,Giulia Conti,14/8/2025,"4,0",Integrazione elaborati
-2031,98 | Compilazione documenti | PJT-1006,Giulia Conti,8/8/2025,"8,0",Completamento fase operativa
-2032,99 | Compilazione documenti | PJT-1006,Francesca Villa,21/1/2025,"2,0",Avanzamento attività prevista
-2033,99 | Compilazione documenti | PJT-1006,Francesca Villa,18/1/2025,"3,0",Verifica finale della task
-2034,99 | Compilazione documenti | PJT-1006,Francesca Villa,7/1/2025,"4,0",Analisi e sviluppo tecnico
-2035,99 | Compilazione documenti | PJT-1006,Francesca Villa,21/1/2025,"1,0",Completamento fase operativa
-2036,100 | Gestione cliente | PJT-1006,Daniele Grassi,10/8/2025,"1,0",Verifica finale della task
-2037,100 | Gestione cliente | PJT-1006,Daniele Grassi,7/8/2025,"7,0",Avanzamento attività prevista
-2038,101 | Gestione cliente | PJT-1006,Daniele Grassi,6/8/2025,"8,0",Avanzamento attività prevista
-2039,101 | Gestione cliente | PJT-1006,Daniele Grassi,16/8/2025,"3,0",Completamento fase operativa
-2040,101 | Gestione cliente | PJT-1006,Daniele Grassi,21/8/2025,"2,0",Completamento fase operativa
-2041,101 | Gestione cliente | PJT-1006,Daniele Grassi,24/7/2025,"1,0",Analisi e sviluppo tecnico
-2042,102 | Elaborazione disegni | PJT-1006,Giulia Conti,20/2/2024,"8,0",Completamento fase operativa
-2043,102 | Elaborazione disegni | PJT-1006,Giulia Conti,8/3/2024,"2,0",Verifica finale della task
-2044,102 | Elaborazione disegni | PJT-1006,Giulia Conti,23/2/2024,"6,0",Avanzamento attività prevista
-2045,103 | Sopralluogo | PJT-1006,Marco Russo,8/8/2025,"5,0",Completamento fase operativa
-2046,103 | Sopralluogo | PJT-1006,Marco Russo,11/8/2025,"2,0",Verifica finale della task
-2047,104 | Validazione interna | PJT-1006,Daniele Grassi,20/8/2025,"5,0",Avanzamento attività prevista
-2048,104 | Validazione interna | PJT-1006,Daniele Grassi,25/7/2025,"1,0",Completamento fase operativa
-2049,104 | Validazione interna | PJT-1006,Daniele Grassi,18/8/2025,"7,0",Completamento fase operativa
-2050,104 | Validazione interna | PJT-1006,Daniele Grassi,3/8/2025,"1,0",Completamento fase operativa
-2051,104 | Validazione interna | PJT-1006,Daniele Grassi,15/8/2025,"4,0",Analisi e sviluppo tecnico
-2052,105 | Revisione elaborati | PJT-1006,Giulia Conti,30/8/2024,"4,0",Integrazione elaborati
-2053,105 | Revisione elaborati | PJT-1006,Giulia Conti,27/8/2024,"5,0",Integrazione elaborati
-2054,105 | Revisione elaborati | PJT-1006,Giulia Conti,1/9/2024,"5,0",Avanzamento attività prevista
-2055,106 | Verifica normativa | PJT-1006,Alessandro Neri,12/2/2024,"6,0",Analisi e sviluppo tecnico
-2056,107 | Simulazione impianto | PJT-1006,Giulia Conti,13/1/2025,"3,0",Analisi e sviluppo tecnico
-2057,107 | Simulazione impianto | PJT-1006,Giulia Conti,25/1/2025,"8,0",Analisi e sviluppo tecnico
-2058,107 | Simulazione impianto | PJT-1006,Giulia Conti,11/1/2025,"7,0",Avanzamento attività prevista
-2059,108 | Gestione cliente | PJT-1006,Daniele Grassi,12/2/2024,"8,0",Completamento fase operativa
-2060,108 | Gestione cliente | PJT-1006,Daniele Grassi,9/2/2024,"8,0",Integrazione elaborati
-2061,108 | Gestione cliente | PJT-1006,Daniele Grassi,4/3/2024,"3,0",Analisi e sviluppo tecnico
-2062,109 | Coordinamento team | PJT-1006,Daniele Grassi,19/7/2025,"4,0",Completamento fase operativa
-2063,109 | Coordinamento team | PJT-1006,Daniele Grassi,7/7/2025,"3,0",Analisi e sviluppo tecnico
-2064,109 | Coordinamento team | PJT-1006,Daniele Grassi,23/7/2025,"1,0",Integrazione elaborati
-2065,109 | Coordinamento team | PJT-1006,Daniele Grassi,21/7/2025,"1,0",Avanzamento attività prevista
-2066,109 | Coordinamento team | PJT-1006,Daniele Grassi,27/7/2025,"5,0",Verifica finale della task
-2067,110 | Verifica normativa | PJT-1006,Alessandro Neri,17/8/2024,"2,0",Avanzamento attività prevista
-2068,110 | Verifica normativa | PJT-1006,Alessandro Neri,31/8/2024,"3,0",Completamento fase operativa
-2069,110 | Verifica normativa | PJT-1006,Alessandro Neri,21/8/2024,"3,0",Verifica finale della task
-2070,111 | Simulazione impianto | PJT-1007,Marco Russo,6/5/2025,"3,0",Verifica finale della task
-2071,111 | Simulazione impianto | PJT-1007,Marco Russo,11/5/2025,"1,0",Integrazione elaborati
-2072,112 | Simulazione impianto | PJT-1007,Alessandro Neri,3/6/2024,"6,0",Avanzamento attività prevista
-2073,112 | Simulazione impianto | PJT-1007,Alessandro Neri,3/6/2024,"5,0",Verifica finale della task
-2074,113 | Sopralluogo | PJT-1007,Daniele Grassi,28/11/2023,"3,0",Completamento fase operativa
-2075,113 | Sopralluogo | PJT-1007,Daniele Grassi,25/11/2023,"6,0",Verifica finale della task
-2076,114 | Verifica normativa | PJT-1007,Alessandro Neri,11/6/2024,"2,0",Verifica finale della task
-2077,114 | Verifica normativa | PJT-1007,Alessandro Neri,3/6/2024,"8,0",Avanzamento attività prevista
-2078,115 | Verifica normativa | PJT-1007,Laura Bellini,13/6/2024,"1,0",Verifica finale della task
-2079,115 | Verifica normativa | PJT-1007,Laura Bellini,10/6/2024,"4,0",Analisi e sviluppo tecnico
-2080,115 | Verifica normativa | PJT-1007,Laura Bellini,11/6/2024,"5,0",Analisi e sviluppo tecnico
-2081,116 | Elaborazione disegni | PJT-1007,Alessandro Neri,3/11/2023,"3,0",Avanzamento attività prevista
-2082,116 | Elaborazione disegni | PJT-1007,Alessandro Neri,26/10/2023,"2,0",Analisi e sviluppo tecnico
-2083,116 | Elaborazione disegni | PJT-1007,Alessandro Neri,29/10/2023,"7,0",Analisi e sviluppo tecnico
-2084,116 | Elaborazione disegni | PJT-1007,Alessandro Neri,20/10/2023,"3,0",Avanzamento attività prevista
-2085,116 | Elaborazione disegni | PJT-1007,Alessandro Neri,22/10/2023,"1,0",Analisi e sviluppo tecnico
-2086,116 | Elaborazione disegni | PJT-1007,Alessandro Neri,21/10/2023,"2,0",Completamento fase operativa
-2087,117 | Compilazione documenti | PJT-1007,Giulia Conti,1/6/2024,"2,0",Avanzamento attività prevista
-2088,117 | Compilazione documenti | PJT-1007,Giulia Conti,7/6/2024,"4,0",Avanzamento attività prevista
-2089,117 | Compilazione documenti | PJT-1007,Giulia Conti,4/6/2024,"2,0",Analisi e sviluppo tecnico
-2090,118 | Compilazione documenti | PJT-1007,Francesca Villa,31/10/2023,"8,0",Avanzamento attività prevista
-2091,118 | Compilazione documenti | PJT-1007,Francesca Villa,3/11/2023,"1,0",Avanzamento attività prevista
-2092,118 | Compilazione documenti | PJT-1007,Francesca Villa,3/11/2023,"4,0",Completamento fase operativa
-2093,118 | Compilazione documenti | PJT-1007,Francesca Villa,20/10/2023,"8,0",Verifica finale della task
-2094,119 | Verifica normativa | PJT-1007,Laura Bellini,7/5/2025,"2,0",Completamento fase operativa
-2095,119 | Verifica normativa | PJT-1007,Laura Bellini,16/5/2025,"5,0",Avanzamento attività prevista
-2096,119 | Verifica normativa | PJT-1007,Laura Bellini,30/4/2025,"4,0",Integrazione elaborati
-2097,119 | Verifica normativa | PJT-1007,Laura Bellini,15/5/2025,"2,0",Avanzamento attività prevista
-2098,119 | Verifica normativa | PJT-1007,Laura Bellini,10/5/2025,"4,0",Completamento fase operativa
-2099,119 | Verifica normativa | PJT-1007,Laura Bellini,13/5/2025,"4,0",Completamento fase operativa
-2100,120 | Coordinamento team | PJT-1007,Daniele Grassi,15/2/2024,"4,0",Analisi e sviluppo tecnico
-2101,120 | Coordinamento team | PJT-1007,Daniele Grassi,6/3/2024,"7,0",Completamento fase operativa
-2102,120 | Coordinamento team | PJT-1007,Daniele Grassi,29/2/2024,"1,0",Verifica finale della task
-2103,120 | Coordinamento team | PJT-1007,Daniele Grassi,18/2/2024,"8,0",Avanzamento attività prevista
-2104,120 | Coordinamento team | PJT-1007,Daniele Grassi,20/2/2024,"1,0",Completamento fase operativa
-2105,121 | Analisi tecnica | PJT-1007,Giulia Conti,26/5/2024,"2,0",Integrazione elaborati
-2106,121 | Analisi tecnica | PJT-1007,Giulia Conti,27/5/2024,"7,0",Verifica finale della task
-2107,122 | Compilazione documenti | PJT-1007,Alessandro Neri,27/2/2024,"6,0",Avanzamento attività prevista
-2108,122 | Compilazione documenti | PJT-1007,Alessandro Neri,4/3/2024,"6,0",Avanzamento attività prevista
-2109,122 | Compilazione documenti | PJT-1007,Alessandro Neri,1/3/2024,"2,0",Verifica finale della task
-2110,123 | Gestione cliente | PJT-1008,Giulia Conti,11/7/2024,"3,0",Integrazione elaborati
-2111,123 | Gestione cliente | PJT-1008,Giulia Conti,1/7/2024,"2,0",Integrazione elaborati
-2112,123 | Gestione cliente | PJT-1008,Giulia Conti,12/7/2024,"3,0",Avanzamento attività prevista
-2113,123 | Gestione cliente | PJT-1008,Giulia Conti,18/7/2024,"3,0",Verifica finale della task
-2114,123 | Gestione cliente | PJT-1008,Giulia Conti,22/7/2024,"4,0",Integrazione elaborati
-2115,123 | Gestione cliente | PJT-1008,Giulia Conti,20/7/2024,"4,0",Analisi e sviluppo tecnico
-2116,124 | Elaborazione disegni | PJT-1008,Giulia Conti,6/5/2024,"4,0",Verifica finale della task
-2117,124 | Elaborazione disegni | PJT-1008,Giulia Conti,7/5/2024,"3,0",Completamento fase operativa
-2118,124 | Elaborazione disegni | PJT-1008,Giulia Conti,2/5/2024,"3,0",Avanzamento attività prevista
-2119,124 | Elaborazione disegni | PJT-1008,Giulia Conti,3/5/2024,"5,0",Completamento fase operativa
-2120,124 | Elaborazione disegni | PJT-1008,Giulia Conti,6/5/2024,"5,0",Avanzamento attività prevista
-2121,124 | Elaborazione disegni | PJT-1008,Giulia Conti,10/5/2024,"8,0",Avanzamento attività prevista
-2122,125 | Verifica normativa | PJT-1008,Giulia Conti,7/6/2024,"4,0",Analisi e sviluppo tecnico
-2123,125 | Verifica normativa | PJT-1008,Giulia Conti,28/5/2024,"5,0",Verifica finale della task
-2124,126 | Verifica normativa | PJT-1008,Giulia Conti,3/7/2024,"3,0",Integrazione elaborati
-2125,126 | Verifica normativa | PJT-1008,Giulia Conti,10/7/2024,"1,0",Avanzamento attività prevista
-2126,127 | Sopralluogo | PJT-1008,Daniele Grassi,10/7/2024,"8,0",Completamento fase operativa
-2127,127 | Sopralluogo | PJT-1008,Daniele Grassi,20/7/2024,"1,0",Integrazione elaborati
-2128,128 | Gestione cliente | PJT-1008,Francesca Villa,8/5/2024,"1,0",Integrazione elaborati
-2129,128 | Gestione cliente | PJT-1008,Francesca Villa,11/5/2024,"4,0",Verifica finale della task
-2130,128 | Gestione cliente | PJT-1008,Francesca Villa,1/5/2024,"1,0",Verifica finale della task
-2131,129 | Coordinamento team | PJT-1008,Daniele Grassi,17/7/2024,"4,0",Verifica finale della task
-2132,129 | Coordinamento team | PJT-1008,Daniele Grassi,18/7/2024,"8,0",Analisi e sviluppo tecnico
-2133,130 | Gestione cliente | PJT-1008,Daniele Grassi,14/7/2024,"1,0",Avanzamento attività prevista
-2134,130 | Gestione cliente | PJT-1008,Daniele Grassi,20/7/2024,"6,0",Avanzamento attività prevista
-2135,130 | Gestione cliente | PJT-1008,Daniele Grassi,22/7/2024,"4,0",Integrazione elaborati
-2136,130 | Gestione cliente | PJT-1008,Daniele Grassi,24/7/2024,"6,0",Integrazione elaborati
-2137,131 | Analisi tecnica | PJT-1008,Marco Russo,2/5/2024,"4,0",Analisi e sviluppo tecnico
-2138,131 | Analisi tecnica | PJT-1008,Marco Russo,10/5/2024,"1,0",Integrazione elaborati
-2139,131 | Analisi tecnica | PJT-1008,Marco Russo,3/5/2024,"2,0",Avanzamento attività prevista
-2140,132 | Sopralluogo | PJT-1008,Alessandro Neri,30/6/2024,"7,0",Integrazione elaborati
-2141,132 | Sopralluogo | PJT-1008,Alessandro Neri,19/7/2024,"2,0",Analisi e sviluppo tecnico
-2142,132 | Sopralluogo | PJT-1008,Alessandro Neri,22/7/2024,"7,0",Verifica finale della task
-2143,132 | Sopralluogo | PJT-1008,Alessandro Neri,20/7/2024,"3,0",Verifica finale della task
-2144,133 | Coordinamento team | PJT-1008,Giulia Conti,7/6/2024,"1,0",Integrazione elaborati
-2145,133 | Coordinamento team | PJT-1008,Giulia Conti,29/5/2024,"8,0",Verifica finale della task
-2146,133 | Coordinamento team | PJT-1008,Giulia Conti,28/5/2024,"1,0",Avanzamento attività prevista
-2147,133 | Coordinamento team | PJT-1008,Giulia Conti,9/6/2024,"5,0",Completamento fase operativa
-2148,133 | Coordinamento team | PJT-1008,Giulia Conti,3/6/2024,"3,0",Completamento fase operativa
-2149,133 | Coordinamento team | PJT-1008,Giulia Conti,2/6/2024,"5,0",Integrazione elaborati
-2150,134 | Simulazione impianto | PJT-1008,Daniele Grassi,18/5/2024,"4,0",Completamento fase operativa
-2151,134 | Simulazione impianto | PJT-1008,Daniele Grassi,31/5/2024,"2,0",Verifica finale della task
-2152,134 | Simulazione impianto | PJT-1008,Daniele Grassi,20/5/2024,"1,0",Analisi e sviluppo tecnico
-2153,134 | Simulazione impianto | PJT-1008,Daniele Grassi,29/5/2024,"1,0",Avanzamento attività prevista
-2154,135 | Sopralluogo | PJT-1008,Marco Russo,1/5/2024,"4,0",Avanzamento attività prevista
-2155,135 | Sopralluogo | PJT-1008,Marco Russo,11/5/2024,"1,0",Avanzamento attività prevista
-2156,135 | Sopralluogo | PJT-1008,Marco Russo,4/5/2024,"3,0",Completamento fase operativa
-2157,135 | Sopralluogo | PJT-1008,Marco Russo,10/5/2024,"5,0",Completamento fase operativa
-2158,136 | Gestione cliente | PJT-1008,Daniele Grassi,30/3/2024,"1,0",Verifica finale della task
-2159,136 | Gestione cliente | PJT-1008,Daniele Grassi,6/4/2024,"3,0",Integrazione elaborati
-2160,137 | Gestione cliente | PJT-1009,Marco Russo,4/11/2023,"2,0",Analisi e sviluppo tecnico
-2161,137 | Gestione cliente | PJT-1009,Marco Russo,13/11/2023,"1,0",Completamento fase operativa
-2162,137 | Gestione cliente | PJT-1009,Marco Russo,17/11/2023,"8,0",Verifica finale della task
-2163,138 | Elaborazione disegni | PJT-1009,Daniele Grassi,31/12/2023,"2,0",Avanzamento attività prevista
-2164,138 | Elaborazione disegni | PJT-1009,Daniele Grassi,11/12/2023,"1,0",Verifica finale della task
-2165,138 | Elaborazione disegni | PJT-1009,Daniele Grassi,14/12/2023,"1,0",Integrazione elaborati
-2166,139 | Gestione cliente | PJT-1009,Alessandro Neri,6/10/2023,"1,0",Completamento fase operativa
-2167,139 | Gestione cliente | PJT-1009,Alessandro Neri,10/10/2023,"3,0",Verifica finale della task
-2168,139 | Gestione cliente | PJT-1009,Alessandro Neri,27/10/2023,"1,0",Analisi e sviluppo tecnico
-2169,140 | Sopralluogo | PJT-1009,Alessandro Neri,30/1/2024,"7,0",Verifica finale della task
-2170,140 | Sopralluogo | PJT-1009,Alessandro Neri,19/1/2024,"1,0",Integrazione elaborati
-2171,141 | Sopralluogo | PJT-1009,Alessandro Neri,24/11/2023,"3,0",Analisi e sviluppo tecnico
-2172,141 | Sopralluogo | PJT-1009,Alessandro Neri,13/11/2023,"2,0",Completamento fase operativa
-2173,142 | Gestione cliente | PJT-1009,Marco Russo,12/10/2023,"8,0",Verifica finale della task
-2174,142 | Gestione cliente | PJT-1009,Marco Russo,26/10/2023,"8,0",Verifica finale della task
-2175,142 | Gestione cliente | PJT-1009,Marco Russo,28/10/2023,"5,0",Integrazione elaborati
-2176,142 | Gestione cliente | PJT-1009,Marco Russo,6/10/2023,"1,0",Integrazione elaborati
-2177,143 | Elaborazione disegni | PJT-1009,Alessandro Neri,2/9/2023,"3,0",Avanzamento attività prevista
-2178,143 | Elaborazione disegni | PJT-1009,Alessandro Neri,8/9/2023,"6,0",Verifica finale della task
-2179,143 | Elaborazione disegni | PJT-1009,Alessandro Neri,6/9/2023,"4,0",Integrazione elaborati
-2180,144 | Compilazione documenti | PJT-1009,Alessandro Neri,14/9/2023,"4,0",Analisi e sviluppo tecnico
-2181,145 | Coordinamento team | PJT-1009,Marco Russo,11/2/2024,"5,0",Avanzamento attività prevista
-2182,145 | Coordinamento team | PJT-1009,Marco Russo,17/2/2024,"3,0",Completamento fase operativa
-2183,146 | Simulazione impianto | PJT-1009,Francesca Villa,11/2/2024,"8,0",Integrazione elaborati
-2184,146 | Simulazione impianto | PJT-1009,Francesca Villa,21/2/2024,"3,0",Verifica finale della task
-2185,146 | Simulazione impianto | PJT-1009,Francesca Villa,10/2/2024,"2,0",Integrazione elaborati
-2186,146 | Simulazione impianto | PJT-1009,Francesca Villa,19/2/2024,"1,0",Completamento fase operativa
-2187,146 | Simulazione impianto | PJT-1009,Francesca Villa,13/2/2024,"6,0",Verifica finale della task
-2188,147 | Revisione elaborati | PJT-1009,Daniele Grassi,15/11/2023,"5,0",Completamento fase operativa
-2189,147 | Revisione elaborati | PJT-1009,Daniele Grassi,18/11/2023,"5,0",Verifica finale della task
-2190,147 | Revisione elaborati | PJT-1009,Daniele Grassi,15/11/2023,"5,0",Verifica finale della task
-2191,148 | Gestione cliente | PJT-1009,Giulia Conti,25/1/2024,"5,0",Avanzamento attività prevista
-2192,148 | Gestione cliente | PJT-1009,Giulia Conti,28/1/2024,"5,0",Analisi e sviluppo tecnico
-2193,148 | Gestione cliente | PJT-1009,Giulia Conti,25/1/2024,"6,0",Avanzamento attività prevista
-2194,148 | Gestione cliente | PJT-1009,Giulia Conti,2/2/2024,"2,0",Verifica finale della task
-2195,148 | Gestione cliente | PJT-1009,Giulia Conti,28/1/2024,"3,0",Verifica finale della task
-2196,149 | Analisi tecnica | PJT-1009,Marco Russo,19/11/2023,"3,0",Completamento fase operativa
-2197,149 | Analisi tecnica | PJT-1009,Marco Russo,11/11/2023,"2,0",Integrazione elaborati
-2198,149 | Analisi tecnica | PJT-1009,Marco Russo,8/11/2023,"4,0",Avanzamento attività prevista
-2199,149 | Analisi tecnica | PJT-1009,Marco Russo,21/11/2023,"4,0",Avanzamento attività prevista
-2200,149 | Analisi tecnica | PJT-1009,Marco Russo,21/11/2023,"5,0",Completamento fase operativa
-2201,150 | Simulazione impianto | PJT-1009,Francesca Villa,2/2/2024,"7,0",Integrazione elaborati
-2202,150 | Simulazione impianto | PJT-1009,Francesca Villa,25/1/2024,"7,0",Avanzamento attività prevista
-2203,151 | Validazione interna | PJT-1009,Francesca Villa,26/1/2024,"5,0",Analisi e sviluppo tecnico
-2204,151 | Validazione interna | PJT-1009,Francesca Villa,25/1/2024,"7,0",Avanzamento attività prevista
-2205,151 | Validazione interna | PJT-1009,Francesca Villa,1/2/2024,"4,0",Verifica finale della task
-2206,151 | Validazione interna | PJT-1009,Francesca Villa,3/2/2024,"1,0",Analisi e sviluppo tecnico
-2207,151 | Validazione interna | PJT-1009,Francesca Villa,29/1/2024,"2,0",Verifica finale della task
-2208,152 | Validazione interna | PJT-1010,Francesca Villa,1/7/2025,"2,0",Completamento fase operativa
-2209,152 | Validazione interna | PJT-1010,Francesca Villa,14/7/2025,"1,0",Integrazione elaborati
-2210,152 | Validazione interna | PJT-1010,Francesca Villa,16/7/2025,"1,0",Verifica finale della task
-2211,152 | Validazione interna | PJT-1010,Francesca Villa,7/7/2025,"1,0",Completamento fase operativa
-2212,153 | Compilazione documenti | PJT-1010,Laura Bellini,12/4/2025,"1,0",Analisi e sviluppo tecnico
-2213,153 | Compilazione documenti | PJT-1010,Laura Bellini,19/4/2025,"6,0",Completamento fase operativa
-2214,153 | Compilazione documenti | PJT-1010,Laura Bellini,14/4/2025,"2,0",Analisi e sviluppo tecnico
-2215,153 | Compilazione documenti | PJT-1010,Laura Bellini,1/5/2025,"7,0",Verifica finale della task
-2216,153 | Compilazione documenti | PJT-1010,Laura Bellini,16/4/2025,"3,0",Integrazione elaborati
-2217,154 | Gestione cliente | PJT-1010,Laura Bellini,16/3/2025,"4,0",Completamento fase operativa
-2218,154 | Gestione cliente | PJT-1010,Laura Bellini,10/3/2025,"2,0",Completamento fase operativa
-2219,154 | Gestione cliente | PJT-1010,Laura Bellini,21/3/2025,"8,0",Verifica finale della task
-2220,154 | Gestione cliente | PJT-1010,Laura Bellini,10/3/2025,"3,0",Verifica finale della task
-2221,155 | Revisione elaborati | PJT-1010,Marco Russo,5/4/2025,"6,0",Analisi e sviluppo tecnico
-2222,155 | Revisione elaborati | PJT-1010,Marco Russo,2/4/2025,"7,0",Analisi e sviluppo tecnico
-2223,155 | Revisione elaborati | PJT-1010,Marco Russo,31/3/2025,"6,0",Integrazione elaborati
-2224,156 | Gestione cliente | PJT-1010,Laura Bellini,7/7/2025,"2,0",Analisi e sviluppo tecnico
-2225,156 | Gestione cliente | PJT-1010,Laura Bellini,7/7/2025,"1,0",Analisi e sviluppo tecnico
-2226,157 | Elaborazione disegni | PJT-1010,Giulia Conti,4/4/2025,"2,0",Completamento fase operativa
-2227,157 | Elaborazione disegni | PJT-1010,Giulia Conti,19/4/2025,"7,0",Completamento fase operativa
-2228,157 | Elaborazione disegni | PJT-1010,Giulia Conti,19/4/2025,"8,0",Integrazione elaborati
-2229,157 | Elaborazione disegni | PJT-1010,Giulia Conti,19/4/2025,"2,0",Integrazione elaborati
-2230,157 | Elaborazione disegni | PJT-1010,Giulia Conti,16/4/2025,"7,0",Integrazione elaborati
-2231,158 | Simulazione impianto | PJT-1010,Giulia Conti,9/7/2025,"6,0",Analisi e sviluppo tecnico
-2232,158 | Simulazione impianto | PJT-1010,Giulia Conti,1/7/2025,"3,0",Verifica finale della task
-2233,159 | Simulazione impianto | PJT-1010,Francesca Villa,17/7/2025,"1,0",Completamento fase operativa
-2234,159 | Simulazione impianto | PJT-1010,Francesca Villa,5/7/2025,"8,0",Integrazione elaborati
-2235,159 | Simulazione impianto | PJT-1010,Francesca Villa,12/7/2025,"6,0",Analisi e sviluppo tecnico
-2236,160 | Elaborazione disegni | PJT-1010,Laura Bellini,3/4/2025,"3,0",Integrazione elaborati
-2237,160 | Elaborazione disegni | PJT-1010,Laura Bellini,8/4/2025,"1,0",Completamento fase operativa
-2238,160 | Elaborazione disegni | PJT-1010,Laura Bellini,5/4/2025,"2,0",Avanzamento attività prevista
-2239,160 | Elaborazione disegni | PJT-1010,Laura Bellini,29/3/2025,"6,0",Verifica finale della task
-2240,160 | Elaborazione disegni | PJT-1010,Laura Bellini,15/4/2025,"5,0",Completamento fase operativa
-2241,161 | Analisi tecnica | PJT-1010,Giulia Conti,25/11/2024,"2,0",Completamento fase operativa
-2242,161 | Analisi tecnica | PJT-1010,Giulia Conti,21/12/2024,"5,0",Verifica finale della task
-2243,162 | Gestione cliente | PJT-1010,Alessandro Neri,23/4/2025,"1,0",Completamento fase operativa
-2244,162 | Gestione cliente | PJT-1010,Alessandro Neri,12/4/2025,"6,0",Integrazione elaborati
-2245,163 | Validazione interna | PJT-1010,Laura Bellini,11/7/2025,"1,0",Verifica finale della task
-2246,163 | Validazione interna | PJT-1010,Laura Bellini,11/7/2025,"3,0",Integrazione elaborati
-2247,163 | Validazione interna | PJT-1010,Laura Bellini,10/7/2025,"2,0",Avanzamento attività prevista
-2248,163 | Validazione interna | PJT-1010,Laura Bellini,17/7/2025,"2,0",Avanzamento attività prevista
-2249,164 | Gestione cliente | PJT-1011,Francesca Villa,23/6/2023,"1,0",Analisi e sviluppo tecnico
-2250,164 | Gestione cliente | PJT-1011,Francesca Villa,20/6/2023,"8,0",Integrazione elaborati
-2251,164 | Gestione cliente | PJT-1011,Francesca Villa,17/6/2023,"8,0",Avanzamento attività prevista
-2252,165 | Validazione interna | PJT-1011,Laura Bellini,20/3/2024,"7,0",Verifica finale della task
-2253,165 | Validazione interna | PJT-1011,Laura Bellini,23/3/2024,"3,0",Completamento fase operativa
-2254,165 | Validazione interna | PJT-1011,Laura Bellini,29/2/2024,"6,0",Avanzamento attività prevista
-2255,166 | Revisione elaborati | PJT-1011,Daniele Grassi,16/5/2023,"8,0",Verifica finale della task
-2256,166 | Revisione elaborati | PJT-1011,Daniele Grassi,24/5/2023,"7,0",Integrazione elaborati
-2257,166 | Revisione elaborati | PJT-1011,Daniele Grassi,10/5/2023,"4,0",Verifica finale della task
-2258,167 | Analisi tecnica | PJT-1011,Laura Bellini,12/5/2023,"2,0",Completamento fase operativa
-2259,167 | Analisi tecnica | PJT-1011,Laura Bellini,24/5/2023,"7,0",Avanzamento attività prevista
-2260,167 | Analisi tecnica | PJT-1011,Laura Bellini,21/5/2023,"1,0",Analisi e sviluppo tecnico
-2261,167 | Analisi tecnica | PJT-1011,Laura Bellini,19/5/2023,"4,0",Verifica finale della task
-2262,167 | Analisi tecnica | PJT-1011,Laura Bellini,14/5/2023,"4,0",Verifica finale della task
-2263,168 | Elaborazione disegni | PJT-1011,Francesca Villa,10/8/2023,"3,0",Integrazione elaborati
-2264,168 | Elaborazione disegni | PJT-1011,Francesca Villa,13/8/2023,"2,0",Avanzamento attività prevista
-2265,169 | Coordinamento team | PJT-1011,Marco Russo,1/9/2023,"6,0",Integrazione elaborati
-2266,169 | Coordinamento team | PJT-1011,Marco Russo,6/9/2023,"8,0",Integrazione elaborati
-2267,169 | Coordinamento team | PJT-1011,Marco Russo,8/9/2023,"4,0",Completamento fase operativa
-2268,170 | Validazione interna | PJT-1011,Giulia Conti,11/8/2023,"6,0",Integrazione elaborati
-2269,170 | Validazione interna | PJT-1011,Giulia Conti,11/8/2023,"5,0",Verifica finale della task
-2270,170 | Validazione interna | PJT-1011,Giulia Conti,3/8/2023,"6,0",Completamento fase operativa
-2271,170 | Validazione interna | PJT-1011,Giulia Conti,4/8/2023,"1,0",Analisi e sviluppo tecnico
-2272,171 | Verifica normativa | PJT-1011,Francesca Villa,7/11/2023,"4,0",Avanzamento attività prevista
-2273,171 | Verifica normativa | PJT-1011,Francesca Villa,17/11/2023,"5,0",Analisi e sviluppo tecnico
-2274,172 | Compilazione documenti | PJT-1011,Francesca Villa,19/6/2023,"6,0",Verifica finale della task
-2275,172 | Compilazione documenti | PJT-1011,Francesca Villa,21/6/2023,"8,0",Avanzamento attività prevista
-2276,173 | Validazione interna | PJT-1011,Laura Bellini,14/3/2024,"6,0",Verifica finale della task
-2277,173 | Validazione interna | PJT-1011,Laura Bellini,1/3/2024,"2,0",Integrazione elaborati
-2278,173 | Validazione interna | PJT-1011,Laura Bellini,16/3/2024,"2,0",Analisi e sviluppo tecnico
-2279,174 | Coordinamento team | PJT-1011,Daniele Grassi,25/10/2023,"4,0",Verifica finale della task
-2280,174 | Coordinamento team | PJT-1011,Daniele Grassi,20/10/2023,"2,0",Integrazione elaborati
-2281,174 | Coordinamento team | PJT-1011,Daniele Grassi,16/10/2023,"4,0",Avanzamento attività prevista
-2282,175 | Simulazione impianto | PJT-1011,Laura Bellini,18/9/2023,"6,0",Integrazione elaborati
-2283,175 | Simulazione impianto | PJT-1011,Laura Bellini,17/9/2023,"4,0",Verifica finale della task
-2284,175 | Simulazione impianto | PJT-1011,Laura Bellini,4/9/2023,"7,0",Avanzamento attività prevista
-2285,175 | Simulazione impianto | PJT-1011,Laura Bellini,12/9/2023,"1,0",Integrazione elaborati
-2286,176 | Compilazione documenti | PJT-1011,Daniele Grassi,20/9/2023,"1,0",Verifica finale della task
-2287,176 | Compilazione documenti | PJT-1011,Daniele Grassi,14/9/2023,"2,0",Verifica finale della task
-2288,177 | Analisi tecnica | PJT-1011,Marco Russo,15/5/2023,"4,0",Verifica finale della task
-2289,177 | Analisi tecnica | PJT-1011,Marco Russo,27/5/2023,"5,0",Analisi e sviluppo tecnico
-2290,177 | Analisi tecnica | PJT-1011,Marco Russo,25/5/2023,"2,0",Integrazione elaborati
-2291,177 | Analisi tecnica | PJT-1011,Marco Russo,10/5/2023,"2,0",Completamento fase operativa
-2292,178 | Simulazione impianto | PJT-1011,Marco Russo,18/6/2023,"5,0",Analisi e sviluppo tecnico
-2293,179 | Compilazione documenti | PJT-1011,Giulia Conti,24/10/2023,"1,0",Verifica finale della task
-2294,179 | Compilazione documenti | PJT-1011,Giulia Conti,29/10/2023,"5,0",Verifica finale della task
-2295,179 | Compilazione documenti | PJT-1011,Giulia Conti,8/10/2023,"1,0",Completamento fase operativa
-2296,179 | Compilazione documenti | PJT-1011,Giulia Conti,1/11/2023,"5,0",Avanzamento attività prevista
-2297,179 | Compilazione documenti | PJT-1011,Giulia Conti,28/10/2023,"8,0",Verifica finale della task
-2298,180 | Verifica normativa | PJT-1011,Laura Bellini,20/10/2023,"1,0",Integrazione elaborati
-2299,180 | Verifica normativa | PJT-1011,Laura Bellini,24/10/2023,"8,0",Verifica finale della task
-2300,180 | Verifica normativa | PJT-1011,Laura Bellini,11/10/2023,"5,0",Verifica finale della task
-2301,180 | Verifica normativa | PJT-1011,Laura Bellini,23/10/2023,"5,0",Avanzamento attività prevista
-2302,180 | Verifica normativa | PJT-1011,Laura Bellini,6/10/2023,"1,0",Verifica finale della task
-2303,181 | Validazione interna | PJT-1011,Marco Russo,13/8/2023,"8,0",Analisi e sviluppo tecnico
-2304,181 | Validazione interna | PJT-1011,Marco Russo,9/8/2023,"7,0",Verifica finale della task
-2305,181 | Validazione interna | PJT-1011,Marco Russo,5/8/2023,"5,0",Verifica finale della task
-2306,181 | Validazione interna | PJT-1011,Marco Russo,8/8/2023,"3,0",Completamento fase operativa
-2307,181 | Validazione interna | PJT-1011,Marco Russo,3/8/2023,"7,0",Integrazione elaborati
-2308,181 | Validazione interna | PJT-1011,Marco Russo,6/8/2023,"4,0",Integrazione elaborati
+2309,194 | Saldatura Guscio Principale | PV-2025-01,Luca Bianchi,20/5/2025,"9,0","Saldatura longitudinale completata, nessun problema riscontrato."
+2310,194 | Saldatura Guscio Principale | PV-2025-01,Luca Bianchi,22/5/2025,"8,0","Saldatura circonferenziale, avanzamento regolare."
+2311,194 | Saldatura Guscio Principale | PV-2025-01,Luca Bianchi,24/5/2025,"10,0",Piccolo rallentamento per controllo qualità intermedio
+2312,195 | Controlli NDT sulle Saldature | PV-2025-01,Giulia Ferri,7/6/2025,"5,0","Controllo radiografico su saldature principali, tutto conforme"
+2313,195 | Controlli NDT sulle Saldature | PV-2025-01,Giulia Ferri,10/6/2025,"4,0","Controllo liquidi penetranti, nessuna difettosità rilevata"
+2314,195 | Controlli NDT sulle Saldature | PV-2025-01,Giulia Ferri,13/6/2025,"6,0","Verifica finale e compilazione report, attività conclusa in anticipo."
+2315,193 | Taglio Lamiere e Assemblaggio Iniziale | PV-2025-01,Davide Romano,16/5/2025,"7,0","Taglio lamiere secondo disegno, nessun intoppo"
+2316,193 | Taglio Lamiere e Assemblaggio Iniziale | PV-2025-01,Davide Romano,18/5/2025,"9,0","Assemblaggio componenti principali, avanzamento regolare"
+2317,193 | Taglio Lamiere e Assemblaggio Iniziale | PV-2025-01,Davide Romano,22/5/2025,"9,0","Assemblaggio completato, attività chiusa nei tempi previsti"
+2318,199 | Trattamento Termico Post-Saldatura | PV-2025-01,Sara Greco,27/7/2025,"5,0","Caricamento pezzo in forno, avvio ciclo termico."
+2319,199 | Trattamento Termico Post-Saldatura | PV-2025-01,Sara Greco,29/7/2025,"7,0","Monitoraggio ciclo e scarico pezzo, attività completata in linea con la pianificazione"
+2320,200 | Verniciatura Esterna Pressure Vessel | PV-2025-01,Matteo Villa,7/9/2025,"5,0",Preparazione superfici e applicazione primer.
+2321,200 | Verniciatura Esterna Pressure Vessel | PV-2025-01,Matteo Villa,9/9/2025,"4,0","Verniciatura finale, attività conclusa in anticipo"
+2322,201 | Preparazione Documentazione di Spedizione | PV-2025-01,Elena Marchetti,21/10/2025,"3,0",Raccolta documenti tecnici e certificazioni.
+2323,201 | Preparazione Documentazione di Spedizione | PV-2025-01,Elena Marchetti,24/10/2025,"4,0","Compilazione DDT e verifica finale, attività completata nei tempi."
+2324,197 | Ispezione Qualità Intermedia | PV-2025-01,Giulia Ferri,12/7/2025,"4,0","Controllo visivo e verifica dimensionale, nessuna anomalia"
+2325,197 | Ispezione Qualità Intermedia | PV-2025-01,Giulia Ferri,18/7/2025,"2,0","Aggiornamento report qualità, attività in corso."
+2326,198 | Assemblaggio Componenti Interni | PV-2025-01,Davide Romano,16/7/2025,"5,0","Montaggio deflettori interni, avanzamento regolare."
+2327,198 | Assemblaggio Componenti Interni | PV-2025-01,Davide Romano,20/7/2025,"4,0","Fissaggio supporti, attività leggermente in ritardo per attesa materiale."
+2328,196 | Saldatura Raccordi e Attacchi | PV-2025-01,Luca Bianchi,22/6/2025,"8,0","Saldatura raccordi principali, avanzamento regolare"
+2329,194 | Saldatura Guscio Principale | PV-2025-01,Luca Bianchi,28/6/2025,"10,0","Saldatura attacchi secondari, attività in leggero ritardo per verifica disegni"
+2330,184 | Saldatura Guscio Principale | PV-2024-01,Luca Bianchi,14/3/2024,"10,0","Saldatura longitudinale, rallentamento per difetto materiale"
+2331,184 | Saldatura Guscio Principale | PV-2024-01,Luca Bianchi,18/3/2024,"12,0","Saldatura circonferenziale, problemi con allineamento pezzi"
+2332,184 | Saldatura Guscio Principale | PV-2024-01,Luca Bianchi,25/3/2024,"13,0",Ripresa saldature per difetti riscontrati ai controlli
+2333,185 | Controlli NDT sulle Saldature | PV-2024-01,Giulia Ferri,3/4/2024,"7,0","Controllo radiografico, riscontrate difettosità"
+2334,185 | Controlli NDT sulle Saldature | PV-2024-01,Giulia Ferri,8/4/2024,"11,0",Ripetizione controlli dopo riparazione saldature
+2336,186 | Taglio Lamiere e Assemblaggio Iniziale | PV-2024-01,Davide Romano,11/3/2024,"8,0","Taglio lamiere, rallentamento per errore disegno"
+2337,186 | Taglio Lamiere e Assemblaggio Iniziale | PV-2024-01,Davide Romano,17/3/2024,"14,0","Assemblaggio, attesa materiale"
+2339,187 | Trattamento Termico Post-Saldatura | PV-2024-01,Sara Greco,17/5/2024,"7,0","Caricamento pezzo in forno, guasto temporaneo"
+2340,187 | Trattamento Termico Post-Saldatura | PV-2024-01,Sara Greco,22/5/2024,"7,0",Ripresa trattamento dopo riparazione forno
+2341,188 | Verniciatura Esterna Pressure Vessel | PV-2024-01,Matteo Villa,17/6/2024,"6,0","Verniciatura, problemi con primer."
+2342,188 | Verniciatura Esterna Pressure Vessel | PV-2024-01,Matteo Villa,19/6/2024,"4,0","Seconda mano, attività completata"
+2343,189 | Preparazione Documentazione di Spedizione | PV-2024-01,Elena Marchetti,30/7/2024,"4,0","Raccolta documenti, attesa certificazioni"
+2344,189 | Preparazione Documentazione di Spedizione | PV-2024-01,Elena Marchetti,1/8/2024,"3,0","Compilazione DDT, spedizione confermata"
+2351,192 | Saldatura Raccordi e Attacchi | PV-2024-01,Luca Bianchi,7/4/2024,"9,0","Saldatura raccordi principali, rallentamento per verifica materiali."
+2352,192 | Saldatura Raccordi e Attacchi | PV-2024-01,Luca Bianchi,13/4/2024,"11,0","Saldatura attacchi secondari, necessaria ripresa su alcune giunzioni."
+2353,192 | Saldatura Raccordi e Attacchi | PV-2024-01,Luca Bianchi,18/4/2024,"10,0","Completamento saldature, attività chiusa con collaudo positivo."
+2354,191 | Assemblaggio Componenti Interni | PV-2024-01,Davide Romano,16/4/2024,"7,0","Montaggio deflettori interni, attesa bulloneria speciale."
+2355,191 | Assemblaggio Componenti Interni | PV-2024-01,Davide Romano,21/4/2024,"9,0","Fissaggio supporti e verifica allineamento, attività completata"
+2356,190 | Ispezione Qualità Intermedia | PV-2024-01,Giulia Ferri,6/5/2024,"6,0","Controllo visivo e dimensionale, riscontrate alcune non conformità"
+2357,190 | Ispezione Qualità Intermedia | PV-2024-01,Giulia Ferri,9/5/2024,"4,0","Aggiornamento report qualità e verifica correzioni, attività conclusa"
+2401,228 | Progettazione Dettagliata Separatori | SEP-2025-02,James Wilson,1/4/2025,"8,0","Kick-off progettazione, analisi requisiti cliente."
+2402,228 | Progettazione Dettagliata Separatori | SEP-2025-02,James Wilson,5/4/2025,"14,0","Progressi modellazione 3D, revisione tecnica interna."
+2403,228 | Progettazione Dettagliata Separatori | SEP-2025-02,James Wilson,12/4/2025,"16,0","Finalizzazione disegni IFC, attività completata nei tempi."
+2404,229 | Ordine Materiali Speciali | SEP-2025-02,Emma Thompson,21/4/2025,"12,0",Invio richieste di offerta a fornitori certificati.
+2405,229 | Ordine Materiali Speciali | SEP-2025-02,Emma Thompson,3/5/2025,"20,0","Chiusura ordine, ritardo per verifica certificazioni."
+2406,230 | Taglio Lamiere Separatori | SEP-2025-02,Luca Bianchi,16/5/2025,"11,0","Taglio lamiere secondo disegno, nessun intoppo."
+2407,230 | Taglio Lamiere Separatori | SEP-2025-02,Luca Bianchi,20/5/2025,"12,0","Prosecuzione taglio, controllo dimensionale ok."
+2408,230 | Taglio Lamiere Separatori | SEP-2025-02,Luca Bianchi,25/5/2025,"10,0","Conclusione taglio, attività chiusa in anticipo."
+2409,231 | Assemblaggio Internals | SEP-2025-02,Giulia Ferri,2/6/2025,"18,0","Avvio montaggio deflettori interni, piccola revisione disegni."
+2410,231 | Assemblaggio Internals | SEP-2025-02,Giulia Ferri,8/6/2025,"17,0","Fissaggio distributori, avanzamento regolare."
+2411,231 | Assemblaggio Internals | SEP-2025-02,Giulia Ferri,14/6/2025,"17,0","Chiusura attività, completata nei tempi previsti."
+2412,232 | Saldatura Gusci Principali | SEP-2025-02,Marco Conti,19/6/2025,"10,0","Saldatura gusci longitudinali, leggera attesa materiale."
+2413,232 | Saldatura Gusci Principali | SEP-2025-02,Marco Conti,25/6/2025,"9,0","Saldature circonferenziali, verifiche UT intermedie."
+2414,232 | Saldatura Gusci Principali | SEP-2025-02,Marco Conti,2/7/2025,"9,0","Riprese minori, attività al 65% del completamento."
+2415,236 | Survey Topografico Tracciato | G.PIPE-2025-03,Carlos Rodriguez,11/2/2025,"12,0","Rilievo GPS punti chiave, condizioni meteo favorevoli."
+2416,236 | Survey Topografico Tracciato | G.PIPE-2025-03,Carlos Rodriguez,15/2/2025,"10,0","Completamento rilievi altimetrici, nessun problema riscontrato."
+2417,236 | Survey Topografico Tracciato | G.PIPE-2025-03,Carlos Rodriguez,22/2/2025,"13,0","Elaborazione dati e consegna mappe, chiusura milestone."
+2418,237 | Ordine Tubazioni API 5L | G.PIPE-2025-03,Sophie Martin,1/3/2025,"12,0","Richiesta quotazioni, confronto prezzi con fornitore spagnolo."
+2419,237 | Ordine Tubazioni API 5L | G.PIPE-2025-03,Sophie Martin,10/3/2025,"16,0","Emissione PO, ritardo di 2 giorni per approvazione QA."
+2420,238 | Preparazione Cantiere | G.PIPE-2025-03,Davide Romano,26/3/2025,"14,0","Allestimento aree di stoccaggio, installazione recinzioni."
+2421,238 | Preparazione Cantiere | G.PIPE-2025-03,Davide Romano,2/4/2025,"16,0","Movimentazione terra, realizzazione piazzole saldatura."
+2422,238 | Preparazione Cantiere | G.PIPE-2025-03,Davide Romano,8/4/2025,"12,0","Verifica accessi e sicurezza, attività completata in tempo."
+2423,239 | Scavi Meccanizzati Tratto 1 | G.PIPE-2025-03,Luca Bianchi,16/4/2025,"20,0","Avvio scavi meccanizzati, incontro ostacolo roccioso."
+2424,239 | Scavi Meccanizzati Tratto 1 | G.PIPE-2025-03,Luca Bianchi,25/4/2025,"18,0","Rimozione ostacolo, recupero parziale del ritardo."
+2425,239 | Scavi Meccanizzati Tratto 1 | G.PIPE-2025-03,Luca Bianchi,3/5/2025,"20,0","Prosecuzione scavi, controlli geotecnici ok."
+2426,239 | Scavi Meccanizzati Tratto 1 | G.PIPE-2025-03,Luca Bianchi,10/5/2025,"20,0","Chiusura scavi tratto 1, attività conclusa con +2 giorni."
+2427,240 | Posa e Allineamento Tubi | G.PIPE-2025-03,James Wilson,21/5/2025,"12,0","Posa tubi sezione 0-500 m, condizioni meteo ottimali."
+2428,240 | Posa e Allineamento Tubi | G.PIPE-2025-03,James Wilson,28/5/2025,"11,0","Allineamento e tack welding, ispezione dimensionale."
+2429,240 | Posa e Allineamento Tubi | G.PIPE-2025-03,James Wilson,4/6/2025,"12,0","Progresso posa 60%, lieve ritardo per pioggia improvvisa."
+2430,244 | Progettazione Strutturale Jacket | OFF.P-2025-04,Pierre Dubois,2/9/2025,"12,0","Analisi carichi ambientali, definizione parametri base."
+2431,244 | Progettazione Strutturale Jacket | OFF.P-2025-04,Pierre Dubois,8/9/2025,"10,0","Model update e calcoli FEM, revisione con team inglese."
+2432,244 | Progettazione Strutturale Jacket | OFF.P-2025-04,Pierre Dubois,15/9/2025,"10,0","Preparazione deliverable preliminare, 50% completata."
+2434,252 | Progettazione Dettagliata Skid | G.Dh-2024-02,James Wilson,12/2/2024,"8,0","Kick-off progettazione, definizione layout generale skid."
+2435,252 | Progettazione Dettagliata Skid | G.Dh-2024-02,James Wilson,16/2/2024,"10,0",Sviluppo P&ID e specifiche tecniche vessel.
+2436,252 | Progettazione Dettagliata Skid | G.Dh-2024-02,James Wilson,22/2/2024,"12,0","Finalizzazione disegni assemblaggio, revisione con cliente."
+2437,252 | Progettazione Dettagliata Skid | G.Dh-2024-02,James Wilson,26/2/2024,"8,0","Chiusura progettazione, consegna documentazione."
+2438,253 | Ordine Materiali Principali | G.Dh-2024-02,Michael Evans,4/3/2024,"6,0",Richiesta quotazioni vessel e componenti principali.
+2439,253 | Ordine Materiali Principali | G.Dh-2024-02,Michael Evans,8/3/2024,"8,0",Valutazione offerte e negoziazione prezzi.
+2440,253 | Ordine Materiali Principali | G.Dh-2024-02,Michael Evans,15/3/2024,"12,0","Emissione ordini, ritardo per approvazione budget."
+2441,254 | Assemblaggio Struttura Skid | G.Dh-2024-02,Roberto Greco,28/4/2024,"12,0","Preparazione carpenteria base, taglio profili."
+2442,254 | Assemblaggio Struttura Skid | G.Dh-2024-02,Roberto Greco,6/5/2024,"14,0","Saldatura telaio principale, controlli dimensionali."
+2443,254 | Assemblaggio Struttura Skid | G.Dh-2024-02,Roberto Greco,15/5/2024,"16,0","Posizionamento vessel principale, allineamento."
+2444,254 | Assemblaggio Struttura Skid | G.Dh-2024-02,Roberto Greco,25/5/2024,"12,0","Installazione piping principale, test preliminari."
+2445,254 | Assemblaggio Struttura Skid | G.Dh-2024-02,Roberto Greco,8/6/2024,"10,0",Assemblaggio componenti ausiliari.
+2446,254 | Assemblaggio Struttura Skid | G.Dh-2024-02,Roberto Greco,20/6/2024,"14,0","Completamento assemblaggio meccanico, attività in linea."
+2447,255 | Installazione Strumentazione e Cablaggi | G.Dh-2024-02,Michael Evans,3/7/2024,"12,0",Installazione sensori di processo e trasmettitori.
+2448,255 | Installazione Strumentazione e Cablaggi | G.Dh-2024-02,Michael Evans,12/7/2024,"14,0","Cablaggio quadri elettrici, piccolo ritardo per materiale."
+2449,255 | Installazione Strumentazione e Cablaggi | G.Dh-2024-02,Michael Evans,25/7/2024,"16,0",Programmazione PLC e test loop di controllo.
+2450,255 | Installazione Strumentazione e Cablaggi | G.Dh-2024-02,Michael Evans,8/8/2024,"18,0","Commissioning sistema di controllo, debug software."
+2451,256 | Controlli Qualità e Collaudi Interni | G.Dh-2024-02,Silvia Romano,23/9/2024,"8,0",Controlli dimensionali e verifica conformità.
+2452,256 | Controlli Qualità e Collaudi Interni | G.Dh-2024-02,Silvia Romano,30/9/2024,"12,0","Test idraulico vessel e piping, tutto conforme."
+2453,256 | Controlli Qualità e Collaudi Interni | G.Dh-2024-02,Silvia Romano,8/10/2024,"14,0","Collaudo funzionale completo, piccole regolazioni."
+2454,257 | Preparazione Spedizione e Documentazione | G.Dh-2024-02,Julia Müller,25/11/2024,"6,0",Preparazione imballi e protezioni per trasporto.
+2455,257 | Preparazione Spedizione e Documentazione | G.Dh-2024-02,Julia Müller,2/12/2024,"5,0",Compilazione documentazione tecnica e certificati.
+2456,257 | Preparazione Spedizione e Documentazione | G.Dh-2024-02,Julia Müller,10/12/2024,"5,0",Organizzazione trasporto e consegna finale.
+2458,260 | Progettazione Dettagliata Pressure Vessel | PV-2024-03,James Wilson,7/3/2024,"10,0",Analisi specifiche cliente e avvio modellazione 3D.
+2459,260 | Progettazione Dettagliata Pressure Vessel | PV-2024-03,James Wilson,15/3/2024,"14,0","Sviluppo disegni esecutivi, revisione tecnica interna."
+2460,260 | Progettazione Dettagliata Pressure Vessel | PV-2024-03,James Wilson,22/3/2024,"14,0",Finalizzazione documentazione e consegna.
+2461,261 | Ordine Materiali e Componenti Critici | PV-2024-03,Emma Thompson,29/3/2024,"8,0",Richiesta offerte e confronto fornitori.
+2462,261 | Ordine Materiali e Componenti Critici | PV-2024-03,Emma Thompson,10/4/2024,"12,0","Emissione ordini, piccolo ritardo per verifica certificazioni."
+2463,262 | Taglio Lamiere e Calandratura | PV-2024-03,Marco Conti,22/4/2024,"10,0","Taglio lamiere secondo disegno, nessun intoppo."
+2464,262 | Taglio Lamiere e Calandratura | PV-2024-03,Marco Conti,2/5/2024,"9,0","Calandratura guscio, avanzamento regolare."
+2465,262 | Taglio Lamiere e Calandratura | PV-2024-03,Marco Conti,8/5/2024,"8,0","Assemblaggio fondi, attività chiusa in anticipo."
+2466,263 | Saldatura Guscio e Fondi | PV-2024-03,Marco Conti,15/5/2024,"12,0","Saldatura longitudinale guscio, avanzamento regolare."
+2467,263 | Saldatura Guscio e Fondi | PV-2024-03,Marco Conti,28/5/2024,"14,0","Saldatura circonferenziale fondi, piccolo ritardo per verifica disegni."
+2468,263 | Saldatura Guscio e Fondi | PV-2024-03,Marco Conti,10/6/2024,"15,0","Ripresa saldature, attività completata con collaudo positivo."
+2469,264 | Controlli NDT su Saldature | PV-2024-03,Giulia Ferri,7/7/2024,"7,0","Controllo radiografico, tutto conforme."
+2470,264 | Controlli NDT su Saldature | PV-2024-03,Giulia Ferri,15/7/2024,"8,0","Controllo liquidi penetranti, nessuna difettosità."
+2471,264 | Controlli NDT su Saldature | PV-2024-03,Giulia Ferri,20/7/2024,"5,0",Compilazione report e chiusura attività.
+2472,265 | Trattamento Termico Post-Saldatura | PV-2024-03,Sara Lombardi,24/7/2024,"8,0","Caricamento pezzo in forno, avvio ciclo termico."
+2473,265 | Trattamento Termico Post-Saldatura | PV-2024-03,Sara Lombardi,2/8/2024,"7,0","Monitoraggio ciclo e scarico pezzo, attività completata in linea."
+2474,266 | Collaudo Funzionale e Test Idraulico | PV-2024-03,Pierre Dubois,18/9/2024,"10,0","Test idraulico vessel, tutto conforme."
+2475,266 | Collaudo Funzionale e Test Idraulico | PV-2024-03,Pierre Dubois,2/10/2024,"16,0","Collaudo funzionale, piccolo ritardo per taratura strumenti."
+2476,267 | Preparazione Spedizione e Documentazione | PV-2024-03,Sophie Martin,16/1/2025,"5,0",Preparazione imballi e protezioni per trasporto.
+2477,267 | Preparazione Spedizione e Documentazione | PV-2024-03,Sophie Martin,19/1/2025,"4,0",Compilazione documentazione tecnica e organizzazione trasporto.
