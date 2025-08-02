@@ -143,7 +143,7 @@
             // --- LOGICA PRINCIPALE ---
             function loadInitialTasks() {
                 // Sostituire questo URL con il percorso corretto del file CSV
-                const taskCsvUrl = 'tasks.csv';
+                const taskCsvUrl = 'task.csv';
                 fetch(taskCsvUrl)
                     .then(response => {
                         if (!response.ok) throw new Error(`File non trovato: ${taskCsvUrl}`);
