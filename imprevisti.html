@@ -53,8 +53,6 @@
         <!-- Pannello Controlli e Filtri -->
         <div class="bg-white p-4 rounded-lg shadow-md mb-6">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
-                <!-- Upload Button Rimosso -->
-                
                 <!-- Filtri -->
                 <div id="filters-panel" class="hidden-on-start grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:col-span-5 gap-4">
                     <select id="project-filter" class="p-2 border rounded-md bg-white shadow-sm w-full"></select>
@@ -150,7 +148,23 @@
             const criticalityInfo = { 'Alta': { color: 'red', icon: 'alert-octagon', badge: 'border-red-500 text-red-600 bg-red-100' }, 'Media': { color: 'orange', icon: 'alert-triangle', badge: 'border-orange-500 text-orange-600 bg-orange-100' }, 'Bassa': { color: 'green', icon: 'shield-check', badge: 'border-green-500 text-green-600 bg-green-100' }, 'Default': { color: 'gray', icon: 'help-circle', badge: 'border-slate-400 text-slate-500 bg-slate-100' } };
             const statusInfo = { 'Aperto': { color: 'red', icon: 'folder-open', badge: 'bg-red-100 text-red-800' }, 'In lavorazione': { color: 'yellow', icon: 'loader-2', badge: 'bg-yellow-100 text-yellow-800' }, 'Risolto': { color: 'green', icon: 'check-circle', badge: 'bg-green-100 text-green-800' }, 'Default': { color: 'gray', icon: 'help-circle', badge: 'bg-slate-100 text-slate-800' } };
 
-            // --- LOGICA DI CARICAMENTO E PARSING (MODIFICATA) ---
+            // --- FUNZIONE DI PARSING ROBUSTA PER LE DATE ---
+            const parseItalianDate = (dateString) => {
+                if (!dateString) return null;
+                const parts = dateString.split('/');
+                if (parts.length !== 3) return null;
+                const day = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10);
+                const year = parseInt(parts[2], 10);
+                if (isNaN(day) || isNaN(month) || isNaN(year) || year < 1000) return null;
+                const date = new Date(year, month - 1, day);
+                if (date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day) {
+                    return date;
+                }
+                return null;
+            };
+
+            // --- LOGICA DI CARICAMENTO E PARSING ---
             function loadInitialIncidents() {
                 const incidentsCsvUrl = 'data/imprevisti.csv';
                 fetch(incidentsCsvUrl)
@@ -171,12 +185,14 @@
 
             function processData(data) {
                 allIncidents = data.map((row, index) => {
-                    if (!row.Progetto || !row['Titolo Imprevisto'] || !row['Data Imprevisti']) return null;
+                    const incidentDate = parseItalianDate(row['Data Imprevisti']);
+                    if (!row.Progetto || !row['Titolo Imprevisto'] || !incidentDate) return null;
+                    
                     return {
                         id: index, title: row['Titolo Imprevisto'], project: row.Progetto,
                         description: row['Descrizione Problema'] || 'Nessuna descrizione fornita.',
                         type: row.Tipo || 'Non specificato', criticality: row.Criticità || 'Bassa',
-                        date: dayjs(row['Data Imprevisti'], 'DD/MM/YYYY').toDate(),
+                        date: incidentDate,
                         status: row.Stato || 'Aperto', risk: row['Rischio Previsionale'] || 'Non definito',
                     };
                 }).filter(Boolean);
@@ -187,14 +203,12 @@
                     filtersPanel.classList.remove('hidden-on-start');
                     populateFilters();
 
-                    // --- MODIFICA CHIAVE ---
                     const urlParams = new URLSearchParams(window.location.search);
                     const projectIdFromUrl = urlParams.get('id');
                     if (projectIdFromUrl) {
                         projectFilterEl.value = projectIdFromUrl;
                         projectFilterEl.disabled = true;
                     }
-                    // --- FINE MODIFICA ---
 
                     renderDashboard();
                 } else {
