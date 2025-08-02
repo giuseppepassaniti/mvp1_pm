@@ -1,8 +1,8 @@
 ﻿Id Progetto,Nome Progetto,Cliente,PM responsabile,Stato,Budget Inziale,Data Inizio,Data Fine,% Avanzamento,Costi Sostenuti,Previsione Finale Costi
 PV-2025-01,Pressure Vessel_Eni,ENI S.p.A.,Antonio Manduca,In progress,"€1250000,0",15/3/2025,10/10/2025,62%,"€780000,00","€1320000,00"
-PV-2024-01,Pressure Vessel_Snam,Snam S.p.A.,Laura Bianchi,Completato,"€980000,0",10/1/2024,5/8/2024,100%,"€1180000,00","€1180000,00"
+PV-2024-01,Pressure Vessel_Snam,Snam S.p.A.,Laura Bianchi,Completato,"€1200000,0",10/1/2024,5/8/2024,100%,"€1180000,00","€1180000,00"
 SEP-2025-02,Separator Unit_Shell,Shell UK Ltd.,Antonio Manduca,In progress,"€1450000,0",4/1/2025,20/12/2025,48%,"€690000,00","€1500000,00"
-G.PIPE-2025-03,Gas Pipeline_BP,BP Exploration Ltd.,Antonio Manduca,In progress,"€2100000,0",2/10/2025,30/11/2025,35%,"€730000,00","€2200000,00"
+G.PIPE-2025-03,Gas Pipeline_BP,BP Exploration Ltd.,Antonio Manduca,In progress,"€2300000,0",2/10/2025,30/11/2025,35%,"€730000,00","€2200000,00"
 OFF.P-2025-04,Offshore Platform_Total,TotalEnergies SE,Antonio Manduca,In progress,"€3200000,0",9/1/2025,31/5/2026,12%,"€380000,00","€3250000,00"
 G.Dh-2024-02,Gas Dehydration Skid_Exxon,ExxonMobil Ltd.,Laura Bianchi,Completato,"€1350000,0",10/2/2024,15/12/2024,100%,"€1420000,00","€1420000,00"
-PV-2024-03,Pressure Vessel_Total,TotalEnergies SE,Jack Folie,Completato,"€1180000,0",5/3/2024,20/1/2025,100%,"€1250000,00","€1250000,00"
+PV-2024-03,Pressure Vessel_Total,TotalEnergies SE,Jack Folie,Completato,"€1500000,0",5/3/2024,20/1/2025,100%,"€1250000,00","€1250000,00"
