@@ -122,7 +122,9 @@
                                         client: row.Cliente,
                                         pm: row['PM responsabile'],
                                         status: row.Stato,
-                                        budget: parseCurrency(row['Budget Iniziale']),
+                                        // --- MODIFICA PER BUG FIX ---
+                                        // Corretto il nome della colonna per corrispondere al CSV ('Budget Inziale')
+                                        budget: parseCurrency(row['Budget Inziale']),
                                         costs: parseCurrency(row['Costi Sostenuti']),
                                         forecast: parseCurrency(row['Previsione Finale Costi']),
                                         progress: parsePercentage(row['% Avanzamento']),
