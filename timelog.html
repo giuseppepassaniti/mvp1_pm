@@ -81,8 +81,6 @@
             </div>
         </header>
 
-        <!-- MODIFICA: Sezione Upload rimossa -->
-
         <!-- Messaggio di caricamento iniziale -->
         <div id="initial-message" class="text-center py-12">
             <div class="spinner h-12 w-12 rounded-full border-4 border-slate-200 mx-auto"></div>
@@ -177,7 +175,9 @@
                 exportCsvBtn: document.getElementById('export-csv-btn'),
             };
             const numberFormatter = new Intl.NumberFormat('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            const PJT_REGEX = /(PJT-\d+)/;
+            // --- MODIFICA PER BUG FIX ---
+            // Espressione regolare corretta per identificare i codici progetto (es. PV-2024-01, G.PIPE-2025-03)
+            const PJT_REGEX = /([\w\.]+-[\d-]+)/;
 
             // --- PARSING E PREPARAZIONE DATI ---
             const parseRobustDate = (dateString) => {
@@ -228,8 +228,8 @@
                     const date = parseRobustDate(dateStr);
                     if (!date) return null;
                     const match = taskStr.match(PJT_REGEX);
-                    const projectId = match ? match[1] : 'N/A';
-                    const taskTitle = match ? taskStr.replace(PJT_REGEX, '').trim() : taskStr.trim();
+                    const projectId = match ? match[0] : 'N/A'; // Usiamo match[0] perché è l'intera corrispondenza
+                    const taskTitle = match ? taskStr.replace(PJT_REGEX, '').replace(/\|/g, '').trim() : taskStr.trim();
                     const hours = parseFloat(hoursStr.replace(',', '.')) || 0;
                     const week = getWeekNumber(date);
                     return { date, resource, projectId, taskTitle, hours, week };
